@@ -1,11 +1,11 @@
 package com.company;
 
-public class DatoNumerico extends TareasDeControl{
+public class DatoNumerico extends TareasDeControl implements ValidarTarea{
 
     private double datoNumerico;
 
     public DatoNumerico(String descripcion, double datoNumerico) {
-        super(true, descripcion);
+        super(descripcion);
         this.datoNumerico = datoNumerico;
     }
 
@@ -15,5 +15,15 @@ public class DatoNumerico extends TareasDeControl{
 
     public void setDatoNumerico(double datoNumerico) {
         this.datoNumerico = datoNumerico;
+    }
+
+    @Override
+    public boolean Validar() {
+        return datoNumerico != 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Dato: " + getDatoNumerico();
     }
 }
