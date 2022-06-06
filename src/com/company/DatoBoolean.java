@@ -1,11 +1,11 @@
 package com.company;
 
-public class DatoBoolean extends TareasDeControl{
+public class DatoBoolean extends TareasDeControl implements ValidarTarea{
 
     private boolean datoBoolean;
 
     public DatoBoolean(String descripcion, boolean datoBoolean) {
-        super(true, descripcion);
+        super(descripcion);
         this.datoBoolean = datoBoolean;
     }
 
@@ -15,5 +15,19 @@ public class DatoBoolean extends TareasDeControl{
 
     public void setDatoBoolean(boolean datoBoolean) {
         this.datoBoolean= datoBoolean;
+    }
+
+    @Override
+    public boolean Validar() {
+        return datoBoolean;
+    }
+
+    @Override
+    public String toString() {
+        if (isDatoBoolean()) {
+            return "Sí. ";
+        } else {
+            return "No. ";
+        }
     }
 }

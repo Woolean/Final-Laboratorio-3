@@ -1,12 +1,16 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class TareasDeControl {
 
-    private boolean realizado;
-    private String descripcion;
+    private String descripcion, descripcionNueva;
+    private int opcion, opcionPersonalizada;
+    private Scanner nc = new Scanner(System.in);
+    private Scanner nc1 = new Scanner(System.in);
+    private Scanner ncdescripcion = new Scanner(System.in);
 
-    public TareasDeControl(boolean realizado, String descripcion) {
-        this.realizado = realizado;
+    public TareasDeControl(String descripcion) {
         this.descripcion = descripcion;
     }
 
@@ -18,11 +22,71 @@ public class TareasDeControl {
         this.descripcion = descripcion;
     }
 
-    public boolean isRealizado() {
-        return realizado;
+    public TareasDeControl CrearTarea(){
+
+        System.out.println("Elegir Tratamiento: \n" +
+                "1 - Tomar Temperatura. \n" +
+                "2 - Tomar Presión. \n" +
+                "3 - Tomar Agua. \n" +
+                "4 - Consumir medicamentos.\n" +
+                "5 - Aplicar tópico. \n" +
+                "6 - Personalizar.\n"
+        );
+
+        System.out.print("Opción: ");
+        opcion = nc.nextInt();
+
+        switch (opcion) {
+            case 1 -> {
+                DatoNumerico dato = new DatoNumerico("Temperatura", 0);
+                return dato;
+            }
+            case 2 -> {
+                DatoNumerico dato = new DatoNumerico("Presión.", 0);
+                return dato;
+            }
+            case 3 -> {
+                DatoBoolean dato = new DatoBoolean("Tomar agua.", false);
+                return dato;
+            }
+            case 4 -> {
+                DatoBoolean dato = new DatoBoolean("Consumir medicamentos.", false);
+                return dato;
+            }
+            case 5 -> {
+                DatoBoolean dato = new DatoBoolean("Aplicar tópico", false);
+                return dato;
+            }
+            case 6 -> {
+                System.out.println("Descripción de la tarea: ");
+                descripcionNueva = ncdescripcion.nextLine();
+                System.out.println("Elegir tipo de tarea: \n" +
+                        "1 - Dato numérico. \n" +
+                        "2 - Dato Textual. \n" +
+                        "3 - Dato si/no \n"
+                );
+                opcionPersonalizada = nc1.nextInt();
+                switch (opcionPersonalizada) {
+                    case 1 -> {
+                        DatoNumerico dato = new DatoNumerico(descripcionNueva, 0);
+                        return dato;
+                    }
+                    case 2 -> {
+                        DatoTextual dato = new DatoTextual(descripcionNueva, null);
+                        return dato;
+                    }
+                    case 3 -> {
+                        DatoBoolean dato = new DatoBoolean(descripcionNueva, false);
+                        return dato;
+                    }
+                }
+            }
+            default -> {
+                System.out.println("Error, el número ingresado no corresponde a ninguna opción.");
+            }
+        }
+
+        return null;
     }
 
-    public void setRealizado(boolean realizado) {
-        this.realizado = realizado;
-    }
 }
