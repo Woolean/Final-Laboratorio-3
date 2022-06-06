@@ -1,6 +1,7 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class RegistroDiario {
     private LocalDate fecha;
@@ -36,5 +37,37 @@ public class RegistroDiario {
 
     public void setInformacion(String informacion) {
         this.informacion = informacion;
+    }
+
+    public boolean verificarfecha(LocalDate hoy){
+        if (this.fecha.equals(hoy)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean VerificaciondeTareas(ArrayList<TareasDeControl> tareas){
+        for (TareasDeControl e : tareas){
+            if (!e.isRealizado()){
+                this.completado=false;
+                return this.completado;
+            }
+        }
+        this.completado=true;
+        return  this.completado;
+    }
+
+    public void RegistrodeTareas(ArrayList<TareasDeControl> tareas){
+
+            StringBuilder registro=new StringBuilder();
+            for (TareasDeControl n : tareas){
+                    registro.append("\n");
+                    registro.append(n.getDescripcion()+":");
+                    //registro.append(n.getValor);
+                    registro.append("--------------------");
+            }
+            this.informacion=registro.toString();
     }
 }
