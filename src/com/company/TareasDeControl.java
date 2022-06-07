@@ -1,10 +1,14 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class TareasDeControl {
 
-    private String descripcion, descripcionNueva;
+    private String descripcion;
+            //estos datos tienen que estar dentro de los metodos, porque no son necesarios afuera
+            private String descripcionNueva;
     private int opcion, opcionPersonalizada;
     private Scanner nc = new Scanner(System.in);
     private Scanner nc1 = new Scanner(System.in);
@@ -22,7 +26,7 @@ public class TareasDeControl {
         this.descripcion = descripcion;
     }
 
-    public TareasDeControl CrearTarea(){
+    public TareasDeControl CrearTarea() {
 
         System.out.println("Elegir Tratamiento: \n" +
                 "1 - Tomar Temperatura. \n" +
@@ -87,6 +91,81 @@ public class TareasDeControl {
         }
 
         return null;
+
+    }
+    //separarlasdoscosasagregarunatareayaexistente o crearunanueva porque si no queda una funcion muy larga y separando
+    //va a ser mas especifica
+    /*public TareasDeControl AgregarTarea(ArrayList<TareasDeControl> tareas) {
+
+         String descripcionNueva;
+         int opcion;
+         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Elegir Tratamiento");
+        for (int i=0; i<tareas.size(); i++){
+            System.out.println("Opcion "+i+" "+tareas.get(i).descripcion);
+        }
+        System.out.print("Opción: ");
+        opcion = scanner.nextInt();
+
+        if (tareas.get(opcion) instanceof DatoNumerico){
+            DatoNumerico dato = new DatoNumerico("Temperatura", 0);
+            return dato;
+        }
+        else if (tareas.get(opcion) instanceof DatoBoolean){
+            DatoBoolean dato = new DatoBoolean("Tomar agua.", false);
+            return dato;
+        }
+        else if (tareas.get(opcion) instanceof DatoTextual){
+            DatoTextual dato = new DatoTextual("Temperatura", null);
+            return dato;
+        }
+        return null;
     }
 
+
+    public TareasDeControl CrearTarea() {
+
+        String descripcionNueva;
+        int opcion;
+        boolean salir=false;
+        DatoNumerico datoNumerico;
+        DatoTextual datoTextual;
+        DatoBoolean datoBoolean;
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        while (!salir) {
+            System.out.println("Descripción de la tarea: ");
+            descripcionNueva = scanner.nextLine();
+            System.out.println("Elegir tipo de tarea: \n" +
+                    "1 - Dato numérico. \n" +
+                    "2 - Dato Textual. \n" +
+                    "3 - Dato si/no \n"
+            );
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1 -> {
+                    datoNumerico = new DatoNumerico(descripcionNueva, 0);
+                    return datoNumerico;
+                }
+                case 2 -> {
+                    datoTextual = new DatoTextual(descripcionNueva, null);
+                    return datoTextual;
+                }
+                case 3 -> {
+                    datoBoolean = new DatoBoolean(descripcionNueva, false);
+                    return datoBoolean;
+                }
+                default -> {
+                    System.out.println("Opcion no Valida");
+                }
+            }
+        }
+        return null; //no se como pero hay que usar alguna ecepcion aca seguro
+    }*/
+
 }
+
