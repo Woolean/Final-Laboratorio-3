@@ -7,6 +7,7 @@ public class Paciente extends Usuarios {
 
     private String Enfermedad;
     private String Sintomas;
+    private PlanDeControl planDeControl=null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
     private LocalDate FindelTratamiento;
     private LocalDate PrincipiodelTratamiento;
     private ArrayList<RegistroDiario> historial;
@@ -55,5 +56,22 @@ public class Paciente extends Usuarios {
 
     public void setHistorial(ArrayList<RegistroDiario> historial) {
         this.historial = historial;
+    }
+
+    public PlanDeControl getPlanDeControl() {
+        return planDeControl;
+    }
+
+    public void setPlanDeControl(PlanDeControl planDeControl) {
+        this.planDeControl = planDeControl;
+    }
+
+    public String BuscarRegistro(LocalDate fechadelregistro){
+        for (RegistroDiario e : this.historial){
+            if (e.verificarfecha(fechadelregistro)){
+                return e.RegistrodeTareas(this.planDeControl.getTratamientos());
+            }
+        }
+        return null;
     }
 }
