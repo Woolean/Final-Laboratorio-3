@@ -17,6 +17,9 @@ public class TareasDeControl {
     public TareasDeControl(String descripcion) {
         this.descripcion = descripcion;
     }
+    public TareasDeControl() {
+        this.descripcion = null;
+    }
 
     public String getDescripcion() {
         return descripcion;
@@ -109,15 +112,15 @@ public class TareasDeControl {
         opcion = scanner.nextInt();
 
         if (tareas.get(opcion) instanceof DatoNumerico){
-            DatoNumerico dato = new DatoNumerico("Temperatura", 0);
+            DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
             return dato;
         }
         else if (tareas.get(opcion) instanceof DatoBoolean){
-            DatoBoolean dato = new DatoBoolean("Tomar agua.", false);
+            DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
             return dato;
         }
         else if (tareas.get(opcion) instanceof DatoTextual){
-            DatoTextual dato = new DatoTextual("Temperatura", null);
+            DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
             return dato;
         }
         return null;
