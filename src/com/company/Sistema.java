@@ -1,6 +1,7 @@
 package com.company;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Sistema {
@@ -24,6 +25,7 @@ public class Sistema {
         for (Paciente e : Pacientes){
             if (e.getUser().equalsIgnoreCase(nombre)){
                 if (e.getPassword().equalsIgnoreCase(contraseña)){
+                    MensajedeAviso(e);
                     return e;
                 }
             }
@@ -31,6 +33,7 @@ public class Sistema {
         for (Medico e : Medicos){
             if (e.getUser().equalsIgnoreCase(nombre)){
                 if (e.getPassword().equalsIgnoreCase(contraseña)){
+                    MensajedeAvisoMedicos(e);
                     return e;
                 }
             }
@@ -46,9 +49,24 @@ public class Sistema {
     }
 
 
-    //ver si es mejor en interfaz
-    public String MensajedeAviso(Usuarios users){
-        return null;
+    public void MensajedeAviso(Paciente users){
+        boolean mensaje;
+        mensaje=users.getHistorial().get(users.getHistorial().size()-1).verificarfecha(LocalDate.now());
+        if (mensaje==false){
+            if (users.getHistorial().get(users.getHistorial().size()-1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())){
+                System.out.println("No Completo las Tareas Diarias el Dia de ayer");
+            }
+            else {
+                System.out.println("Completo las Tareas Diarias el Dia de ayer");
+            }
+            users.getHistorial().get(users.getHistorial().size()-1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
+        }
+    }
+
+    public void MensajedeAvisoMedicos(Medico medico){
+        for (Paciente e : medico.getPacientesAsignados()){
+            MensajedeAviso(e);
+        }
     }
 
     public void EjecutarMenu(Usuarios user){
