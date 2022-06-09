@@ -11,7 +11,7 @@ public class Paciente extends Usuarios implements Menus {
     private PlanDeControl planDeControl=null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
     private LocalDate FindelTratamiento;
     private LocalDate PrincipiodelTratamiento;
-    private ArrayList<RegistroDiario> historial;
+    private ArrayList<RegistroDiario> historial=new ArrayList<>();
 
     public Paciente(String password, String user, String enfermedad, String sintomas) {
         super(password, user);
