@@ -19,7 +19,7 @@ public class Sistema {
     }
 
 
-    //usar excepciones
+    //usar excepciones seguramente
     public Usuarios iniciarSesion(String nombre, String contraseña){
         for (Paciente e : Pacientes){
             if (e.getUser().equalsIgnoreCase(nombre)){

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Medico extends Usuarios implements CrearPlandeControl, Menus {
+public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus {
 
     private String especializacion;
     private ArrayList<Paciente> pacientesAsignados;
@@ -107,5 +107,100 @@ public class Medico extends Usuarios implements CrearPlandeControl, Menus {
                     break;
             }
         }
+    }
+
+    //modifica el plan de control
+    @Override
+    public void agregarTareasdeContol(ArrayList<TareasDeControl> tareas) {
+
+        String descripcionNueva;
+        int opcion;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Elegir Tratamiento");
+        for (int i=0; i<tareas.size(); i++){
+            System.out.println("Opcion "+i+" "+tareas.get(i).getDescripcion());
+        }
+        System.out.print("Opción: ");
+        opcion = scanner.nextInt();
+
+        if (tareas.get(opcion) instanceof DatoNumerico){
+            DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
+            tareas.add(dato);
+        }
+        else if (tareas.get(opcion) instanceof DatoBoolean){
+            DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
+            tareas.add(dato);
+        }
+        else if (tareas.get(opcion) instanceof DatoTextual){
+            DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
+            tareas.add(dato);
+        }
+    }
+    //paraadminymedicolomismo
+    @Override
+    public void EliminarTareas(ArrayList<TareasDeControl> tareas) {
+
+        boolean seguir=false;
+        int opcion;
+        Scanner scanner = new Scanner(System.in);
+
+
+        while (!seguir) {
+            System.out.println("Elegir Tratamiento a Eliminar");
+            for (int i = 0; i < tareas.size(); i++) {
+                System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
+            }
+            System.out.print("Opción: ");
+            opcion = scanner.nextInt();
+            if (opcion < tareas.size()) {
+                tareas.remove(opcion);
+                seguir=true;
+            }
+        }
+    }
+    //agregar a un arraylist con las tareas de un plan y persistir pero en el paciente
+    @Override
+    public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
+
+        String descripcionNueva;
+        int opcion;
+        boolean salir=false;
+        DatoNumerico datoNumerico;
+        DatoTextual datoTextual;
+        DatoBoolean datoBoolean;
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        while (!salir) {
+            System.out.println("Descripción de la tarea: ");
+            descripcionNueva = scanner.nextLine();
+            System.out.println("Elegir tipo de tarea: \n" +
+                    "1 - Dato numérico. \n" +
+                    "2 - Dato Textual. \n" +
+                    "3 - Dato si/no \n"
+            );
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1 -> {
+                    datoNumerico = new DatoNumerico(descripcionNueva, 0);
+                    tareas.add(datoNumerico);
+                }
+                case 2 -> {
+                    datoTextual = new DatoTextual(descripcionNueva, null);
+                    tareas.add(datoTextual);
+                }
+                case 3 -> {
+                    datoBoolean = new DatoBoolean(descripcionNueva, false);
+                    tareas.add(datoBoolean);
+                }
+                default -> {
+                    System.out.println("Opcion no Valida");
+                }
+            }
+        }
+        //no se como pero hay que usar alguna ecepcion aca seguro
     }
 }

@@ -170,7 +170,7 @@ public class TareasDeControl {
         return null; //no se como pero hay que usar alguna ecepcion aca seguro
     }*/
 
-    //paraadminymedicolomismo
+    /*//paraadminymedicolomismo
     public TareasDeControl agregarTareasdeContol(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
@@ -262,7 +262,7 @@ public class TareasDeControl {
             }
         }
         return null; //no se como pero hay que usar alguna ecepcion aca seguro
-    }
+    }*/
 
 }
 
