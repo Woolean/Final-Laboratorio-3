@@ -7,12 +7,35 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //persistencia
         ArrayList<Paciente> Pacientes=new ArrayList<>();
         ArrayList<Medico> Medicos=new ArrayList<>();
         ArrayList<Administrador> Administradores=new ArrayList<>();
+        ArrayList<TareasDeControl> Tareas=new ArrayList<>();
+        ArrayList<Enfermedades> Enfermedades=new ArrayList<>();
+        ArrayList<PlanDeControl> PlanesdeControl=new ArrayList<>();
 
-        Sistema hospital=new Sistema();
+        Sistema hospital=new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
 
+
+        //iniciar sesion
+        boolean Seguir=false;
+        int j=0;
+        Usuarios UserenSesion;
+
+        while (!Seguir){
+            Scanner scanner1=new Scanner(System.in);
+            String nombre,contrasena;
+            System.out.println("Bienvenido");
+            System.out.println("Ingrese Nombre de Usuario: ");
+            nombre=scanner1.nextLine();
+            System.out.println("Ingrese Contrasena: ");
+            contrasena=scanner1.nextLine();
+            UserenSesion=hospital.iniciarSesion(nombre, contrasena);
+            if (UserenSesion!=null){
+                Seguir=true;
+            }
+        }
 
         //menubase o menu en cada clase
         /*boolean salir=false;
