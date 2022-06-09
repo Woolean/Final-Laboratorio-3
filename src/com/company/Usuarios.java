@@ -13,7 +13,7 @@ public class Usuarios {
         this.id = idsuma;
     }
 
-    public String getPassword() {
+    public String getPasswords() {
         return password;
     }
 
@@ -21,7 +21,7 @@ public class Usuarios {
         this.password = password;
     }
 
-    public String getUser() {
+    public String getUsers() {
         return user;
     }
 
