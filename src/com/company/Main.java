@@ -61,8 +61,10 @@ public class Main {
             contrasena=scanner1.nextLine();
             UserenSesion=hospital.iniciarSesion(nombre, contrasena);
             if (UserenSesion!=null){
+                hospital.EjecutarMenu(UserenSesion);
                 Seguir=true;
             }
+
         }
     }
 }
