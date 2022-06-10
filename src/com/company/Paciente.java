@@ -89,7 +89,7 @@ public class Paciente extends Usuarios implements Menus {
         Scanner scanner = new Scanner(System.in);
 
         while (!seguir) {
-
+            //excepcion si es null
             System.out.println("Elegir Tratamiento");
             for (int i = 0; i < planDeControl.getTratamientos().size(); i++) {
                 System.out.println("Opcion " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
