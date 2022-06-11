@@ -103,11 +103,17 @@ public class Paciente extends Usuarios implements Menus {
                 dato = scanner.nextInt();
                 ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);
             } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoBoolean) {
-                double dato;
-                System.out.println("Ingresa un valor Numerico");
+                int dato;
+                System.out.println("Cambiar estado a echo escribiendo 1, cualquier otra tecla para Anular");
                 System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
                 dato = scanner.nextInt();
-                ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+                if (dato==1){
+                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+                }
+                else {
+                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(false);
+                }
+
             } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoTextual) {
                 String dato;
                 System.out.println("Ingresa un Texto");
@@ -117,6 +123,7 @@ public class Paciente extends Usuarios implements Menus {
             }
 
             System.out.println("Quiere Salir del Sistema s=SI n=NO");
+            scanner.nextLine();
             String si= scanner.nextLine();
             if (si.equalsIgnoreCase("s")){
                 seguir=true;
