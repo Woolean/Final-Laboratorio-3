@@ -203,7 +203,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     while (!salir2){
                         System.out.println("Opcion 1: Agregar Tarea Existenete al Plan de Control");
                         System.out.println("Opcion 2: Eliminar Tarea");
-                        System.out.println("Opcion 3: Agregar nueva Tarea");
+                        System.out.println("Opcion 3: Crear nueva Tarea");
                         System.out.println("Opcion 4: Salir");
 
                         System.out.printf("Ingrese una Opción: ");
@@ -213,7 +213,6 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                             case 1:
                                 agregarTareasdeContol(Planamodificar.getTratamientos());
                                 //persistir cambio del plan
-                                salir=true;
                                 break;
                             case 2:
                                 EliminarTareas(Planamodificar.getTratamientos());
@@ -221,10 +220,12 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 break;
                             case 3:
                                 //crearnuevatarea para la lista así peristimos como base
-                                CrearTareaNueva();
+                                CrearTareaNueva(Planamodificar.getTratamientos());
+                                break;
                                 //persistir la lista de tareas
                             case 4:
-                                salir=true;
+                                salir2=true;
+                                break;
                             default:
                                 System.out.println("Opcion no valida");
                                 break;
@@ -281,8 +282,8 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
 
         while (!seguir) {
             System.out.println("Elegir Tratamiento a Eliminar");
-            for (int i = 0; i < this.tareasbase.size(); i++) {
-                System.out.println("Opcion " + i + " " + this.tareasbase.get(i).getDescripcion());
+            for (int i = 0; i < tareas.size(); i++) {
+                System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
             }
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
@@ -294,7 +295,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
     }
     //agregar a un arraylist con las tareas por defecto y persiste
     @Override
-    public void CrearTareaNueva() {
+    public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
         int opcion;
@@ -311,22 +312,29 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             System.out.println("Elegir tipo de tarea: \n" +
                     "1 - Dato numérico. \n" +
                     "2 - Dato Textual. \n" +
-                    "3 - Dato si/no \n"
+                    "3 - Dato si/no\n"
             );
+        System.out.println("Opcion: ");
             opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1:
                     datoNumerico = new DatoNumerico(descripcionNueva, 0);
                     this.tareasbase.add(datoNumerico);
+                    DatoNumerico datoNumerico2 = new DatoNumerico(descripcionNueva, 0);
+                    tareas.add(datoNumerico2);
                     break;
                 case 2:
                     datoTextual = new DatoTextual(descripcionNueva, null);
                     this.tareasbase.add(datoTextual);
+                    DatoTextual datoTextual2 = new DatoTextual(descripcionNueva, null);
+                    tareas.add(datoTextual2);
                     break;
                 case 3:
                     datoBoolean = new DatoBoolean(descripcionNueva, false);
                     this.tareasbase.add(datoBoolean);
+                    DatoBoolean datoBoolean2 = new DatoBoolean(descripcionNueva, false);
+                    tareas.add(datoBoolean2);
                     break;
                 default:
                     System.out.println("Opcion no Valida");

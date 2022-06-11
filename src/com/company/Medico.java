@@ -161,7 +161,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     }
     //agregar a un arraylist con las tareas de un plan y persistir pero en el paciente
     @Override
-    public void CrearTareaNueva() {
+    public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
         int opcion;
@@ -186,15 +186,15 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             switch (opcion) {
                 case 1 -> {
                     datoNumerico = new DatoNumerico(descripcionNueva, 0);
-                    //tareas.add(datoNumerico);
+                    tareas.add(datoNumerico);
                 }
                 case 2 -> {
                     datoTextual = new DatoTextual(descripcionNueva, null);
-                    //tareas.add(datoTextual);
+                    tareas.add(datoTextual);
                 }
                 case 3 -> {
                     datoBoolean = new DatoBoolean(descripcionNueva, false);
-                    //tareas.add(datoBoolean);
+                    tareas.add(datoBoolean);
                 }
                 default -> {
                     System.out.println("Opcion no Valida");
