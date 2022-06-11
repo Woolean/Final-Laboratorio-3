@@ -6,12 +6,14 @@ public class PlanDeControl {
 
     private String Enfermedad;
     private int Tiempo;
-    private ArrayList<TareasDeControl> Tratamientos;
+    private ArrayList<TareasDeControl> Tratamientos=new ArrayList<>();
 
-    public PlanDeControl(String enfermedad, int tiempo, ArrayList<TareasDeControl> tratamientos) {
-        Enfermedad = enfermedad;
-        Tiempo = tiempo;
-        Tratamientos = tratamientos;
+    public PlanDeControl(Enfermedad enfermedad, ArrayList<TareasDeControl> tratamientos) {
+        Enfermedad = enfermedad.getEnfermedadNombre();
+        Tiempo = enfermedad.getRecuperacionenDias();
+        if (tratamientos!=null){
+            Tratamientos = tratamientos;
+        }
     }
 
     public String getEnfermedad() {
@@ -36,5 +38,14 @@ public class PlanDeControl {
 
     public void setTratamientos(ArrayList<TareasDeControl> tratamientos) {
         Tratamientos = tratamientos;
+    }
+
+    @Override
+    public String toString() {
+        return "PlanDeControl{" +
+                "Enfermedad='" + Enfermedad + '\'' +
+                ", Tiempo=" + Tiempo +
+                ", Tratamientos=" + Tratamientos +
+                '}';
     }
 }

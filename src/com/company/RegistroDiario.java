@@ -9,10 +9,8 @@ public class RegistroDiario {
     private String informacion;
 
 
-    public RegistroDiario(LocalDate fecha, boolean completado, String informacion) {
+    public RegistroDiario(LocalDate fecha) {
         this.fecha = fecha;
-        this.completado = completado;
-        this.informacion = informacion;
     }
 
     public LocalDate getFecha() {

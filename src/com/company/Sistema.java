@@ -23,24 +23,30 @@ public class Sistema {
     //usar excepciones seguramente
     public Usuarios iniciarSesion(String nombre, String contraseña){
         for (Paciente e : Pacientes){
-            if (e.getUser().equalsIgnoreCase(nombre)){
-                if (e.getPassword().equalsIgnoreCase(contraseña)){
-                    MensajedeAviso(e);
+            if (e.getUsers().equalsIgnoreCase(nombre)){
+                if (e.getPasswords().equalsIgnoreCase(contraseña)){
+                    if (e.getPlanDeControl()!=null){
+                        MensajedeAviso(e);
+                    }
                     return e;
                 }
             }
         }
         for (Medico e : Medicos){
-            if (e.getUser().equalsIgnoreCase(nombre)){
-                if (e.getPassword().equalsIgnoreCase(contraseña)){
-                    MensajedeAvisoMedicos(e);
+            if (e.getUsers().equalsIgnoreCase(nombre)){
+                if (e.getPasswords().equalsIgnoreCase(contraseña)){
+                    try{
+                        MensajedeAvisoMedicos(e);
+                    }catch (NullPointerException a){
+                        System.out.println("No tiene ningun Paciente Asignado");
+                    }
                     return e;
                 }
             }
         }
         for (Administrador e : Administradores){
-            if (e.getUser().equalsIgnoreCase(nombre)){
-                if (e.getPassword().equalsIgnoreCase(contraseña)){
+            if (e.getUsers().equalsIgnoreCase(nombre)){
+                if (e.getPasswords().equalsIgnoreCase(contraseña)){
                     return e;
                 }
             }
@@ -51,19 +57,25 @@ public class Sistema {
 
     public void MensajedeAviso(Paciente users){
         boolean mensaje;
-        mensaje=users.getHistorial().get(users.getHistorial().size()-1).verificarfecha(LocalDate.now());
-        if (mensaje==false){
-            if (users.getHistorial().get(users.getHistorial().size()-1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())){
-                System.out.println("No Completo las Tareas Diarias el Dia de ayer");
+        //verificar si es el primer dia del tratamiento
+        if (users.getHistorial().size()!=0){
+            mensaje=users.getHistorial().get(users.getHistorial().size()-1).verificarfecha(LocalDate.now());
+            if (mensaje==false){
+                if (users.getHistorial().get(users.getHistorial().size()-1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())==false){
+                    System.out.println(users+": No Completo las Tareas Diarias el Dia de ayer");
+                }
+                users.getHistorial().get(users.getHistorial().size()-1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
+                RegistroDiario registro=new RegistroDiario(LocalDate.now());
+                users.getHistorial().add(registro);
             }
-            else {
-                System.out.println("Completo las Tareas Diarias el Dia de ayer");
-            }
-            users.getHistorial().get(users.getHistorial().size()-1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
+        }
+        else {
+            RegistroDiario registro=new RegistroDiario(LocalDate.now());
+            users.getHistorial().add(registro);
         }
     }
 
-    public void MensajedeAvisoMedicos(Medico medico){
+    public void MensajedeAvisoMedicos(Medico medico) throws NullPointerException{
         for (Paciente e : medico.getPacientesAsignados()){
             MensajedeAviso(e);
         }
@@ -71,13 +83,21 @@ public class Sistema {
 
     public void EjecutarMenu(Usuarios user){
         if (user instanceof Paciente){
-            ((Paciente) user).Menu();
+            try {
+                ((Paciente) user).Menu();
+            }catch (NullPointerException sinplan){
+                System.out.println("Aún No tiene Ningun plan Asignado");
+            }
         }
         else if(user instanceof  Medico){
-            ((Paciente) user).Menu();
+            try {
+                ((Medico) user).Menu();
+            }catch (NullPointerException sinpaciente){
+                System.out.println("Aún No tiene Ningun Paciente Asignado");
+            }
         }
         else if(user instanceof  Administrador){
-            ((Paciente) user).Menu();
+                ((Administrador) user).Menu();
         }
     }
 }

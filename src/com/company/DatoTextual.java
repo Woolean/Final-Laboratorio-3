@@ -24,6 +24,6 @@ public class DatoTextual extends TareasDeControl implements ValidarTarea{
 
     @Override
     public String toString() {
-        return "Dato: " + getDatoTextual();
+        return this.getDescripcion()+": " + getDatoTextual();
     }
 }

@@ -11,7 +11,7 @@ public class Paciente extends Usuarios implements Menus {
     private PlanDeControl planDeControl=null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
     private LocalDate FindelTratamiento;
     private LocalDate PrincipiodelTratamiento;
-    private ArrayList<RegistroDiario> historial;
+    private ArrayList<RegistroDiario> historial=new ArrayList<>();
 
     public Paciente(String password, String user, String enfermedad, String sintomas) {
         super(password, user);
@@ -83,13 +83,12 @@ public class Paciente extends Usuarios implements Menus {
     //interface menu
 
     @Override
-    public void Menu() {
+    public void Menu () throws NullPointerException{
         boolean seguir=false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
-
         while (!seguir) {
-
+            //excepcion si es null
             System.out.println("Elegir Tratamiento");
             for (int i = 0; i < planDeControl.getTratamientos().size(); i++) {
                 System.out.println("Opcion " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
@@ -104,11 +103,17 @@ public class Paciente extends Usuarios implements Menus {
                 dato = scanner.nextInt();
                 ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);
             } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoBoolean) {
-                double dato;
-                System.out.println("Ingresa un valor Numerico");
+                int dato;
+                System.out.println("Cambiar estado a echo escribiendo 1, cualquier otra tecla para Anular");
                 System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
                 dato = scanner.nextInt();
-                ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+                if (dato==1){
+                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+                }
+                else {
+                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(false);
+                }
+
             } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoTextual) {
                 String dato;
                 System.out.println("Ingresa un Texto");
@@ -118,6 +123,7 @@ public class Paciente extends Usuarios implements Menus {
             }
 
             System.out.println("Quiere Salir del Sistema s=SI n=NO");
+            scanner.nextLine();
             String si= scanner.nextLine();
             if (si.equalsIgnoreCase("s")){
                 seguir=true;
@@ -125,5 +131,12 @@ public class Paciente extends Usuarios implements Menus {
         }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente: "+this.getUsers()+"{" +
+                "Enfermedad='" + Enfermedad + '\'' +
+                '}';
     }
 }
