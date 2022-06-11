@@ -22,6 +22,7 @@ public class Main {
         Paciente paciente2=new Paciente("contra11", "Juan", "DOLOR_GARGANTA", "dolor de garganta cuando trago");
         Medico medico1=new Medico("contra3", "Fernando", "Oftamologo");
         Medico medico2=new Medico("contra33", "Julio", "Pediatra");
+        medico1.AgregarPaciente(paciente1);
         DatoNumerico tarea1=new DatoNumerico("Tomar temperatura", 0);
         DatoBoolean tarea2=new DatoBoolean("Tomar Pastilla", false);
         Enfermedad enfermedad1=new Enfermedad("BRONQUITIS", 20);
@@ -39,7 +40,9 @@ public class Main {
         PlanesdeControl.add(plan1);
         PlanesdeControl.add(plan12);
         Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
-        Administradores.add(admin2);
+        medico1.AsignarPlan(paciente1, plan12);
+
+
         ////////////////////////////////////////
 
         Sistema hospital=new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);

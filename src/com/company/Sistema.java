@@ -58,7 +58,7 @@ public class Sistema {
     public void MensajedeAviso(Paciente users){
         boolean mensaje;
         //verificar si es el primer dia del tratamiento
-        if (users.getHistorial()!=null){
+        if (users.getHistorial().size()!=0){
             mensaje=users.getHistorial().get(users.getHistorial().size()-1).verificarfecha(LocalDate.now());
             if (mensaje==false){
                 if (users.getHistorial().get(users.getHistorial().size()-1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())==false){
