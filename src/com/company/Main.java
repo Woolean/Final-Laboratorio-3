@@ -12,7 +12,7 @@ public class Main {
         ArrayList<Medico> Medicos=new ArrayList<>();
         ArrayList<Administrador> Administradores=new ArrayList<>();
         ArrayList<TareasDeControl> Tareas=new ArrayList<>();
-        ArrayList<String> Enfermedades=new ArrayList<>();
+        ArrayList<Enfermedad> Enfermedades=new ArrayList<>();
         ArrayList<PlanDeControl> PlanesdeControl=new ArrayList<>();
 
         //Carga de Datos de prueba:
@@ -24,9 +24,8 @@ public class Main {
         Medico medico2=new Medico("contra33", "Julio", "Pediatra");
         DatoNumerico tarea1=new DatoNumerico("Tomar temperatura", 0);
         DatoBoolean tarea2=new DatoBoolean("Tomar Pastilla", false);
-        String enfermedad1="BRONQUITIS";
-        String enfermedad2="DOLOR_GARGANTA";
-
+        Enfermedad enfermedad1=new Enfermedad("BRONQUITIS", 20);
+        Enfermedad enfermedad2=new Enfermedad("DOLOR_GARGANTA", 10);
         Pacientes.add(paciente1);
         Pacientes.add(paciente2);
         Medicos.add(medico1);
@@ -35,11 +34,11 @@ public class Main {
         Tareas.add(tarea2);
         Enfermedades.add(enfermedad1);
         Enfermedades.add(enfermedad2);
-        PlanDeControl plan1=new PlanDeControl(enfermedad1, 30, null);
-        PlanDeControl plan12=new PlanDeControl(enfermedad2, 15, Tareas);
+        PlanDeControl plan1=new PlanDeControl(enfermedad1, null);
+        PlanDeControl plan12=new PlanDeControl(enfermedad2,  Tareas);
         PlanesdeControl.add(plan1);
         PlanesdeControl.add(plan12);
-        Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas);
+        Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
         Administradores.add(admin2);
         ////////////////////////////////////////
 

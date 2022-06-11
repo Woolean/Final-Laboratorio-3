@@ -24,6 +24,6 @@ public class DatoNumerico extends TareasDeControl implements ValidarTarea{
 
     @Override
     public String toString() {
-        return "Dato: " + getDatoNumerico();
+        return this.getDescripcion()+": " + getDatoNumerico();
     }
 }

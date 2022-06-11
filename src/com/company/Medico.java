@@ -9,7 +9,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus {
 
     private String especializacion;
-    private ArrayList<Paciente> pacientesAsignados;
+    private ArrayList<Paciente> pacientesAsignados=new ArrayList<>();
 
     public Medico(String password, String user, String especializacion) {
         super(password, user);
@@ -49,12 +49,12 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     //verificar cuando se da de alta, se cambia la fecha del fin del tratamiento en el paciente y se cambia el numero de dias del plan de control
     public void FinalizarPlan(Paciente paciente){
         paciente.setFindelTratamiento(LocalDate.now());
-        long dias= DAYS.between(paciente.getPrincipiodelTratamiento(), LocalDate.now());
-        paciente.getPlanDeControl().setTiempo((int) dias);
+        /*long dias= DAYS.between(paciente.getPrincipiodelTratamiento(), LocalDate.now());
+        paciente.getPlanDeControl().setTiempo((int) dias); se usaba para cambiar a los dias que duro el tratamiento el plan de control*/
     }
 
     @Override
-    public void Menu() {
+    public void Menu() throws NullPointerException{
         boolean salir=false;
         int opcion=0;
         Scanner scanner=new Scanner(System.in);
@@ -72,7 +72,6 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                 case 1:
                     //pacientes sin plan de control
                     //crear plan de control personalizado o uno ya echo???
-                    salir=true;
                     break;
                 case 2:
                     //pacientes con plan de control vigente
@@ -102,6 +101,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     FinalizarPlan(pacientesAsignados.get(opcion));
                 case 4:
                     salir=true;
+                    break;
                 default:
                     System.out.println("Opcion no valida");
                     break;
@@ -161,7 +161,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     }
     //agregar a un arraylist con las tareas de un plan y persistir pero en el paciente
     @Override
-    public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
+    public void CrearTareaNueva() {
 
         String descripcionNueva;
         int opcion;
@@ -186,15 +186,15 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             switch (opcion) {
                 case 1 -> {
                     datoNumerico = new DatoNumerico(descripcionNueva, 0);
-                    tareas.add(datoNumerico);
+                    //tareas.add(datoNumerico);
                 }
                 case 2 -> {
                     datoTextual = new DatoTextual(descripcionNueva, null);
-                    tareas.add(datoTextual);
+                    //tareas.add(datoTextual);
                 }
                 case 3 -> {
                     datoBoolean = new DatoBoolean(descripcionNueva, false);
-                    tareas.add(datoBoolean);
+                    //tareas.add(datoBoolean);
                 }
                 default -> {
                     System.out.println("Opcion no Valida");
@@ -202,5 +202,13 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             }
         }
         //no se como pero hay que usar alguna ecepcion aca seguro
+    }
+
+    @Override
+    public String toString() {
+        return "Medico: "+this.getUsers()+"{" +
+                "especializacion='" + especializacion + '\'' +
+                ", pacientesAsignados=" + pacientesAsignados +
+                '}';
     }
 }

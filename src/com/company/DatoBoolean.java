@@ -25,9 +25,9 @@ public class DatoBoolean extends TareasDeControl implements ValidarTarea{
     @Override
     public String toString() {
         if (isDatoBoolean()) {
-            return "Sí. ";
+            return this.getDescripcion()+": Sí.";
         } else {
-            return "No. ";
+            return this.getDescripcion()+": No.";
         }
     }
 }

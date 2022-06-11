@@ -35,7 +35,11 @@ public class Sistema {
         for (Medico e : Medicos){
             if (e.getUsers().equalsIgnoreCase(nombre)){
                 if (e.getPasswords().equalsIgnoreCase(contraseña)){
-                    MensajedeAvisoMedicos(e);
+                    try{
+                        MensajedeAvisoMedicos(e);
+                    }catch (NullPointerException a){
+                        System.out.println("No tiene ningun Paciente Asignado");
+                    }
                     return e;
                 }
             }
@@ -71,7 +75,7 @@ public class Sistema {
         }
     }
 
-    public void MensajedeAvisoMedicos(Medico medico){
+    public void MensajedeAvisoMedicos(Medico medico) throws NullPointerException{
         for (Paciente e : medico.getPacientesAsignados()){
             MensajedeAviso(e);
         }
@@ -79,13 +83,21 @@ public class Sistema {
 
     public void EjecutarMenu(Usuarios user){
         if (user instanceof Paciente){
-            ((Paciente) user).Menu();
+            try {
+                ((Paciente) user).Menu();
+            }catch (NullPointerException sinplan){
+                System.out.println("Aún No tiene Ningun plan Asignado");
+            }
         }
         else if(user instanceof  Medico){
-            ((Paciente) user).Menu();
+            try {
+                ((Medico) user).Menu();
+            }catch (NullPointerException sinpaciente){
+                System.out.println("Aún No tiene Ningun Paciente Asignado");
+            }
         }
         else if(user instanceof  Administrador){
-            ((Paciente) user).Menu();
+                ((Administrador) user).Menu();
         }
     }
 }
