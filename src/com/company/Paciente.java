@@ -83,11 +83,10 @@ public class Paciente extends Usuarios implements Menus {
     //interface menu
 
     @Override
-    public void Menu() {
+    public void Menu () throws NullPointerException{
         boolean seguir=false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
-
         while (!seguir) {
             //excepcion si es null
             System.out.println("Elegir Tratamiento");
@@ -125,5 +124,12 @@ public class Paciente extends Usuarios implements Menus {
         }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "Paciente: "+this.getUsers()+"{" +
+                "Enfermedad='" + Enfermedad + '\'' +
+                '}';
     }
 }
