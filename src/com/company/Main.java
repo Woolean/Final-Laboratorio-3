@@ -1,7 +1,12 @@
 package com.company;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
@@ -15,12 +20,19 @@ public class Main {
         ArrayList<Enfermedad> Enfermedades=new ArrayList<>();
         ArrayList<PlanDeControl> PlanesdeControl=new ArrayList<>();
 
-        //Carga de Datos de prueba:
+        //Creación de Archivos base
+        File filePacientes = new File("files/Pacientes.json");
+        File fileMedicos = new File("files/Medicos.json");
+        File fileAdmins = new File("files/Administradores.json");
+        File fileTareas = new File("files/TareasDeControl.json");
+        File fileEnfermedad = new File("fileS/Enfermedades.json");
+        File filePlanes = new File("files/PlanesDeControl.json");
 
-
-        Paciente paciente1=new Paciente("contra1", "Pablo", "BRONQUITIS", "dolor de garganta");
+        //Carga de Datos de pruebas
+        //Ya cargado en Json
+        /*Paciente paciente1=new Paciente("contra1", "Pablo", "BRONQUITIS", "dolor de garganta");
         Paciente paciente2=new Paciente("contra11", "Juan", "DOLOR_GARGANTA", "dolor de garganta cuando trago");
-        Medico medico1=new Medico("contra3", "Fernando", "Oftamologo");
+        Medico medico1=new Medico("contra3", "Fernando", "Oftalmólogo");
         Medico medico2=new Medico("contra33", "Julio", "Pediatra");
         medico1.AgregarPaciente(paciente1);
         DatoNumerico tarea1=new DatoNumerico("Tomar temperatura", 0);
@@ -40,7 +52,31 @@ public class Main {
         PlanesdeControl.add(plan1);
         PlanesdeControl.add(plan12);
         Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
-        medico1.AsignarPlan(paciente1, plan12);
+        Administradores.add(admin2);
+        medico1.AsignarPlan(paciente1, plan12);*/
+
+        //ObjectMapper mapper = new ObjectMapper();
+        Gson gson = new Gson();
+
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(filePacientes));
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        //Pasar datos de los json a arraylists y trabajar sobre eso
+        /*try {
+            //Pacientes = mapper.readValue(filePacientes, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Paciente.class));
+            //Medicos = mapper.readValue(fileMedicos, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Medico.class));
+            //Administradores = mapper.readValue(fileAdmins, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Administrador.class));
+            //Tareas = mapper.readValue(fileTareas, mapper.getTypeFactory().constructCollectionType(ArrayList.class, TareasDeControl.class));
+            //Enfermedades = mapper.readValue(fileEnfermedad, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Enfermedad.class));
+            //PlanesdeControl = mapper.readValue(filePlanes, mapper.getTypeFactory().constructCollectionType(ArrayList.class, PlanDeControl.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
 
         ////////////////////////////////////////
@@ -59,7 +95,7 @@ public class Main {
             System.out.println("Bienvenido");
             System.out.println("Ingrese Nombre de Usuario: ");
             nombre=scanner1.nextLine();
-            System.out.println("Ingrese Contrasena: ");
+            System.out.println("Ingrese Contraseña: ");
             contrasena=scanner1.nextLine();
             UserenSesion=hospital.iniciarSesion(nombre, contrasena);
             if (UserenSesion!=null){
@@ -68,5 +104,17 @@ public class Main {
             }
 
         }
+
+        //guardo los nuevos datos en los archivos
+        /*try {
+            mapper.writeValue(filePacientes, Pacientes);
+            mapper.writeValue(fileMedicos, Medicos);
+            mapper.writeValue(fileAdmins, Administradores);
+            mapper.writeValue(fileEnfermedad, Enfermedades);
+            mapper.writeValue(filePlanes, PlanesdeControl);
+            mapper.writeValue(fileTareas, Tareas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 }

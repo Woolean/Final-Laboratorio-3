@@ -1,10 +1,11 @@
 package com.company;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Paciente extends Usuarios implements Menus {
+public class Paciente extends Usuarios implements Menus, Serializable {
 
     private String Enfermedad;
     private String Sintomas;
@@ -18,6 +19,8 @@ public class Paciente extends Usuarios implements Menus {
         Enfermedad = enfermedad;
         Sintomas = sintomas;
     }
+
+    public Paciente(){}
 
     public String getEnfermedad() {
         return Enfermedad;

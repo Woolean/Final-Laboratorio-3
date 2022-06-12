@@ -1,6 +1,8 @@
 package com.company;
 
-public class DatoNumerico extends TareasDeControl implements ValidarTarea{
+import java.io.Serializable;
+
+public class DatoNumerico extends TareasDeControl implements ValidarTarea, Serializable {
 
     private double datoNumerico;
 
@@ -8,6 +10,8 @@ public class DatoNumerico extends TareasDeControl implements ValidarTarea{
         super(descripcion);
         this.datoNumerico = datoNumerico;
     }
+
+    public DatoNumerico(){}
 
     public double getDatoNumerico() {
         return datoNumerico;

@@ -1,6 +1,8 @@
 package com.company;
 
-public class DatoBoolean extends TareasDeControl implements ValidarTarea{
+import java.io.Serializable;
+
+public class DatoBoolean extends TareasDeControl implements ValidarTarea, Serializable {
 
     private boolean datoBoolean;
 

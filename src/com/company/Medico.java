@@ -1,12 +1,11 @@
 package com.company;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static java.time.temporal.ChronoUnit.DAYS;
-
-public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus {
+public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
     private String especializacion;
     private ArrayList<Paciente> pacientesAsignados=new ArrayList<>();
@@ -15,6 +14,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         super(password, user);
         this.especializacion = especializacion;
     }
+
+    public Medico(){}
 
     public String getEspecializacion() {
         return especializacion;
