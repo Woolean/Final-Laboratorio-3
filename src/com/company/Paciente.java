@@ -104,7 +104,7 @@ public class Paciente extends Usuarios implements Menus {
                 ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);
             } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoBoolean) {
                 int dato;
-                System.out.println("Cambiar estado a echo escribiendo 1, cualquier otra tecla para Anular");
+                System.out.println("Cambiar estado a 'realizado' escribiendo 1, cualquier otra tecla para Anular");
                 System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
                 dato = scanner.nextInt();
                 if (dato==1){
