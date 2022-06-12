@@ -1,6 +1,8 @@
 package com.company;
 
-public class Enfermedad {
+import java.io.Serializable;
+
+public class Enfermedad implements Serializable {
     private String EnfermedadNombre;
     private int RecuperacionenDias;
 
@@ -8,6 +10,8 @@ public class Enfermedad {
         EnfermedadNombre = enfermedadNombre;
         RecuperacionenDias = recuperacionenDias;
     }
+
+    public Enfermedad(){}
 
     public String getEnfermedadNombre() {
         return EnfermedadNombre;

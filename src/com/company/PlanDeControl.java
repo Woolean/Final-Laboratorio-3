@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PlanDeControl {
+public class PlanDeControl implements Serializable {
 
     private String Enfermedad;
     private int Tiempo;
@@ -14,6 +15,9 @@ public class PlanDeControl {
         if (tratamientos!=null){
             Tratamientos = tratamientos;
         }
+    }
+
+    public PlanDeControl(){
     }
 
     public String getEnfermedad() {

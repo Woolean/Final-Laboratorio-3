@@ -1,9 +1,10 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Administrador extends Usuarios implements AdministraciondeTareasdeControl, Menus {
+public class Administrador extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
     private ArrayList<Paciente> pacientes;
     private ArrayList<Medico> medicos;
@@ -18,6 +19,9 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         this.planes = planes;
         this.tareasbase = tareasbase;
         this.enfermedades=enfermedades;
+    }
+
+    public Administrador() {
     }
 
     public void agregarnuevoMedico(Medico mediconuevo) {
@@ -195,13 +199,17 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     for (int k=0; k<planes.size(); k++){
                         System.out.println("Opcion "+k+":"+planes.get(k));
                     }
+                    System.out.println("Opcion 99: Volver atrás. ");
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2=scanner2.nextInt();
-                    Planamodificar=planes.get(opcion2);
-
+                    if (opcion2 != 99){
+                        Planamodificar=planes.get(opcion2);
+                    } else {
+                        break;
+                    }
 
                     while (!salir2){
-                        System.out.println("Opcion 1: Agregar Tarea Existenete al Plan de Control");
+                        System.out.println("Opcion 1: Agregar Tarea Existente al Plan de Control");
                         System.out.println("Opcion 2: Eliminar Tarea");
                         System.out.println("Opcion 3: Crear nueva Tarea");
                         System.out.println("Opcion 4: Salir");

@@ -13,6 +13,9 @@ public class Usuarios {
         this.id = idsuma;
     }
 
+    public Usuarios(){
+    }
+
     public String getPasswords() {
         return password;
     }

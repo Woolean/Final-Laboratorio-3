@@ -1,6 +1,8 @@
 package com.company;
 
-public class DatoTextual extends TareasDeControl implements ValidarTarea{
+import java.io.Serializable;
+
+public class DatoTextual extends TareasDeControl implements ValidarTarea, Serializable {
 
     private String datoTextual;
 

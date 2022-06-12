@@ -1,6 +1,5 @@
 package com.company;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -97,7 +96,7 @@ public class Sistema {
             }
         }
         else if(user instanceof  Administrador){
-                ((Administrador) user).Menu();
+            ((Administrador) user).Menu();
         }
     }
 }
