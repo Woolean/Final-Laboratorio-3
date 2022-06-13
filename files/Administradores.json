@@ -9,11 +9,9 @@
           "Tiempo": 10,
           "Tratamientos": [
             {
-              "datoNumerico": 0.0,
               "descripcion": "Tomar temperatura"
             },
             {
-              "datoBoolean": false,
               "descripcion": "Tomar Pastilla"
             }
           ]
@@ -32,6 +30,14 @@
         "password": "contra11",
         "user": "Juan",
         "id": 2
+      },
+      {
+        "Enfermedad": "Gripe Común",
+        "Sintomas": "Congestion",
+        "historial": [],
+        "password": "contra20",
+        "user": "Julián",
+        "id": 1
       }
     ],
     "medicos": [
@@ -46,11 +52,9 @@
               "Tiempo": 10,
               "Tratamientos": [
                 {
-                  "datoNumerico": 0.0,
                   "descripcion": "Tomar temperatura"
                 },
                 {
-                  "datoBoolean": false,
                   "descripcion": "Tomar Pastilla"
                 }
               ]
@@ -69,7 +73,16 @@
       },
       {
         "especializacion": "Pediatra",
-        "pacientesAsignados": [],
+        "pacientesAsignados": [
+          {
+            "Enfermedad": "Gripe Común",
+            "Sintomas": "Congestion",
+            "historial": [],
+            "password": "contra20",
+            "user": "Julián",
+            "id": 1
+          }
+        ],
         "password": "contra33",
         "user": "Julio",
         "id": 4
@@ -86,23 +99,29 @@
         "Tiempo": 10,
         "Tratamientos": [
           {
-            "datoNumerico": 0.0,
             "descripcion": "Tomar temperatura"
           },
           {
-            "datoBoolean": false,
             "descripcion": "Tomar Pastilla"
           }
         ]
+      },
+      {
+        "Enfermedad": "Otitis",
+        "Tiempo": 20,
+        "Tratamientos": []
+      },
+      {
+        "Enfermedad": "Gripe Común",
+        "Tiempo": 14,
+        "Tratamientos": []
       }
     ],
     "tareasbase": [
       {
-        "datoNumerico": 0.0,
         "descripcion": "Tomar temperatura"
       },
       {
-        "datoBoolean": false,
         "descripcion": "Tomar Pastilla"
       }
     ],
@@ -114,6 +133,14 @@
       {
         "EnfermedadNombre": "DOLOR_GARGANTA",
         "RecuperacionenDias": 10
+      },
+      {
+        "EnfermedadNombre": "Otitis",
+        "RecuperacionenDias": 20
+      },
+      {
+        "EnfermedadNombre": "Gripe Común",
+        "RecuperacionenDias": 14
       }
     ],
     "password": "contra4",

@@ -58,8 +58,6 @@ public class Main {
         Administradores.add(admin2);
         medico1.AsignarPlan(paciente1, plan12);*/
 
-        //ObjectMapper mapper = new ObjectMapper();
-
         //Gson builders para que funcione LocalDate
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
@@ -67,6 +65,9 @@ public class Main {
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
         gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
         Gson gson = gsonBuilder.setPrettyPrinting().create();
+        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
+
+
 
         try {
             BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
@@ -114,8 +115,20 @@ public class Main {
                 hospital.EjecutarMenu(UserenSesion);
                 Seguir=true;
             }
-
+            guardar.serializarDatos(Pacientes, filePacientes);
+            guardar.serializarDatos(Medicos, fileMedicos);
+            guardar.serializarDatos(Administradores, fileAdmins);
+            guardar.serializarDatos(Tareas, fileTareas);
+            guardar.serializarDatos(PlanesdeControl, filePlanes);
+            guardar.serializarDatos(Enfermedades, fileEnfermedad);
         }
+
+        /*guardar.serializarDatos(Pacientes, filePacientes);
+        guardar.serializarDatos(Medicos, fileMedicos);
+        guardar.serializarDatos(Administradores, fileAdmins);
+        guardar.serializarDatos(Tareas, fileTareas);
+        guardar.serializarDatos(PlanesdeControl, filePlanes);
+        guardar.serializarDatos(Enfermedades, fileEnfermedad);*/
 
         //guardo los nuevos datos en los archivos - Jackson
         /*try {
@@ -130,7 +143,7 @@ public class Main {
         }*/
         ///Guardar en Json los datos de las listas
         //Pacientes
-        try {
+        /*try {
             FileOutputStream jsonPacientes = new FileOutputStream(filePacientes);
             OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonPacientes);
             String json = gson.toJson(Pacientes);
@@ -186,7 +199,7 @@ public class Main {
         }
         //Planes
         try {
-            FileOutputStream jsonPlanes = new FileOutputStream(fileEnfermedad);
+            FileOutputStream jsonPlanes = new FileOutputStream(filePlanes);
             OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonPlanes);
             String json = gson.toJson(PlanesdeControl);
             miOutWriter.append(json);
@@ -194,6 +207,6 @@ public class Main {
             jsonPlanes.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

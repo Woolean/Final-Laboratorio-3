@@ -87,15 +87,13 @@ public class Sistema {
             }catch (NullPointerException sinplan){
                 System.out.println("Aún No tiene Ningun plan Asignado");
             }
-        }
-        else if(user instanceof  Medico){
+        } else if(user instanceof  Medico){
             try {
                 ((Medico) user).Menu();
             }catch (NullPointerException sinpaciente){
                 System.out.println("Aún No tiene Ningun Paciente Asignado");
             }
-        }
-        else if(user instanceof  Administrador){
+        } else if(user instanceof  Administrador){
             ((Administrador) user).Menu();
         }
     }

@@ -1,1 +1,19 @@
-[{"tiempo":20,"tratamientos":[],"enfermedad":"BRONQUITIS"},{"tiempo":10,"tratamientos":[{"descripcion":"Tomar temperatura","datoNumerico":0.0},{"descripcion":"Tomar Pastilla","datoBoolean":false}],"enfermedad":"DOLOR_GARGANTA"}]
+[
+  {
+    "Enfermedad": "BRONQUITIS",
+    "Tiempo": 20,
+    "Tratamientos": []
+  },
+  {
+    "Enfermedad": "DOLOR_GARGANTA",
+    "Tiempo": 10,
+    "Tratamientos": [
+      {
+        "descripcion": "Tomar temperatura"
+      },
+      {
+        "descripcion": "Tomar Pastilla"
+      }
+    ]
+  }
+]

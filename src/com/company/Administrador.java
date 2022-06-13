@@ -90,17 +90,24 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                         System.out.println("Opcion "+i+": "+e.getEnfermedadNombre());
                         i++;
                     }
+                    System.out.println("Opción 99: Volver al inicio.");
                     System.out.println("Opcion: ");
+                    opcion=scanner.nextInt();
 
-                    opcion=scanner.nextInt();
-                    enfermedad=enfermedades.get(opcion);
-                    for (int j = 0; j < medicos.size(); j++) {
-                        System.out.println("Opcion " + j + " " + medicos.get(j));
+                    if (opcion < enfermedades.size() || opcion != 99) {
+                        enfermedad=enfermedades.get(opcion);
+                        for (int j = 0; j < medicos.size(); j++) {
+                            System.out.println("Opcion " + j + " " + medicos.get(j));
+                        }
+                        System.out.println("Ingrese la opcion de Medico: ");
+                        opcion=scanner.nextInt();
+                        agregarnuevoPaciente(enfermedad.getEnfermedadNombre(),medicos.get(opcion), nombre, contrasena, sintomas);
+                        break;
+                    } else {
+                        System.out.println("La enfermedad no existe, primero créela.");
+                        break;
                     }
-                    System.out.println("Ingrese la opcion de Medico: ");
-                    opcion=scanner.nextInt();
-                    agregarnuevoPaciente(enfermedad.getEnfermedadNombre(),medicos.get(opcion), nombre, contrasena, sintomas);
-                    break;
+
                 case 2:
                     //persistencia faltaria
                     String nombreMedico;
@@ -171,16 +178,23 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 for (int k=0; k<enfermedades.size(); k++ ){
                                     System.out.println("Enfermedad Numero "+k+" "+enfermedades.get(k).getEnfermedadNombre());
                                 }
+                                System.out.println("Opción 99: Volver al menú.");
                                 System.out.println("Cambiar dias de Recuperacion de la Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad2=scanner.nextInt();
 
-                                System.out.println("Nueva Cantidad de Dias: ");
-                                scanner.nextLine();
-                                diasrecu=scanner.nextInt();
+                                if (opcionenfermedad2 < enfermedades.size() || opcionenfermedad2 != 99) {
+                                    System.out.println("Nueva Cantidad de Dias: ");
+                                    scanner.nextLine();
+                                    diasrecu=scanner.nextInt();
 
-                                cambiarRecuperacion(diasrecu, opcionenfermedad2);
-                                break;
+                                    cambiarRecuperacion(diasrecu, opcionenfermedad2);
+                                    break;
+                                } else {
+                                    System.out.println("Volviendo al menú principal... ");
+                                    break;
+                                }
+
                             case 4:
                                 salir3=true;
                                 break;
