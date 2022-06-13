@@ -1,8 +1,31 @@
 [
   {
-    "descripcion": "Tomar temperatura"
+    "Tiempo": 0,
+    "Tratamientos": []
   },
   {
-    "descripcion": "Tomar Pastilla"
+    "Tiempo": 0,
+    "Tratamientos": []
+  },
+  {
+    "Tiempo": 0,
+    "Tratamientos": [
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar Presión"
+      },
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar Presión"
+      },
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar Temperatura"
+      },
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar Temperatura"
+      }
+    ]
   }
 ]

@@ -10,9 +10,11 @@
           "Tiempo": 10,
           "Tratamientos": [
             {
+              "datoNumerico": 0.0,
               "descripcion": "Tomar temperatura"
             },
             {
+              "datoBoolean": false,
               "descripcion": "Tomar Pastilla"
             }
           ]
@@ -25,6 +27,16 @@
         "id": 1
       }
     ],
+    "planes": [
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar temperatura"
+      },
+      {
+        "datoBoolean": false,
+        "descripcion": "Tomar Pastilla"
+      }
+    ],
     "password": "contra3",
     "user": "Fernando",
     "id": 3
@@ -32,6 +44,16 @@
   {
     "especializacion": "Pediatra",
     "pacientesAsignados": [],
+    "planes": [
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar temperatura"
+      },
+      {
+        "datoBoolean": false,
+        "descripcion": "Tomar Pastilla"
+      }
+    ],
     "password": "contra33",
     "user": "Julio",
     "id": 4

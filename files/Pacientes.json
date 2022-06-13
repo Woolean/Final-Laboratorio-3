@@ -7,9 +7,11 @@
       "Tiempo": 10,
       "Tratamientos": [
         {
+          "datoNumerico": 0.0,
           "descripcion": "Tomar temperatura"
         },
         {
+          "datoBoolean": false,
           "descripcion": "Tomar Pastilla"
         }
       ]

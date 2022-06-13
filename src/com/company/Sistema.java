@@ -59,8 +59,8 @@ public class Sistema {
         //verificar si es el primer dia del tratamiento
         if (users.getHistorial().size()!=0){
             mensaje=users.getHistorial().get(users.getHistorial().size()-1).verificarfecha(LocalDate.now());
-            if (mensaje==false){
-                if (users.getHistorial().get(users.getHistorial().size()-1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())==false){
+            if (!mensaje){
+                if (!users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())){
                     System.out.println(users+": No Completo las Tareas Diarias el Dia de ayer");
                 }
                 users.getHistorial().get(users.getHistorial().size()-1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());

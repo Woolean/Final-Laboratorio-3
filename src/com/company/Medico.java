@@ -1,18 +1,25 @@
 package com.company;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
     private String especializacion;
     private ArrayList<Paciente> pacientesAsignados=new ArrayList<>();
+    private ArrayList<PlanDeControl> planes;
 
-    public Medico(String password, String user, String especializacion) {
+    public Medico(String password, String user, String especializacion, ArrayList planes) {
         super(password, user);
         this.especializacion = especializacion;
+        this.planes = planes;
     }
 
     //public Medico(){}
@@ -68,12 +75,17 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         boolean salir=false;
         int opcion=0;
         Scanner scanner=new Scanner(System.in);
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
+        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
+        File fileTareas = new File("files/TareasDeControl.json");
+
         while (!salir){
 
-            System.out.println("Opcion 1: Asignacion de Planes de Control");
-            System.out.println("Opcion 2: Control de los registros de los Pacientes");
-            System.out.println("Opcion 3: Finalizacion de Planes de Control");
-            System.out.println("Opcion 4: Salir");
+            System.out.println("Opción 1: Asignación de Planes de Control");
+            System.out.println("Opción 2: Control de los registros de los Pacientes");
+            System.out.println("Opción 3: Finalización de Planes de Control");
+            System.out.println("Opción 4: Salir");
 
             System.out.printf("Ingrese una Opción: ");
             opcion=scanner.nextInt();
@@ -115,7 +127,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     Planamodificar=new PlanDeControl(plan.get(opcion2).getEnfermedad, plan.get(opcion2).getTratamientos);
                     */
                     //dato de prueba
-                    Enfermedad nueva=new Enfermedad("holatitis", 30);
+                    Enfermedad nueva=new Enfermedad();
                     Planamodificar=new PlanDeControl(nueva, null);
 
 
@@ -123,58 +135,55 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
 
                     while (!salir2){
-                        System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCION 5:");
+                        System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5:");
                         System.out.println("Plan Base:");
-                        System.out.println(Planamodificar);
-                        System.out.println("Opcion 1: Agregar Tarea Existenete al Plan de Control");
-                        System.out.println("Opcion 2: Eliminar Tarea");
-                        System.out.println("Opcion 3: Crear nueva Tarea");
-                        System.out.println("Opcion 4: Cambiar cantidad de dias del Plan");
-                        System.out.println("Opcion 5: Salir");
+                        //System.out.println(Planamodificar);
+                        System.out.println("Opción 1: Agregar Tarea Existente al Plan de Control");
+                        System.out.println("Opción 2: Eliminar Tarea");
+                        System.out.println("Opción 3: Crear nueva Tarea");
+                        System.out.println("Opción 4: Cambiar cantidad de dias del Plan");
+                        System.out.println("Opción 5: Salir");
 
                         System.out.printf("Ingrese una Opción: ");
                         opcion2=scanner.nextInt();
 
-                        switch (opcion2){
-                            case 1:
-                                //agregarTareasdeContol(Planamodificar.getTratamientos());
-                                //persistir cambio del plan
-                                break;
-                            case 2:
-                                //EliminarTareas(Planamodificar.getTratamientos());
-                                //persistir cambio del plan
-                                break;
-                            case 3:
-                                //crearnuevatarea para la lista así peristimos como base
-                                //CrearTareaNueva(Planamodificar.getTratamientos());
-                                break;
+                        switch (opcion2) {
+                            case 1 -> agregarTareasdeControl(Planamodificar.getTratamientos());
+
+                            //persistir cambio del plan
+                            case 2 -> EliminarTareas(Planamodificar.getTratamientos());
+
+                            //persistir cambio del plan
+                            case 3 ->
+                                    //crearnuevatarea para la lista así peristimos como base
+                                    CrearTareaNueva(Planamodificar.getTratamientos());
                             //persistir la lista de tareas
-                            case 4:
-                                int diasenfermedad=0;
-                                System.out.println("Ingrese el Cantidad estipulada de Dias para la Recuperacion de la Enfermedad: ");
-                                diasenfermedad=scanner.nextInt();
-                                //Planamodificar.setTiempo(diasenfermedad);
-                                break;
-                            case 5:
-                                salir2=true;
-                                break;
-                            default:
-                                System.out.println("Opcion no valida");
-                                break;
+                            case 4 -> {
+                                int diasenfermedad = 0;
+                                System.out.println("Ingrese el Cantidad estimada de Dias para la Recuperación de la Enfermedad: ");
+                                diasenfermedad = scanner.nextInt();
+                                Planamodificar.setTiempo(diasenfermedad);
+                            }
+                            case 5 -> salir2 = true;
+                            default -> {
+                                System.out.println("Opción no valida");
+                            }
                         }
                     }
                     AsignarPlan(asignar, Planamodificar);
+                    planes.add(Planamodificar);
+                    guardar.serializarDatos(planes, fileTareas);
                     break;
                 case 2:
                     //pacientes con plan de control vigente
                     int ano, mes, dia;
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        System.out.println("Opcion " + i + " " + pacientesAsignados.get(i));
+                        System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                     }
                     System.out.println("Ingrese una Opcion");
                     opcion=scanner.nextInt();
 
-                    if(pacientesAsignados.get(opcion).getPrincipiodelTratamiento()!=LocalDate.now()){
+                    if(!Objects.equals(pacientesAsignados.get(opcion).getPrincipiodelTratamiento(), LocalDate.now())){
                         System.out.println("Fechas Disponibles "+pacientesAsignados.get(opcion).getPrincipiodelTratamiento()+" hasta"+ LocalDate.now().plusDays(-1));
                         System.out.println("Ingrese Year: ");
                         ano=scanner.nextInt();
@@ -194,10 +203,10 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     //dardealta antes de tiempo o modificar fecha
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
                         if (pacientesAsignados.get(i).getPlanDeControl()!=null){
-                            System.out.println("Opcion " + i + " " + pacientesAsignados.get(i));
+                            System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                         }
                     }
-                    System.out.println("Ingrese una Opcion");
+                    System.out.println("Ingrese una Opción");
                     scanner.nextLine();
                     opcion=scanner.nextInt();
                     FinalizarPlan(pacientesAsignados.get(opcion));
@@ -207,7 +216,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     salir=true;
                     break;
                 default:
-                    System.out.println("Opcion no valida");
+                    System.out.println("Opción no valida");
                     break;
             }
         }
@@ -215,31 +224,31 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
     //modifica el plan de control
     @Override
-    public void agregarTareasdeContol(ArrayList<TareasDeControl> tareas) {
+    public void agregarTareasdeControl(ArrayList<TareasDeControl> tareas ) {
 
         String descripcionNueva;
         int opcion;
         Scanner scanner = new Scanner(System.in);
 
-        /*System.out.println("Elegir Tratamiento");
-        for (int i=0; i<this.tareasbase.size(); i++){
-            System.out.println("Opcion "+i+" "+this.tareasbase.get(i).getDescripcion());
+        System.out.println("Elegir Tratamiento");
+        for (int i=0; i<tareas.size(); i++){
+            System.out.println("Opcion "+i+" "+tareas.get(i).getDescripcion());
         }
         System.out.print("Opción: ");
-        opcion = scanner.nextInt();*/ //levanta del archivo tareas base
+        opcion = scanner.nextInt(); //levanta del archivo tareas base
 
-        /*if (this.tareasbase.get(opcion) instanceof DatoNumerico){
-            DatoNumerico dato = new DatoNumerico(this.tareasbase.get(opcion).getDescripcion(), 0);
+        if (tareas.get(opcion) instanceof DatoNumerico){
+            DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
             tareas.add(dato);
         }
-        else if (this.tareasbase.get(opcion) instanceof DatoBoolean){
-            DatoBoolean dato = new DatoBoolean(this.tareasbase.get(opcion).getDescripcion(), false);
+        else if (tareas.get(opcion) instanceof DatoBoolean){
+            DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
             tareas.add(dato);
         }
-        else if (this.tareasbase.get(opcion) instanceof DatoTextual){
-            DatoTextual dato = new DatoTextual(this.tareasbase.get(opcion).getDescripcion(), null);
+        else if (tareas.get(opcion) instanceof DatoTextual){
+            DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
             tareas.add(dato);
-        }*/
+        }
     }
     //paraadminymedicolomismo
     @Override
@@ -288,21 +297,19 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         opcion = scanner.nextInt();
 
         switch (opcion) {//solo agrega en el paciente no en el plan base
-            case 1:
+            case 1 -> {
                 datoNumerico = new DatoNumerico(descripcionNueva, 0);
                 tareas.add(datoNumerico);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 datoTextual = new DatoTextual(descripcionNueva, null);
                 tareas.add(datoTextual);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 datoBoolean = new DatoBoolean(descripcionNueva, false);
                 tareas.add(datoBoolean);
-                break;
-            default:
-                System.out.println("Opcion no Valida");
-                break;
+            }
+            default -> System.out.println("Opcion no Valida");
         }
         //no se como pero hay que usar alguna ecepcion aca seguro
     }

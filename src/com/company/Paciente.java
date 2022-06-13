@@ -80,9 +80,6 @@ public class Paciente extends Usuarios implements Menus, Serializable {
     }
 
 
-
-
-
     //interface menu
 
     @Override
@@ -94,7 +91,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
             //excepcion si es null
             System.out.println("Elegir Tratamiento");
             for (int i = 0; i < planDeControl.getTratamientos().size(); i++) {
-                System.out.println("Opcion " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
+                System.out.println("Opción " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
             }
             System.out.print("Ingrese Opción: ");
             opcion = scanner.nextInt();

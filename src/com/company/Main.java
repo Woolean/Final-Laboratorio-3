@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,12 +34,21 @@ public class Main {
         File fileEnfermedad = new File("fileS/Enfermedades.json");
         File filePlanes = new File("files/PlanesDeControl.json");
 
+        //Gson builders para que funcione LocalDate
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
+        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
+
         //Carga de Datos de pruebas
         //Ya cargado en Json
         /*Paciente paciente1=new Paciente("contra1", "Pablo", "BRONQUITIS", "dolor de garganta");
         Paciente paciente2=new Paciente("contra11", "Juan", "DOLOR_GARGANTA", "dolor de garganta cuando trago");
-        Medico medico1=new Medico("contra3", "Fernando", "Oftalmólogo");
-        Medico medico2=new Medico("contra33", "Julio", "Pediatra");
+        Medico medico1=new Medico("contra3", "Fernando", "Oftalmólogo", Tareas);
+        Medico medico2=new Medico("contra33", "Julio", "Pediatra", Tareas);
         medico1.AgregarPaciente(paciente1);
         DatoNumerico tarea1=new DatoNumerico("Tomar temperatura", 0);
         DatoBoolean tarea2=new DatoBoolean("Tomar Pastilla", false);
@@ -54,20 +66,7 @@ public class Main {
         PlanDeControl plan12=new PlanDeControl(enfermedad2,  Tareas);
         PlanesdeControl.add(plan1);
         PlanesdeControl.add(plan12);
-        Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
-        Administradores.add(admin2);
         medico1.AsignarPlan(paciente1, plan12);*/
-
-        //Gson builders para que funcione LocalDate
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
-        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
-
-
 
         try {
             BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
@@ -76,9 +75,9 @@ public class Main {
             BufferedReader bufferedReaderMedicos = new BufferedReader(new FileReader(fileMedicos));
             Type tipoMedico = new TypeToken<ArrayList<Medico>>() {}.getType();
             Medicos = gson.fromJson(bufferedReaderMedicos, tipoMedico);
-            BufferedReader bufferedReaderAdmins = new BufferedReader(new FileReader(fileAdmins));
+            /*BufferedReader bufferedReaderAdmins = new BufferedReader(new FileReader(fileAdmins));
             Type tipoAdmin = new TypeToken<ArrayList<Administrador>>() {}.getType();
-            Administradores = gson.fromJson(bufferedReaderAdmins, tipoAdmin);
+            Administradores = gson.fromJson(bufferedReaderAdmins, tipoAdmin);*/
             BufferedReader bufferedReaderTareas = new BufferedReader(new FileReader(fileTareas));
             Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {}.getType();
             Tareas = gson.fromJson(bufferedReaderTareas, tipoTareas);
@@ -91,6 +90,9 @@ public class Main {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades, gson, gsonBuilder, guardar);
+        Administradores.add(admin2);
 
         ////////////////////////////////////////
 
@@ -115,12 +117,12 @@ public class Main {
                 hospital.EjecutarMenu(UserenSesion);
                 Seguir=true;
             }
-            guardar.serializarDatos(Pacientes, filePacientes);
+            /*guardar.serializarDatos(Pacientes, filePacientes);
             guardar.serializarDatos(Medicos, fileMedicos);
             guardar.serializarDatos(Administradores, fileAdmins);
             guardar.serializarDatos(Tareas, fileTareas);
             guardar.serializarDatos(PlanesdeControl, filePlanes);
-            guardar.serializarDatos(Enfermedades, fileEnfermedad);
+            guardar.serializarDatos(Enfermedades, fileEnfermedad);*/
         }
 
         /*guardar.serializarDatos(Pacientes, filePacientes);
