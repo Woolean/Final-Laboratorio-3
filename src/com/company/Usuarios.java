@@ -1,6 +1,8 @@
 package com.company;
 
-public class Usuarios {
+import java.io.Serializable;
+
+public class Usuarios implements Serializable {
     private String password;
     private String user;
     private int id;

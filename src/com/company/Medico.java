@@ -15,7 +15,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         this.especializacion = especializacion;
     }
 
-    public Medico(){}
+    //public Medico(){}
 
     public String getEspecializacion() {
         return especializacion;

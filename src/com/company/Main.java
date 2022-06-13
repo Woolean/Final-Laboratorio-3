@@ -1,19 +1,24 @@
 package com.company;
 
 import com.google.gson.Gson;
-
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
         //persistencia
-        ArrayList<Paciente> Pacientes=new ArrayList<>();
+        ArrayList<Paciente> Pacientes =new ArrayList<>();
         ArrayList<Medico> Medicos=new ArrayList<>();
         ArrayList<Administrador> Administradores=new ArrayList<>();
         ArrayList<TareasDeControl> Tareas=new ArrayList<>();
@@ -56,17 +61,39 @@ public class Main {
         medico1.AsignarPlan(paciente1, plan12);*/
 
         //ObjectMapper mapper = new ObjectMapper();
-        Gson gson = new Gson();
+
+        //Gson builders para que funcione LocalDate
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
+        Gson gson = gsonBuilder.setPrettyPrinting().create();
 
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(filePacientes));
-
+            BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
+            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {}.getType();
+            Pacientes = gson.fromJson(bufferedReaderPacientes, tipoPaciente);
+            BufferedReader bufferedReaderMedicos = new BufferedReader(new FileReader(fileMedicos));
+            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {}.getType();
+            Medicos = gson.fromJson(bufferedReaderMedicos, tipoMedico);
+            BufferedReader bufferedReaderAdmins = new BufferedReader(new FileReader(fileAdmins));
+            Type tipoAdmin = new TypeToken<ArrayList<Administrador>>() {}.getType();
+            Administradores = gson.fromJson(bufferedReaderAdmins, tipoAdmin);
+            BufferedReader bufferedReaderTareas = new BufferedReader(new FileReader(fileTareas));
+            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {}.getType();
+            Tareas = gson.fromJson(bufferedReaderTareas, tipoTareas);
+            BufferedReader bufferedReaderEnfermedades = new BufferedReader(new FileReader(fileEnfermedad));
+            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {}.getType();
+            Enfermedades = gson.fromJson(bufferedReaderEnfermedades, tipoEnfermedad);
+            BufferedReader bufferedReaderPlanes = new BufferedReader(new FileReader(filePlanes));
+            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {}.getType();
+            PlanesdeControl = gson.fromJson(bufferedReaderPlanes, tipoPlanes);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-
-        //Pasar datos de los json a arraylists y trabajar sobre eso
+        //Pasar datos de los json a arraylists y trabajar sobre eso - Jackson
         /*try {
             //Pacientes = mapper.readValue(filePacientes, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Paciente.class));
             //Medicos = mapper.readValue(fileMedicos, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Medico.class));
@@ -105,7 +132,7 @@ public class Main {
 
         }
 
-        //guardo los nuevos datos en los archivos
+        //guardo los nuevos datos en los archivos - Jackson
         /*try {
             mapper.writeValue(filePacientes, Pacientes);
             mapper.writeValue(fileMedicos, Medicos);
