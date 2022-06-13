@@ -1,1 +1,123 @@
-[{"id":5,"users":"Mateo","passwords":"contra4"}]
+[
+  {
+    "pacientes": [
+      {
+        "Enfermedad": "BRONQUITIS",
+        "Sintomas": "dolor de garganta",
+        "planDeControl": {
+          "Enfermedad": "DOLOR_GARGANTA",
+          "Tiempo": 10,
+          "Tratamientos": [
+            {
+              "datoNumerico": 0.0,
+              "descripcion": "Tomar temperatura"
+            },
+            {
+              "datoBoolean": false,
+              "descripcion": "Tomar Pastilla"
+            }
+          ]
+        },
+        "FindelTratamiento": "23-jun.-2022",
+        "PrincipiodelTratamiento": "13-jun.-2022",
+        "historial": [],
+        "password": "contra1",
+        "user": "Pablo",
+        "id": 1
+      },
+      {
+        "Enfermedad": "DOLOR_GARGANTA",
+        "Sintomas": "dolor de garganta cuando trago",
+        "historial": [],
+        "password": "contra11",
+        "user": "Juan",
+        "id": 2
+      }
+    ],
+    "medicos": [
+      {
+        "especializacion": "Oftalmólogo",
+        "pacientesAsignados": [
+          {
+            "Enfermedad": "BRONQUITIS",
+            "Sintomas": "dolor de garganta",
+            "planDeControl": {
+              "Enfermedad": "DOLOR_GARGANTA",
+              "Tiempo": 10,
+              "Tratamientos": [
+                {
+                  "datoNumerico": 0.0,
+                  "descripcion": "Tomar temperatura"
+                },
+                {
+                  "datoBoolean": false,
+                  "descripcion": "Tomar Pastilla"
+                }
+              ]
+            },
+            "FindelTratamiento": "23-jun.-2022",
+            "PrincipiodelTratamiento": "13-jun.-2022",
+            "historial": [],
+            "password": "contra1",
+            "user": "Pablo",
+            "id": 1
+          }
+        ],
+        "password": "contra3",
+        "user": "Fernando",
+        "id": 3
+      },
+      {
+        "especializacion": "Pediatra",
+        "pacientesAsignados": [],
+        "password": "contra33",
+        "user": "Julio",
+        "id": 4
+      }
+    ],
+    "planes": [
+      {
+        "Enfermedad": "BRONQUITIS",
+        "Tiempo": 20,
+        "Tratamientos": []
+      },
+      {
+        "Enfermedad": "DOLOR_GARGANTA",
+        "Tiempo": 10,
+        "Tratamientos": [
+          {
+            "datoNumerico": 0.0,
+            "descripcion": "Tomar temperatura"
+          },
+          {
+            "datoBoolean": false,
+            "descripcion": "Tomar Pastilla"
+          }
+        ]
+      }
+    ],
+    "tareasbase": [
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar temperatura"
+      },
+      {
+        "datoBoolean": false,
+        "descripcion": "Tomar Pastilla"
+      }
+    ],
+    "enfermedades": [
+      {
+        "EnfermedadNombre": "BRONQUITIS",
+        "RecuperacionenDias": 20
+      },
+      {
+        "EnfermedadNombre": "DOLOR_GARGANTA",
+        "RecuperacionenDias": 10
+      }
+    ],
+    "password": "contra4",
+    "user": "Mateo",
+    "id": 5
+  }
+]

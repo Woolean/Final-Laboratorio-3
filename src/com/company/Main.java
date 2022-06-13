@@ -3,10 +3,8 @@ package com.company;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -93,19 +91,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        //Pasar datos de los json a arraylists y trabajar sobre eso - Jackson
-        /*try {
-            //Pacientes = mapper.readValue(filePacientes, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Paciente.class));
-            //Medicos = mapper.readValue(fileMedicos, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Medico.class));
-            //Administradores = mapper.readValue(fileAdmins, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Administrador.class));
-            //Tareas = mapper.readValue(fileTareas, mapper.getTypeFactory().constructCollectionType(ArrayList.class, TareasDeControl.class));
-            //Enfermedades = mapper.readValue(fileEnfermedad, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Enfermedad.class));
-            //PlanesdeControl = mapper.readValue(filePlanes, mapper.getTypeFactory().constructCollectionType(ArrayList.class, PlanDeControl.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
         ////////////////////////////////////////
 
         Sistema hospital=new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
@@ -143,5 +128,72 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+        ///Guardar en Json los datos de las listas
+        //Pacientes
+        try {
+            FileOutputStream jsonPacientes = new FileOutputStream(filePacientes);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonPacientes);
+            String json = gson.toJson(Pacientes);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonPacientes.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Medicos
+        try {
+            FileOutputStream jsonMedicos = new FileOutputStream(fileMedicos);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonMedicos);
+            String json = gson.toJson(Medicos);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonMedicos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Administradores
+        try {
+            FileOutputStream jsonAdmins = new FileOutputStream(fileAdmins);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonAdmins);
+            String json = gson.toJson(Administradores);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonAdmins.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Tareas
+        try {
+            FileOutputStream jsonTareas = new FileOutputStream(fileTareas);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonTareas);
+            String json = gson.toJson(Tareas);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonTareas.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Enfermedades
+        try {
+            FileOutputStream jsonEnfermedad = new FileOutputStream(fileEnfermedad);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonEnfermedad);
+            String json = gson.toJson(Enfermedades);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonEnfermedad.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Planes
+        try {
+            FileOutputStream jsonPlanes = new FileOutputStream(fileEnfermedad);
+            OutputStreamWriter miOutWriter = new OutputStreamWriter(jsonPlanes);
+            String json = gson.toJson(PlanesdeControl);
+            miOutWriter.append(json);
+            miOutWriter.close();
+            jsonPlanes.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

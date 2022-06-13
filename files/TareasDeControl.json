@@ -1,1 +1,10 @@
-[{"descripcion":"Tomar temperatura","datoNumerico":0.0},{"descripcion":"Tomar Pastilla","datoBoolean":false}]
+[
+  {
+    "datoNumerico": 0.0,
+    "descripcion": "Tomar temperatura"
+  },
+  {
+    "datoBoolean": false,
+    "descripcion": "Tomar Pastilla"
+  }
+]

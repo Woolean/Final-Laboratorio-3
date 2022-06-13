@@ -1,1 +1,21 @@
-[{"enfermedadNombre":"BRONQUITIS","recuperacionenDias":20},{"enfermedadNombre":"DOLOR_GARGANTA","recuperacionenDias":10}]
+[
+  {
+    "Enfermedad": "BRONQUITIS",
+    "Tiempo": 20,
+    "Tratamientos": []
+  },
+  {
+    "Enfermedad": "DOLOR_GARGANTA",
+    "Tiempo": 10,
+    "Tratamientos": [
+      {
+        "datoNumerico": 0.0,
+        "descripcion": "Tomar temperatura"
+      },
+      {
+        "datoBoolean": false,
+        "descripcion": "Tomar Pastilla"
+      }
+    ]
+  }
+]

@@ -1,1 +1,41 @@
-[{"id":3,"especializacion":"Oftalmólogo","pacientesAsignados":[{"id":1,"planDeControl":{"tiempo":10,"tratamientos":[{"descripcion":"Tomar temperatura","datoNumerico":0.0},{"descripcion":"Tomar Pastilla","datoBoolean":false}],"enfermedad":"DOLOR_GARGANTA"},"historial":[],"findelTratamiento":{"year":2022,"month":"JUNE","monthValue":6,"dayOfMonth":22,"chronology":{"id":"ISO","calendarType":"iso8601"},"dayOfWeek":"WEDNESDAY","leapYear":false,"dayOfYear":173,"era":"CE"},"principiodelTratamiento":{"year":2022,"month":"JUNE","monthValue":6,"dayOfMonth":12,"chronology":{"id":"ISO","calendarType":"iso8601"},"dayOfWeek":"SUNDAY","leapYear":false,"dayOfYear":163,"era":"CE"},"enfermedad":"BRONQUITIS","sintomas":"dolor de garganta","users":"Pablo","passwords":"contra1"}],"users":"Fernando","passwords":"contra3"},{"id":4,"especializacion":"Pediatra","pacientesAsignados":[],"users":"Julio","passwords":"contra33"}]
+[
+  {
+    "especializacion": "Oftalmólogo",
+    "pacientesAsignados": [
+      {
+        "Enfermedad": "BRONQUITIS",
+        "Sintomas": "dolor de garganta",
+        "planDeControl": {
+          "Enfermedad": "DOLOR_GARGANTA",
+          "Tiempo": 10,
+          "Tratamientos": [
+            {
+              "datoNumerico": 0.0,
+              "descripcion": "Tomar temperatura"
+            },
+            {
+              "datoBoolean": false,
+              "descripcion": "Tomar Pastilla"
+            }
+          ]
+        },
+        "FindelTratamiento": "23-jun.-2022",
+        "PrincipiodelTratamiento": "13-jun.-2022",
+        "historial": [],
+        "password": "contra1",
+        "user": "Pablo",
+        "id": 1
+      }
+    ],
+    "password": "contra3",
+    "user": "Fernando",
+    "id": 3
+  },
+  {
+    "especializacion": "Pediatra",
+    "pacientesAsignados": [],
+    "password": "contra33",
+    "user": "Julio",
+    "id": 4
+  }
+]
