@@ -9,10 +9,10 @@ public class Paciente extends Usuarios implements Menus, Serializable {
 
     private String Enfermedad;
     private String Sintomas;
-    private PlanDeControl planDeControl=null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
+    private PlanDeControl planDeControl = null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
     private LocalDate FindelTratamiento;
     private LocalDate PrincipiodelTratamiento;
-    private ArrayList<RegistroDiario> historial=new ArrayList<>();
+    private ArrayList<RegistroDiario> historial = new ArrayList<>();
 
     public Paciente(String password, String user, String enfermedad, String sintomas) {
         super(password, user);
@@ -20,7 +20,8 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         Sintomas = sintomas;
     }
 
-    public Paciente(){}
+    public Paciente() {
+    }
 
     public String getEnfermedad() {
         return Enfermedad;
@@ -70,9 +71,9 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         this.planDeControl = planDeControl;
     }
 
-    public String BuscarRegistro(LocalDate fechadelregistro){
-        for (RegistroDiario e : this.historial){
-            if (e.verificarfecha(fechadelregistro)){
+    public String BuscarRegistro(LocalDate fechadelregistro) {
+        for (RegistroDiario e : this.historial) {
+            if (e.verificarfecha(fechadelregistro)) {
                 return e.RegistrodeTareas(this.planDeControl.getTratamientos());
             }
         }
@@ -83,8 +84,8 @@ public class Paciente extends Usuarios implements Menus, Serializable {
     //interface menu
 
     @Override
-    public void Menu () throws NullPointerException{
-        boolean seguir=false;
+    public void Menu() throws NullPointerException {
+        boolean seguir = false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
         while (!seguir) {
@@ -96,37 +97,43 @@ public class Paciente extends Usuarios implements Menus, Serializable {
             System.out.print("Ingrese Opción: ");
             opcion = scanner.nextInt();
 
-            if (planDeControl.getTratamientos().get(opcion) instanceof DatoNumerico) {
-                double dato;
-                System.out.println("Ingresa un valor Numerico");
-                System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
-                dato = scanner.nextInt();
-                ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);
-            } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoBoolean) {
-                int dato;
-                System.out.println("Cambiar estado a 'realizado' escribiendo 1, cualquier otra tecla para Anular");
-                System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
-                dato = scanner.nextInt();
-                if (dato==1){
-                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+            //ESTO NO FUNCIONA Y NO SE PORQUÉ
+            if (opcion < planDeControl.getTratamientos().size()) {
+                if (planDeControl.getTratamientos().get(opcion) instanceof DatoNumerico) {
+                    double dato;
+                    System.out.println("Ingresa un valor Numerico");
+                    System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
+                    dato = scanner.nextInt();
+                    ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);
+                } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoBoolean) {
+                    int dato;
+                    System.out.println("Cambiar estado a 'realizado' escribiendo 1, cualquier otra tecla para Anular");
+                    System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
+                    dato = scanner.nextInt();
+                    if (dato == 1) {
+                        ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(true);
+                    } else {
+                        ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(false);
+                    }
+                } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoTextual) {
+                    String dato;
+                    System.out.println("Ingresa un Texto");
+                    System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
+                    dato = scanner.nextLine();
+                    ((DatoTextual) planDeControl.getTratamientos().get(opcion)).setDatoTextual(dato);
+                } else {
+                    System.out.println("No funciona esta parte porque no detecta que sea de alguna clase específica");
                 }
-                else {
-                    ((DatoBoolean) planDeControl.getTratamientos().get(opcion)).setDatoBoolean(false);
-                }
-
-            } else if (planDeControl.getTratamientos().get(opcion) instanceof DatoTextual) {
-                String dato;
-                System.out.println("Ingresa un Texto");
-                System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
-                dato = scanner.nextLine();
-                ((DatoTextual) planDeControl.getTratamientos().get(opcion)).setDatoTextual(dato);
+            } else {
+                System.out.println("No existe esa opción. Intente nuevamente.");
             }
+
 
             System.out.println("Quiere Salir del Sistema s=SI n=NO");
             scanner.nextLine();
-            String si= scanner.nextLine();
-            if (si.equalsIgnoreCase("s")){
-                seguir=true;
+            String si = scanner.nextLine();
+            if (si.equalsIgnoreCase("s")) {
+                seguir = true;
             }
         }
 
@@ -135,7 +142,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
 
     @Override
     public String toString() {
-        return "Paciente: "+this.getUsers()+"{" +
+        return "Paciente: " + this.getUsers() + "{" +
                 "Enfermedad='" + Enfermedad + '\'' +
                 '}';
     }

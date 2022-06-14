@@ -9,6 +9,7 @@ public class TareasDeControl implements Serializable {
     public TareasDeControl(String descripcion) {
         this.descripcion = descripcion;
     }
+
     public TareasDeControl() {
         this.descripcion = null;
     }

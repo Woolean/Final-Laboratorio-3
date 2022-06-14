@@ -7,17 +7,17 @@ public class PlanDeControl implements Serializable {
 
     private String Enfermedad;
     private int Tiempo;
-    private ArrayList<TareasDeControl> Tratamientos=new ArrayList<>();
+    private ArrayList<TareasDeControl> Tratamientos = new ArrayList<>();
 
     public PlanDeControl(Enfermedad enfermedad, ArrayList<TareasDeControl> tratamientos) {
         Enfermedad = enfermedad.getEnfermedadNombre();
         Tiempo = enfermedad.getRecuperacionenDias();
-        if (tratamientos!=null){
+        if (tratamientos != null) {
             Tratamientos = tratamientos;
         }
     }
 
-    public PlanDeControl(){
+    public PlanDeControl() {
     }
 
     public String getEnfermedad() {

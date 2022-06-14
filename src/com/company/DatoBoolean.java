@@ -16,7 +16,7 @@ public class DatoBoolean extends TareasDeControl implements ValidarTarea, Serial
     }
 
     public void setDatoBoolean(boolean datoBoolean) {
-        this.datoBoolean= datoBoolean;
+        this.datoBoolean = datoBoolean;
     }
 
     @Override
@@ -27,9 +27,9 @@ public class DatoBoolean extends TareasDeControl implements ValidarTarea, Serial
     @Override
     public String toString() {
         if (isDatoBoolean()) {
-            return this.getDescripcion()+": Sí.";
+            return this.getDescripcion() + ": Sí.";
         } else {
-            return this.getDescripcion()+": No.";
+            return this.getDescripcion() + ": No.";
         }
     }
 }

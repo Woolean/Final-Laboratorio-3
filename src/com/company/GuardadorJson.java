@@ -19,7 +19,7 @@ public class GuardadorJson {
         this.gson = gson;
     }
 
-    public void serializarDatos(ArrayList Lista, File file){
+    public void serializarDatos(ArrayList Lista, File file) {
         ///Guardar en Json los datos de las listas
         try {
             FileOutputStream jsonFile = new FileOutputStream(file);

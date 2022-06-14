@@ -11,7 +11,8 @@ public class Enfermedad implements Serializable {
         RecuperacionenDias = recuperacionenDias;
     }
 
-    public Enfermedad(){}
+    public Enfermedad() {
+    }
 
     public String getEnfermedadNombre() {
         return EnfermedadNombre;

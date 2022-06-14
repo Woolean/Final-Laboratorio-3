@@ -14,17 +14,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Main {
 
     public static void main(String[] args) {
 
         //persistencia
-        ArrayList<Paciente> Pacientes =new ArrayList<>();
-        ArrayList<Medico> Medicos=new ArrayList<>();
-        ArrayList<Administrador> Administradores=new ArrayList<>();
-        ArrayList<TareasDeControl> Tareas=new ArrayList<>();
-        ArrayList<Enfermedad> Enfermedades=new ArrayList<>();
-        ArrayList<PlanDeControl> PlanesdeControl=new ArrayList<>();
+        ArrayList<Paciente> Pacientes = new ArrayList<>();
+        ArrayList<Medico> Medicos = new ArrayList<>();
+        ArrayList<Administrador> Administradores = new ArrayList<>();
+        ArrayList<TareasDeControl> Tareas = new ArrayList<>();
+        ArrayList<Enfermedad> Enfermedades = new ArrayList<>();
+        ArrayList<PlanDeControl> PlanesdeControl = new ArrayList<>();
 
         //Creación de Archivos base
         File filePacientes = new File("files/Pacientes.json");
@@ -45,15 +46,15 @@ public class Main {
 
         //Carga de Datos de pruebas
         //Ya cargado en Json
-        /*Paciente paciente1=new Paciente("contra1", "Pablo", "BRONQUITIS", "dolor de garganta");
-        Paciente paciente2=new Paciente("contra11", "Juan", "DOLOR_GARGANTA", "dolor de garganta cuando trago");
-        Medico medico1=new Medico("contra3", "Fernando", "Oftalmólogo", Tareas);
-        Medico medico2=new Medico("contra33", "Julio", "Pediatra", Tareas);
+        /*Paciente paciente1=new Paciente("contra1", "Pablo", "Bronquitis", "dolor de garganta");
+        Paciente paciente2=new Paciente("contra11", "Juan", "Dolor de Garganta", "dolor de garganta cuando trago");
+        Medico medico1=new Medico("contra3", "Fernando", "Oftalmologo");
+        Medico medico2=new Medico("contra33", "Julio", "Pediatra");
         medico1.AgregarPaciente(paciente1);
         DatoNumerico tarea1=new DatoNumerico("Tomar temperatura", 0);
         DatoBoolean tarea2=new DatoBoolean("Tomar Pastilla", false);
-        Enfermedad enfermedad1=new Enfermedad("BRONQUITIS", 20);
-        Enfermedad enfermedad2=new Enfermedad("DOLOR_GARGANTA", 10);
+        Enfermedad enfermedad1=new Enfermedad("Bronquitis", 20);
+        Enfermedad enfermedad2=new Enfermedad("Dolor de Garganta", 10);
         Pacientes.add(paciente1);
         Pacientes.add(paciente2);
         Medicos.add(medico1);
@@ -68,54 +69,62 @@ public class Main {
         PlanesdeControl.add(plan12);
         medico1.AsignarPlan(paciente1, plan12);*/
 
+        /*guardar.serializarDatos(Pacientes, filePacientes);
+        guardar.serializarDatos(Medicos, fileMedicos);
+        guardar.serializarDatos(Tareas, fileTareas);
+        guardar.serializarDatos(PlanesdeControl, filePlanes);
+        guardar.serializarDatos(Enfermedades, fileEnfermedad);*/
+
         try {
             BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
-            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {}.getType();
+            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {
+            }.getType();
             Pacientes = gson.fromJson(bufferedReaderPacientes, tipoPaciente);
             BufferedReader bufferedReaderMedicos = new BufferedReader(new FileReader(fileMedicos));
-            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {}.getType();
+            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {
+            }.getType();
             Medicos = gson.fromJson(bufferedReaderMedicos, tipoMedico);
-            /*BufferedReader bufferedReaderAdmins = new BufferedReader(new FileReader(fileAdmins));
-            Type tipoAdmin = new TypeToken<ArrayList<Administrador>>() {}.getType();
-            Administradores = gson.fromJson(bufferedReaderAdmins, tipoAdmin);*/
             BufferedReader bufferedReaderTareas = new BufferedReader(new FileReader(fileTareas));
-            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {}.getType();
+            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {
+            }.getType();
             Tareas = gson.fromJson(bufferedReaderTareas, tipoTareas);
             BufferedReader bufferedReaderEnfermedades = new BufferedReader(new FileReader(fileEnfermedad));
-            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {}.getType();
+            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {
+            }.getType();
             Enfermedades = gson.fromJson(bufferedReaderEnfermedades, tipoEnfermedad);
             BufferedReader bufferedReaderPlanes = new BufferedReader(new FileReader(filePlanes));
-            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {}.getType();
+            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {
+            }.getType();
             PlanesdeControl = gson.fromJson(bufferedReaderPlanes, tipoPlanes);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Administrador admin2=new Administrador("contra4", "Mateo", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades, gson, gsonBuilder, guardar);
+        Administrador admin2 = new Administrador("admin123", "admin", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades, gson, gsonBuilder, guardar);
         Administradores.add(admin2);
 
         ////////////////////////////////////////
 
-        Sistema hospital=new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
+        Sistema hospital = new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
 
 
         //iniciar sesion
-        boolean Seguir=false;
-        int j=0;
+        boolean Seguir = false;
+        int j = 0;
         Usuarios UserenSesion;
 
-        while (!Seguir){
-            Scanner scanner1=new Scanner(System.in);
-            String nombre,contrasena;
+        while (!Seguir) {
+            Scanner scanner1 = new Scanner(System.in);
+            String nombre, contrasena;
             System.out.println("Bienvenido");
             System.out.println("Ingrese Nombre de Usuario: ");
-            nombre=scanner1.nextLine();
+            nombre = scanner1.nextLine();
             System.out.println("Ingrese Contraseña: ");
-            contrasena=scanner1.nextLine();
-            UserenSesion=hospital.iniciarSesion(nombre, contrasena);
-            if (UserenSesion!=null){
+            contrasena = scanner1.nextLine();
+            UserenSesion = hospital.iniciarSesion(nombre, contrasena);
+            if (UserenSesion != null) {
                 hospital.EjecutarMenu(UserenSesion);
-                Seguir=true;
+                Seguir = true;
             }
         }
 

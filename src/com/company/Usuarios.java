@@ -3,19 +3,19 @@ package com.company;
 import java.io.Serializable;
 
 public class Usuarios implements Serializable {
+    private static int idsuma;
     private String password;
     private String user;
     private int id;
-    private static int idsuma;
 
     public Usuarios(String password, String user) {
         this.password = password;
         this.user = user;
-        idsuma=idsuma+1;
+        idsuma = idsuma + 1;
         this.id = idsuma;
     }
 
-    public Usuarios(){
+    public Usuarios() {
     }
 
     public String getPasswords() {

@@ -26,6 +26,6 @@ public class DatoTextual extends TareasDeControl implements ValidarTarea, Serial
 
     @Override
     public String toString() {
-        return this.getDescripcion()+": " + getDatoTextual();
+        return this.getDescripcion() + ": " + getDatoTextual();
     }
 }

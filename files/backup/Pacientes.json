@@ -7,9 +7,11 @@
       "Tiempo": 10,
       "Tratamientos": [
         {
+          "datoNumerico": 0.0,
           "descripcion": "Tomar temperatura"
         },
         {
+          "datoBoolean": false,
           "descripcion": "Tomar Pastilla"
         }
       ]
@@ -28,13 +30,5 @@
     "password": "contra11",
     "user": "Juan",
     "id": 2
-  },
-  {
-    "Enfermedad": "Gripe comun",
-    "Sintomas": "Congestion y tos",
-    "historial": [],
-    "password": "1234",
-    "user": "Julian",
-    "id": 2
   }
- ]
+]

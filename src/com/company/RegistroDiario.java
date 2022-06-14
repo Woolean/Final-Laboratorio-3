@@ -37,58 +37,53 @@ public class RegistroDiario {
         this.informacion = informacion;
     }
 
-    public boolean verificarfecha(LocalDate hoy){
-        if (this.fecha.equals(hoy)){
+    public boolean verificarfecha(LocalDate hoy) {
+        if (this.fecha.equals(hoy)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public boolean VerificaciondeTareas(ArrayList<TareasDeControl> tareas){
-        for (TareasDeControl e : tareas){
-            if (e instanceof DatoNumerico){
-                if (!((DatoNumerico) e).Validar()){
-                    this.completado=false;
+    public boolean VerificaciondeTareas(ArrayList<TareasDeControl> tareas) {
+        for (TareasDeControl e : tareas) {
+            if (e instanceof DatoNumerico) {
+                if (!((DatoNumerico) e).Validar()) {
+                    this.completado = false;
                     return this.completado;
                 }
-            }
-            else if (e instanceof DatoBoolean){
-                if (!((DatoBoolean) e).Validar()){
-                    this.completado=false;
+            } else if (e instanceof DatoBoolean) {
+                if (!((DatoBoolean) e).Validar()) {
+                    this.completado = false;
                     return this.completado;
                 }
-            }
-            else if (e instanceof DatoTextual){
-                if (!((DatoTextual) e).Validar()){
-                    this.completado=false;
+            } else if (e instanceof DatoTextual) {
+                if (!((DatoTextual) e).Validar()) {
+                    this.completado = false;
                     return this.completado;
                 }
             }
 
         }
-        this.completado=true;
-        return  this.completado;
+        this.completado = true;
+        return this.completado;
     }
 
-    public String RegistrodeTareas(ArrayList<TareasDeControl> tareas){
+    public String RegistrodeTareas(ArrayList<TareasDeControl> tareas) {
 
-            StringBuilder registro=new StringBuilder();
-            for (TareasDeControl n : tareas){
-                    registro.append("\n");
-                    registro.append(n.getDescripcion()+":");
-                if (n instanceof DatoNumerico){
-                    registro.append(((DatoNumerico) n).getDatoNumerico());
-                }
-                else if (n instanceof DatoBoolean){
-                    registro.append(((DatoBoolean) n).isDatoBoolean());
-                }
-                else if (n instanceof DatoTextual){
-                    registro.append(((DatoTextual) n).getDatoTextual());
-                }
-                    registro.append("--------------------");
+        StringBuilder registro = new StringBuilder();
+        for (TareasDeControl n : tareas) {
+            registro.append("\n");
+            registro.append(n.getDescripcion() + ":");
+            if (n instanceof DatoNumerico) {
+                registro.append(((DatoNumerico) n).getDatoNumerico());
+            } else if (n instanceof DatoBoolean) {
+                registro.append(((DatoBoolean) n).isDatoBoolean());
+            } else if (n instanceof DatoTextual) {
+                registro.append(((DatoTextual) n).getDatoTextual());
             }
-            return this.informacion=registro.toString();
+            registro.append("--------------------");
+        }
+        return this.informacion = registro.toString();
     }
 }

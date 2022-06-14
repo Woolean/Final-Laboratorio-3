@@ -1,9 +1,5 @@
 package com.company;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,13 +9,11 @@ import java.util.Scanner;
 public class Medico extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
     private String especializacion;
-    private ArrayList<Paciente> pacientesAsignados=new ArrayList<>();
-    private ArrayList<PlanDeControl> planes;
+    private ArrayList<Paciente> pacientesAsignados = new ArrayList<>();
 
-    public Medico(String password, String user, String especializacion, ArrayList planes) {
+    public Medico(String password, String user, String especializacion) {
         super(password, user);
         this.especializacion = especializacion;
-        this.planes = planes;
     }
 
     //public Medico(){}
@@ -44,26 +38,26 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         this.pacientesAsignados.add(pacientesAsignados);
     }
 
-    public void AsignarPlan(Paciente paciente, PlanDeControl plan){
+    public void AsignarPlan(Paciente paciente, PlanDeControl plan) {
         paciente.setPlanDeControl(plan);
         paciente.setPrincipiodelTratamiento(LocalDate.now());
         paciente.setFindelTratamiento(LocalDate.now().plusDays(plan.getTiempo()));
     }
 
-    public String VerRegistro(Paciente paciente, LocalDate fechadelregistro){
+    public String VerRegistro(Paciente paciente, LocalDate fechadelregistro) {
         return paciente.BuscarRegistro(fechadelregistro);
     }
 
     //verificar cuando se da de alta, se cambia la fecha del fin del tratamiento en el paciente y se cambia el numero de dias del plan de control
-    public void FinalizarPlan(Paciente paciente){
+    public void FinalizarPlan(Paciente paciente) {
         paciente.setFindelTratamiento(LocalDate.now());
         /*long dias= DAYS.between(paciente.getPrincipiodelTratamiento(), LocalDate.now());
         paciente.getPlanDeControl().setTiempo((int) dias); se usaba para cambiar a los dias que duro el tratamiento el plan de control*/
     }
 
-    public Paciente buscarpaciente(String nombre){
-        for (Paciente e : this.pacientesAsignados){
-            if (nombre.equalsIgnoreCase(e.getUsers())){
+    public Paciente buscarpaciente(String nombre) {
+        for (Paciente e : this.pacientesAsignados) {
+            if (nombre.equalsIgnoreCase(e.getUsers())) {
                 return e;
             }
         }
@@ -71,16 +65,12 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     }
 
     @Override
-    public void Menu() throws NullPointerException{
-        boolean salir=false;
-        int opcion=0;
-        Scanner scanner=new Scanner(System.in);
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
-        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
-        File fileTareas = new File("files/TareasDeControl.json");
+    public void Menu() throws NullPointerException {
+        boolean salir = false;
+        int opcion = 0;
+        Scanner scanner = new Scanner(System.in);
 
-        while (!salir){
+        while (!salir) {
 
             System.out.println("Opción 1: Asignación de Planes de Control");
             System.out.println("Opción 2: Control de los registros de los Pacientes");
@@ -88,28 +78,28 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             System.out.println("Opción 4: Salir");
 
             System.out.printf("Ingrese una Opción: ");
-            opcion=scanner.nextInt();
+            opcion = scanner.nextInt();
 
-            switch (opcion){
+            switch (opcion) {
                 case 1:
-                    boolean salir2=false;
-                    int opcion2=0;
+                    boolean salir2 = false;
+                    int opcion2 = 0;
                     String userpaciente;
                     Paciente asignar;
                     PlanDeControl Planamodificar;
-                    Scanner scanner2=new Scanner(System.in);
+                    Scanner scanner2 = new Scanner(System.in);
 
                     //selecciona el user
 
                     System.out.println("Pacientes sin Plan de Control:");
-                    for (int i=0; i<pacientesAsignados.size(); i++){
-                        if (pacientesAsignados.get(i).getPlanDeControl()==null){
+                    for (int i = 0; i < pacientesAsignados.size(); i++) {
+                        if (pacientesAsignados.get(i).getPlanDeControl() == null) {
                             System.out.println(pacientesAsignados.get(i));
                         }
                     }
                     System.out.println("Ingrese el Usuario: ");
-                    userpaciente=scanner2.nextLine();
-                    asignar=buscarpaciente(userpaciente);
+                    userpaciente = scanner2.nextLine();
+                    asignar = buscarpaciente(userpaciente);
 
                     //Opcion 1: levanta los planes base de un archivo y los lee, para elegir uno y hacer una copia
 
@@ -127,14 +117,14 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     Planamodificar=new PlanDeControl(plan.get(opcion2).getEnfermedad, plan.get(opcion2).getTratamientos);
                     */
                     //dato de prueba
-                    Enfermedad nueva=new Enfermedad();
-                    Planamodificar=new PlanDeControl(nueva, null);
+                    Enfermedad nueva = new Enfermedad();
+                    Planamodificar = new PlanDeControl(nueva, null);
 
 
                     //administracion de tareas de control y dias del plan de control.
 
 
-                    while (!salir2){
+                    while (!salir2) {
                         System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5:");
                         System.out.println("Plan Base:");
                         //System.out.println(Planamodificar);
@@ -145,7 +135,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         System.out.println("Opción 5: Salir");
 
                         System.out.printf("Ingrese una Opción: ");
-                        opcion2=scanner.nextInt();
+                        opcion2 = scanner.nextInt();
 
                         switch (opcion2) {
                             case 1 -> agregarTareasdeControl(Planamodificar.getTratamientos());
@@ -171,8 +161,6 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         }
                     }
                     AsignarPlan(asignar, Planamodificar);
-                    planes.add(Planamodificar);
-                    guardar.serializarDatos(planes, fileTareas);
                     break;
                 case 2:
                     //pacientes con plan de control vigente
@@ -181,20 +169,19 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                     }
                     System.out.println("Ingrese una Opcion");
-                    opcion=scanner.nextInt();
+                    opcion = scanner.nextInt();
 
-                    if(!Objects.equals(pacientesAsignados.get(opcion).getPrincipiodelTratamiento(), LocalDate.now())){
-                        System.out.println("Fechas Disponibles "+pacientesAsignados.get(opcion).getPrincipiodelTratamiento()+" hasta"+ LocalDate.now().plusDays(-1));
+                    if (!Objects.equals(pacientesAsignados.get(opcion).getPrincipiodelTratamiento(), LocalDate.now())) {
+                        System.out.println("Fechas Disponibles " + pacientesAsignados.get(opcion).getPrincipiodelTratamiento() + " hasta" + LocalDate.now().plusDays(-1));
                         System.out.println("Ingrese Year: ");
-                        ano=scanner.nextInt();
+                        ano = scanner.nextInt();
                         System.out.println("Ingrese Mes: ");
-                        mes=scanner.nextInt();
+                        mes = scanner.nextInt();
                         System.out.println("Ingrese Dia: ");
-                        dia=scanner.nextInt();
+                        dia = scanner.nextInt();
 
                         System.out.println(pacientesAsignados.get(opcion).BuscarRegistro(LocalDate.of(ano, mes, dia)));
-                    }
-                    else {
+                    } else {
                         System.out.println("No tiene Registros Aun");
                     }
 
@@ -202,18 +189,18 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                 case 3:
                     //dardealta antes de tiempo o modificar fecha
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        if (pacientesAsignados.get(i).getPlanDeControl()!=null){
+                        if (pacientesAsignados.get(i).getPlanDeControl() != null) {
                             System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                         }
                     }
                     System.out.println("Ingrese una Opción");
                     scanner.nextLine();
-                    opcion=scanner.nextInt();
+                    opcion = scanner.nextInt();
                     FinalizarPlan(pacientesAsignados.get(opcion));
                     pacientesAsignados.remove(opcion);
                     break;
                 case 4:
-                    salir=true;
+                    salir = true;
                     break;
                 default:
                     System.out.println("Opción no valida");
@@ -224,37 +211,36 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
     //modifica el plan de control
     @Override
-    public void agregarTareasdeControl(ArrayList<TareasDeControl> tareas ) {
+    public void agregarTareasdeControl(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
         int opcion;
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Elegir Tratamiento");
-        for (int i=0; i<tareas.size(); i++){
-            System.out.println("Opcion "+i+" "+tareas.get(i).getDescripcion());
+        for (int i = 0; i < tareas.size(); i++) {
+            System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
         }
         System.out.print("Opción: ");
         opcion = scanner.nextInt(); //levanta del archivo tareas base
 
-        if (tareas.get(opcion) instanceof DatoNumerico){
+        if (tareas.get(opcion) instanceof DatoNumerico) {
             DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
             tareas.add(dato);
-        }
-        else if (tareas.get(opcion) instanceof DatoBoolean){
+        } else if (tareas.get(opcion) instanceof DatoBoolean) {
             DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
             tareas.add(dato);
-        }
-        else if (tareas.get(opcion) instanceof DatoTextual){
+        } else if (tareas.get(opcion) instanceof DatoTextual) {
             DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
             tareas.add(dato);
         }
     }
+
     //paraadminymedicolomismo
     @Override
     public void EliminarTareas(ArrayList<TareasDeControl> tareas) {
 
-        boolean seguir=false;
+        boolean seguir = false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
 
@@ -268,17 +254,18 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             opcion = scanner.nextInt();
             if (opcion < tareas.size()) {
                 tareas.remove(opcion);
-                seguir=true;
+                seguir = true;
             }
         }
     }
+
     //agregar a un arraylist con las tareas por defecto y persiste
     @Override
     public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
         int opcion;
-        boolean salir=false;
+        boolean salir = false;
         DatoNumerico datoNumerico;
         DatoTextual datoTextual;
         DatoBoolean datoBoolean;
@@ -309,14 +296,14 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                 datoBoolean = new DatoBoolean(descripcionNueva, false);
                 tareas.add(datoBoolean);
             }
-            default -> System.out.println("Opcion no Valida");
+            default -> System.out.println("Opción no Valida");
         }
-        //no se como pero hay que usar alguna ecepcion aca seguro
+        //no se como pero hay que usar alguna excepción aca seguro
     }
 
     @Override
     public String toString() {
-        return "Medico: "+this.getUsers()+"{" +
+        return "Medico: " + this.getUsers() + "{" +
                 "especializacion='" + especializacion + '\'' +
                 ", pacientesAsignados=" + pacientesAsignados +
                 '}';

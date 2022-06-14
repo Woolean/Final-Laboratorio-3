@@ -6,18 +6,19 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Administrador extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
+    Gson gson;
+    GsonBuilder gsonBuilder;
+    GuardadorJson guardarJson;
     private ArrayList<Paciente> pacientes;
     private ArrayList<Medico> medicos;
     private ArrayList<PlanDeControl> planes;
     private ArrayList<TareasDeControl> tareasbase;
     private ArrayList<Enfermedad> enfermedades;
-    Gson gson;
-    GsonBuilder gsonBuilder;
-    GuardadorJson guardarJson;
 
 
     public Administrador(String password, String user, ArrayList<Paciente> pacientes, ArrayList<Medico> medicos, ArrayList<PlanDeControl> planes, ArrayList<TareasDeControl> tareasbase, ArrayList<Enfermedad> enfermedades, Gson gson, GsonBuilder gsonBuilder, GuardadorJson guardarJson) {
@@ -26,7 +27,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         this.medicos = medicos;
         this.planes = planes;
         this.tareasbase = tareasbase;
-        this.enfermedades=enfermedades;
+        this.enfermedades = enfermedades;
         this.gson = gson;
         this.gsonBuilder = gsonBuilder;
         this.guardarJson = guardarJson;
@@ -35,57 +36,74 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
 
     public void agregarnuevoMedico(Medico mediconuevo) {
         File fileMedicos = new File("files/Medicos.json");
-        this.medicos.add(mediconuevo);
+        medicos.add(mediconuevo);
         guardarJson.serializarDatos(medicos, fileMedicos);
     }
 
-    public void agregarnuevoPaciente(String Enfermedad, Medico medicoasignado, String nombre, String contrasena, String sintomas) {
+    public void agregarnuevoPaciente(String Enfermedad, Medico medicoAsignado, String nombre, String contrasena, String sintomas) {
         File filePacientes = new File("files/Pacientes.json");
-        Paciente paciente=new Paciente(contrasena, nombre, Enfermedad, sintomas);
-        this.pacientes.add(paciente);
-        medicoasignado.AgregarPaciente(paciente);
+        File fileMedicos = new File("files/Medicos.json");
+        Paciente paciente = new Paciente(contrasena, nombre, Enfermedad, sintomas);
+        pacientes.add(paciente);
+        medicoAsignado.AgregarPaciente(paciente);
+        
+        for (int i=0; i<medicos.size(); i++){
+            if (medicoAsignado.getId() == medicos.get(i).getId()){
+                medicos.set(i, medicoAsignado);
+            }
+        }
+        
         guardarJson.serializarDatos(pacientes, filePacientes);
+        guardarJson.serializarDatos(medicos, fileMedicos);
     }
 
     public void agregarEnfermedad(String nombre, int dias) {
         File fileEnfermedades = new File("files/Enfermedades.json");
-        Enfermedad nuevaenfermedad=new Enfermedad(nombre, dias);
+        File filePlanes = new File("files/PlanesDeControl.json");
+        Enfermedad nuevaenfermedad = new Enfermedad(nombre, dias);
         enfermedades.add(nuevaenfermedad);
-        PlanDeControl nuevoplan=new PlanDeControl(nuevaenfermedad, null);
+        PlanDeControl nuevoplan = new PlanDeControl(nuevaenfermedad, null);
         planes.add(nuevoplan);
-        guardarJson.serializarDatos(planes, fileEnfermedades);
+        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
+        guardarJson.serializarDatos(planes, filePlanes);
     }
+
     public void eliminarEnfermedad(int posicionaeliminar) {
         File fileEnfermedades = new File("files/Enfermedades.json");
+        File filePlanes = new File("files/PlanesDeControl.json");
         enfermedades.remove(posicionaeliminar);
         planes.remove(posicionaeliminar);
-        guardarJson.serializarDatos(planes, fileEnfermedades);
+        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
+        guardarJson.serializarDatos(planes, filePlanes);
     }
+
     public void cambiarRecuperacion(int dias, int posicion) {
         File fileEnfermedades = new File("files/Enfermedades.json");
+        File filePlanes = new File("files/PlanesDeControl.json");
         enfermedades.get(posicion).setRecuperacionenDias(dias);
         planes.get(posicion).setTiempo(dias);
-        guardarJson.serializarDatos(planes, fileEnfermedades);
+        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
+        guardarJson.serializarDatos(planes, filePlanes);
     }
 
 
     @Override
     public void Menu() {
-        boolean salir=false;
+        boolean salir = false;
         int opcion;
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
 
-        while (!salir){
+        while (!salir) {
 
             System.out.println("Opcion 1: Ingreso de Pacientes");
             System.out.println("Opcion 2: Ingreso de Profesionales");
-            System.out.println("Opcion 3: Administracion de Enfermedades");
+            System.out.println("Opcion 3: Administración de Enfermedades");
             System.out.println("Opcion 4: Administración de Tareas de Control");
             System.out.println("Opcion 5: Salir");
 
             System.out.printf("Ingrese una Opción: ");
-            opcion=scanner.nextInt();
+            opcion = scanner.nextInt();
 
             switch (opcion) {
                 case 1 -> {
@@ -129,11 +147,11 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     System.out.println("Ingrese nombre de usuario para el Medico:");
                     scanner.nextLine();
                     nombreMedico = scanner.nextLine();
-                    System.out.println("Ingrese contrasena de usuario para el Medico:");
+                    System.out.println("Ingrese contraseña de usuario para el Medico:");
                     contrasenaMedico = scanner.nextLine();
-                    System.out.println("Ingrese Especialisacion del Medico:");
+                    System.out.println("Ingrese especialización del Medico:");
                     Especialisacion = scanner.nextLine();
-                    Medico mediconuevo = new Medico(contrasenaMedico, nombreMedico, Especialisacion, planes);
+                    Medico mediconuevo = new Medico(contrasenaMedico, nombreMedico, Especialisacion);
                     agregarnuevoMedico(mediconuevo);
                 }
                 case 3 -> {
@@ -184,7 +202,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                     System.out.println("Enfermedad Numero " + k + " " + enfermedades.get(k).getEnfermedadNombre());
                                 }
                                 System.out.println("Opción 99: Volver al menú.");
-                                System.out.println("Cambiar dias de Recuperacion de la Enfermedad Numero: ");
+                                System.out.println("Cambiar dias de Recuperación de la Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad2 = scanner.nextInt();
                                 if (opcionenfermedad2 < enfermedades.size() || opcionenfermedad2 != 99) {
@@ -262,32 +280,35 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         File fileTareas = new File("files/TareasDeControl.json");
 
         System.out.println("Elegir Tratamiento");
-        for (int i=0; i<this.tareasbase.size(); i++){
-            System.out.println("Opcion "+i+" "+this.tareasbase.get(i).getDescripcion());
+        for (int i = 0; i < tareas.size(); i++) {
+            System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
         }
+        System.out.println("Opción 99: Volver atrás.");
         System.out.print("Opción: ");
         opcion = scanner.nextInt();
+        if (opcion < tareas.size()){
+            if (tareas.get(opcion) instanceof DatoNumerico) {
+                DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
+                tareas.add(dato);
+            } else if (tareas.get(opcion) instanceof DatoBoolean) {
+                DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
+                tareas.add(dato);
+            } else if (tareas.get(opcion) instanceof DatoTextual) {
+                DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
+                tareas.add(dato);
+            }
+            guardarJson.serializarDatos(tareas, fileTareas);
+        } else {
+            System.out.println("Opción errónea, intente nuevamente. ");
+        }
 
-        if (this.tareasbase.get(opcion) instanceof DatoNumerico){
-            DatoNumerico dato = new DatoNumerico(this.tareasbase.get(opcion).getDescripcion(), 0);
-            tareas.add(dato);
-        }
-        else if (this.tareasbase.get(opcion) instanceof DatoBoolean){
-            DatoBoolean dato = new DatoBoolean(this.tareasbase.get(opcion).getDescripcion(), false);
-            tareas.add(dato);
-        }
-        else if (this.tareasbase.get(opcion) instanceof DatoTextual){
-            DatoTextual dato = new DatoTextual(this.tareasbase.get(opcion).getDescripcion(), null);
-            tareas.add(dato);
-        }
-
-        guardarJson.serializarDatos(tareas, fileTareas);
     }
+
     //paraadminymedicolomismo
     @Override
     public void EliminarTareas(ArrayList<TareasDeControl> tareas) {
 
-        boolean seguir=false;
+        boolean seguir = false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
         File fileTareas = new File("files/TareasDeControl.json");
@@ -301,19 +322,20 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             opcion = scanner.nextInt();
             if (opcion < tareas.size()) {
                 tareas.remove(opcion);
-                seguir=true;
+                seguir = true;
             }
         }
 
         guardarJson.serializarDatos(tareas, fileTareas);
     }
+
     //agregar a un arraylist con las tareas por defecto y persiste
     @Override
     public void CrearTareaNueva(ArrayList<TareasDeControl> tareas) {
 
         String descripcionNueva;
         int opcion;
-        boolean salir=false;
+        boolean salir = false;
         DatoNumerico datoNumerico;
         DatoTextual datoTextual;
         DatoBoolean datoBoolean;
@@ -322,15 +344,15 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         Scanner scanner = new Scanner(System.in);
 
 
-            System.out.println("Descripción de la tarea: ");
-            descripcionNueva = scanner.nextLine();
-            System.out.println("Elegir tipo de tarea: \n" +
-                    "1 - Dato numérico. \n" +
-                    "2 - Dato Textual. \n" +
-                    "3 - Dato si/no\n"
-            );
+        System.out.println("Descripción de la tarea: ");
+        descripcionNueva = scanner.nextLine();
+        System.out.println("Elegir tipo de tarea: \n" +
+                "1 - Dato numérico. \n" +
+                "2 - Dato Textual. \n" +
+                "3 - Dato si/no\n"
+        );
         System.out.println("Opcion: ");
-            opcion = scanner.nextInt();
+        opcion = scanner.nextInt();
 
         switch (opcion) {
             case 1 -> {

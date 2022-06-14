@@ -11,7 +11,8 @@ public class DatoNumerico extends TareasDeControl implements ValidarTarea, Seria
         this.datoNumerico = datoNumerico;
     }
 
-    public DatoNumerico(){}
+    public DatoNumerico() {
+    }
 
     public double getDatoNumerico() {
         return datoNumerico;
@@ -28,6 +29,6 @@ public class DatoNumerico extends TareasDeControl implements ValidarTarea, Seria
 
     @Override
     public String toString() {
-        return this.getDescripcion()+": " + getDatoNumerico();
+        return this.getDescripcion() + ": " + getDatoNumerico();
     }
 }
