@@ -66,10 +66,12 @@ public class Sistema {
                 users.getHistorial().get(users.getHistorial().size() - 1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
                 RegistroDiario registro = new RegistroDiario(LocalDate.now());
                 users.getHistorial().add(registro);
+                users.actualizarArchivo();
             }
         } else {
             RegistroDiario registro = new RegistroDiario(LocalDate.now());
             users.getHistorial().add(registro);
+            users.actualizarArchivo();
         }
     }
 

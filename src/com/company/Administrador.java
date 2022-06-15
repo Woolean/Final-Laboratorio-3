@@ -1,9 +1,7 @@
 package com.company;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -11,33 +9,37 @@ import java.util.Scanner;
 
 public class Administrador extends Usuarios implements AdministraciondeTareasdeControl, Menus, Serializable {
 
-    Gson gson;
-    GsonBuilder gsonBuilder;
-    GuardadorJson guardarJson;
     private ArrayList<Paciente> pacientes;
     private ArrayList<Medico> medicos;
     private ArrayList<PlanDeControl> planes;
     private ArrayList<TareasDeControl> tareasbase;
     private ArrayList<Enfermedad> enfermedades;
+    SerializadorPacientes ser1 = new SerializadorPacientes();
+    SerializadorMedicos ser2 = new SerializadorMedicos();
+    SerializadorAdministrador ser3 = new SerializadorAdministrador();
+    SerializadorPlanesdeControl ser4 = new SerializadorPlanesdeControl();
+    SerializadorTareasdeControl ser5 = new SerializadorTareasdeControl();
+    SerializadorEnfermedades ser6 = new SerializadorEnfermedades();
 
 
-    public Administrador(String password, String user, ArrayList<Paciente> pacientes, ArrayList<Medico> medicos, ArrayList<PlanDeControl> planes, ArrayList<TareasDeControl> tareasbase, ArrayList<Enfermedad> enfermedades, Gson gson, GsonBuilder gsonBuilder, GuardadorJson guardarJson) {
+    public Administrador(String password, String user, ArrayList<Paciente> pacientes, ArrayList<Medico> medicos, ArrayList<PlanDeControl> planes, ArrayList<TareasDeControl> tareasbase, ArrayList<Enfermedad> enfermedades) {
         super(password, user);
         this.pacientes = pacientes;
         this.medicos = medicos;
         this.planes = planes;
         this.tareasbase = tareasbase;
         this.enfermedades = enfermedades;
-        this.gson = gson;
-        this.gsonBuilder = gsonBuilder;
-        this.guardarJson = guardarJson;
     }
 
 
     public void agregarnuevoMedico(Medico mediconuevo) {
         File fileMedicos = new File("files/Medicos.json");
         medicos.add(mediconuevo);
-        guardarJson.serializarDatos(medicos, fileMedicos);
+        try {
+            ser2.Serializar(medicos, fileMedicos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void agregarnuevoPaciente(String Enfermedad, Medico medicoAsignado, String nombre, String contrasena, String sintomas) {
@@ -48,13 +50,17 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         medicoAsignado.AgregarPaciente(paciente);
         
         for (int i=0; i<medicos.size(); i++){
-            if (medicoAsignado.getId() == medicos.get(i).getId()){
+            if (Objects.equals(medicoAsignado.getUsers(), medicos.get(i).getUsers())){
                 medicos.set(i, medicoAsignado);
             }
         }
-        
-        guardarJson.serializarDatos(pacientes, filePacientes);
-        guardarJson.serializarDatos(medicos, fileMedicos);
+
+        try {
+            ser1.Serializar(pacientes, filePacientes);
+            ser2.Serializar(medicos, fileMedicos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void agregarEnfermedad(String nombre, int dias) {
@@ -64,8 +70,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         enfermedades.add(nuevaenfermedad);
         PlanDeControl nuevoplan = new PlanDeControl(nuevaenfermedad, null);
         planes.add(nuevoplan);
-        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
-        guardarJson.serializarDatos(planes, filePlanes);
+
+        try {
+            ser6.Serializar(enfermedades, fileEnfermedades);
+            ser4.Serializar(planes, filePlanes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void eliminarEnfermedad(int posicionaeliminar) {
@@ -73,8 +84,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         File filePlanes = new File("files/PlanesDeControl.json");
         enfermedades.remove(posicionaeliminar);
         planes.remove(posicionaeliminar);
-        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
-        guardarJson.serializarDatos(planes, filePlanes);
+
+        try {
+            ser6.Serializar(enfermedades, fileEnfermedades);
+            ser4.Serializar(planes, filePlanes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void cambiarRecuperacion(int dias, int posicion) {
@@ -82,8 +98,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         File filePlanes = new File("files/PlanesDeControl.json");
         enfermedades.get(posicion).setRecuperacionenDias(dias);
         planes.get(posicion).setTiempo(dias);
-        guardarJson.serializarDatos(enfermedades, fileEnfermedades);
-        guardarJson.serializarDatos(planes, filePlanes);
+
+        try {
+            ser6.Serializar(enfermedades, fileEnfermedades);
+            ser4.Serializar(planes, filePlanes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -297,7 +318,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                 DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
                 tareas.add(dato);
             }
-            guardarJson.serializarDatos(tareas, fileTareas);
+
+            try {
+                ser5.Serializar(tareas, fileTareas);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             System.out.println("Opción errónea, intente nuevamente. ");
         }
@@ -326,7 +353,11 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             }
         }
 
-        guardarJson.serializarDatos(tareas, fileTareas);
+        try {
+            ser5.Serializar(tareas, fileTareas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //agregar a un arraylist con las tareas por defecto y persiste
@@ -376,7 +407,11 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             default -> System.out.println("Opcion no Valida");
         }
         //no se como pero hay que usar alguna ecepcion aca seguro
-        guardarJson.serializarDatos(tareas, fileTareas);
+        try {
+            ser5.Serializar(tareas, fileTareas);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

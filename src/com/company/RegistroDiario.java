@@ -1,9 +1,10 @@
 package com.company;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class RegistroDiario {
+public class RegistroDiario implements Serializable {
     private LocalDate fecha;
     private boolean completado;
     private String informacion;

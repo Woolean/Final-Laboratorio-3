@@ -1,5 +1,7 @@
 package com.company;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class TareasDeControl implements Serializable {
@@ -21,5 +23,6 @@ public class TareasDeControl implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
 }
 

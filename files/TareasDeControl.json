@@ -1,6 +1,16 @@
 [
   {
-    "datoNumerico": 0.0,
-    "descripcion": "Tomar temperatura"
+    "type": "DatoNumerico",
+    "properties": {
+      "datoNumerico": 0.0,
+      "descripcion": "Tomar temperatura"
+    }
+  },
+  {
+    "type": "DatoBoolean",
+    "properties": {
+      "datoBoolean": false,
+      "descripcion": "Tomar Pastilla"
+    }
   }
 ]

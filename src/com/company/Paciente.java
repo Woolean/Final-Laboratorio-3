@@ -1,8 +1,12 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Paciente extends Usuarios implements Menus, Serializable {
@@ -80,6 +84,35 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         return null;
     }
 
+    public void actualizarArchivo(){
+
+        //Cosas para los archivos
+        File filePacientes = new File("files/Pacientes.json");
+        SerializadorPacientes ser1 = new SerializadorPacientes();
+
+        ArrayList<Paciente>listanueva = new ArrayList<>();
+
+        try {
+            listanueva = ser1.Deserializar(filePacientes);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (Paciente paciente : listanueva) {
+            if (Objects.equals(getUsers(), paciente.getUsers())) {
+                paciente.setPlanDeControl(this.planDeControl);
+                paciente.setHistorial(this.historial);
+            }
+        }
+
+        try {
+            ser1.Serializar(listanueva, filePacientes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     //interface menu
 
@@ -97,7 +130,6 @@ public class Paciente extends Usuarios implements Menus, Serializable {
             System.out.print("Ingrese Opción: ");
             opcion = scanner.nextInt();
 
-            //ESTO NO FUNCIONA Y NO SE PORQUÉ
             if (opcion < planDeControl.getTratamientos().size()) {
                 if (planDeControl.getTratamientos().get(opcion) instanceof DatoNumerico) {
                     double dato;
@@ -121,14 +153,12 @@ public class Paciente extends Usuarios implements Menus, Serializable {
                     System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
                     dato = scanner.nextLine();
                     ((DatoTextual) planDeControl.getTratamientos().get(opcion)).setDatoTextual(dato);
-                } else {
-                    System.out.println("No funciona esta parte porque no detecta que sea de alguna clase específica");
                 }
             } else {
                 System.out.println("No existe esa opción. Intente nuevamente.");
             }
 
-
+            actualizarArchivo();
             System.out.println("Quiere Salir del Sistema s=SI n=NO");
             scanner.nextLine();
             String si = scanner.nextLine();

@@ -4,20 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
 
         //persistencia
         ArrayList<Paciente> Pacientes = new ArrayList<>();
@@ -30,19 +26,25 @@ public class Main {
         //Creación de Archivos base
         File filePacientes = new File("files/Pacientes.json");
         File fileMedicos = new File("files/Medicos.json");
-        //File fileAdmins = new File("files/Administradores.json");
+        File fileAdmins = new File("files/Administradores.json");
         File fileTareas = new File("files/TareasDeControl.json");
-        File fileEnfermedad = new File("fileS/Enfermedades.json");
+        File fileEnfermedad = new File("files/Enfermedades.json");
         File filePlanes = new File("files/PlanesDeControl.json");
 
         //Gson builders para que funcione LocalDate
         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(TareasDeControl.class, new AbstractTareasdeControl());
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer());
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
-        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer());
         Gson gson = gsonBuilder.setPrettyPrinting().create();
-        GuardadorJson guardar = new GuardadorJson(gsonBuilder, gson);
+
+        //Serializadores
+        SerializadorPacientes ser1 = new SerializadorPacientes();
+        SerializadorMedicos ser2 = new SerializadorMedicos();
+        SerializadorAdministrador ser3 = new SerializadorAdministrador();
+        SerializadorPlanesdeControl ser4 = new SerializadorPlanesdeControl();
+        SerializadorTareasdeControl ser5 = new SerializadorTareasdeControl();
+        SerializadorEnfermedades ser6 = new SerializadorEnfermedades();
 
         //Carga de Datos de pruebas
         //Ya cargado en Json
@@ -69,38 +71,58 @@ public class Main {
         PlanesdeControl.add(plan12);
         medico1.AsignarPlan(paciente1, plan12);*/
 
-        /*guardar.serializarDatos(Pacientes, filePacientes);
-        guardar.serializarDatos(Medicos, fileMedicos);
-        guardar.serializarDatos(Tareas, fileTareas);
-        guardar.serializarDatos(PlanesdeControl, filePlanes);
-        guardar.serializarDatos(Enfermedades, fileEnfermedad);*/
-
-        try {
+        /*try {
             BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
-            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {
-            }.getType();
+            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {}.getType();
             Pacientes = gson.fromJson(bufferedReaderPacientes, tipoPaciente);
             BufferedReader bufferedReaderMedicos = new BufferedReader(new FileReader(fileMedicos));
-            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {
-            }.getType();
+            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {}.getType();
             Medicos = gson.fromJson(bufferedReaderMedicos, tipoMedico);
             BufferedReader bufferedReaderTareas = new BufferedReader(new FileReader(fileTareas));
-            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {
-            }.getType();
+            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {}.getType();
             Tareas = gson.fromJson(bufferedReaderTareas, tipoTareas);
             BufferedReader bufferedReaderEnfermedades = new BufferedReader(new FileReader(fileEnfermedad));
-            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {
-            }.getType();
+            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {}.getType();
             Enfermedades = gson.fromJson(bufferedReaderEnfermedades, tipoEnfermedad);
             BufferedReader bufferedReaderPlanes = new BufferedReader(new FileReader(filePlanes));
-            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {
-            }.getType();
+            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {}.getType();
             PlanesdeControl = gson.fromJson(bufferedReaderPlanes, tipoPlanes);
+
+            System.out.println(Tareas.toString());
+
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
+
+
+        //serializar
+        /*try {
+            ser1.Serializar(Pacientes, filePacientes);
+            ser2.Serializar(Medicos, fileMedicos);
+            ser3.Serializar(Administradores, fileAdmins);
+            ser4.Serializar(PlanesdeControl, filePlanes);
+            ser5.Serializar(Tareas, fileTareas);
+            ser6.Serializar(Enfermedades, fileEnfermedad);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer/escribir el archivo: " + e.getMessage());
+            e.printStackTrace();
+        }*/
+
+        //deserealizar
+
+        try {
+            Pacientes= (ArrayList<Paciente>) ser1.Deserializar(filePacientes);
+            Medicos= (ArrayList<Medico>) ser2.Deserializar(fileMedicos);
+            Administradores= (ArrayList<Administrador>) ser3.Deserializar(fileAdmins);
+            PlanesdeControl= (ArrayList<PlanDeControl>) ser4.Deserializar(filePlanes);
+            Tareas= (ArrayList<TareasDeControl>) ser5.Deserializar(fileTareas);
+            Enfermedades= (ArrayList<Enfermedad>) ser6.Deserializar(fileEnfermedad);
+        } catch (IOException e) {
+            System.out.println("No se pudo leer/escribir el archivo: " + e.getMessage());
             e.printStackTrace();
         }
 
-        Administrador admin2 = new Administrador("admin123", "admin", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades, gson, gsonBuilder, guardar);
+        Administrador admin2 = new Administrador("admin123", "admin", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
         Administradores.add(admin2);
 
         ////////////////////////////////////////

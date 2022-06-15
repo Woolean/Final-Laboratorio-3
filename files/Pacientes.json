@@ -7,15 +7,23 @@
       "Tiempo": 10,
       "Tratamientos": [
         {
-          "descripcion": "Tomar temperatura"
+          "type": "DatoNumerico",
+          "properties": {
+            "datoNumerico": 37.0,
+            "descripcion": "Tomar temperatura"
+          }
         },
         {
-          "descripcion": "Tomar Pastilla"
+          "type": "DatoBoolean",
+          "properties": {
+            "datoBoolean": true,
+            "descripcion": "Tomar Pastilla"
+          }
         }
       ]
     },
-    "FindelTratamiento": "23-jun.-2022",
-    "PrincipiodelTratamiento": "13-jun.-2022",
+    "FindelTratamiento": "24-jun.-2022",
+    "PrincipiodelTratamiento": "14-jun.-2022",
     "historial": [],
     "password": "contra1",
     "user": "Pablo",
@@ -28,13 +36,5 @@
     "password": "contra11",
     "user": "Juan",
     "id": 2
-  },
-  {
-    "Enfermedad": "Gripe comun",
-    "Sintomas": "Congestion y tos",
-    "historial": [],
-    "password": "1234",
-    "user": "Julian",
-    "id": 2
   }
- ]
+]
