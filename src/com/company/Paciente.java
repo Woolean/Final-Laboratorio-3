@@ -99,15 +99,15 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         File filePacientes = new File("files/Pacientes.json");
         SerializadorPacientes ser1 = new SerializadorPacientes();
 
-        ArrayList<Paciente>listanueva = new ArrayList<>();
+        ArrayList<Paciente> listaNueva = new ArrayList<>();
 
         try {
-            listanueva = ser1.Deserializar(filePacientes);
+            listaNueva = ser1.Deserializar(filePacientes);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        for (Paciente paciente : listanueva) {
+        for (Paciente paciente : listaNueva) {
             if (Objects.equals(getUsers(), paciente.getUsers())) {
                 paciente.setPlanDeControl(this.planDeControl);
                 paciente.setHistorial(this.historial);
@@ -118,14 +118,12 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         }
 
         try {
-            ser1.Serializar(listanueva, filePacientes);
+            ser1.Serializar(listaNueva, filePacientes);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
-
     //interface menu
 
     @Override
@@ -140,6 +138,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
                 System.out.println("Opción " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
             }
 
+            System.out.println("Opción " + planDeControl.getTratamientos().size() + ": Cancelar.");
             System.out.print("Ingrese Opción: ");
             opcion = scanner.nextInt();
 
@@ -168,7 +167,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
                     ((DatoTextual) planDeControl.getTratamientos().get(opcion)).setDatoTextual(dato);
                 }
             } else {
-                System.out.println("No existe esa opción. Intente nuevamente.");
+                System.out.println("Saliendo...");
             }
 
             actualizarArchivo();
@@ -185,8 +184,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
 
     @Override
     public String toString() {
-        return "Paciente: " + this.getUsers() + "{" +
-                "Enfermedad='" + Enfermedad + '\'' +
-                '}';
+        return "Paciente: " + this.getUsers() + " - " +
+                "Enfermedad: " + Enfermedad;
     }
 }

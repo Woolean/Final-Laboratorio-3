@@ -119,9 +119,6 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             System.out.println("No se pudo leer el archivo: " + e.getMessage());
             e.printStackTrace();
         }
-        finally {
-
-        }
 
         for (Paciente e : pacientes){
             if (nombre.equalsIgnoreCase(e.getUsers())){
@@ -175,7 +172,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
                     System.out.println("Pacientes sin Plan de Control:");
                     for (int i=0; i<pacientesAsignados.size(); i++){
-                        if (pacientesAsignados.get(i).getPlanDeControl()==null || pacientesAsignados.get(i).isAltamedica()==true){
+                        if (pacientesAsignados.get(i).getPlanDeControl()==null || pacientesAsignados.get(i).isAltamedica()){
                             System.out.println(pacientesAsignados.get(i));
                         }
                     }
@@ -188,6 +185,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     for (int k=0; k<planes.size(); k++){
                         System.out.println("Opcion "+k+":"+planes.get(k));
                     }
+
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2=scanner2.nextInt();
                     //copia de la enfermeda porque si no la modifica
@@ -209,7 +207,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         System.out.println("Opción 4: Cambiar cantidad de dias del Plan");
                         System.out.println("Opción 5: Salir");
 
-                        System.out.printf("Ingrese una Opción: ");
+                        System.out.println("Ingrese una Opción: ");
                         opcion2 = scanner.nextInt();
 
                         switch (opcion2) {
@@ -239,39 +237,46 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     //pacientes con plan de control vigente
                     int ano, mes, dia;
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
+                        System.out.println("Opción " + i + ": " + pacientesAsignados.get(i));
                     }
-                    System.out.println("Ingrese una Opcion");
+
+                    System.out.println("Opción " + pacientesAsignados.size() + ": Cancelar.");
+                    System.out.println("Ingrese una Opción");
                     opcion = scanner.nextInt();
 
-                    Paciente Actualizado=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
+                    if (opcion < pacientesAsignados.size()) {
+                        Paciente Actualizado=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
 
-                    if (!Objects.equals(Actualizado.getPrincipiodelTratamiento(), LocalDate.now())) {
-                        System.out.println("Fechas Disponibles " + Actualizado.getPrincipiodelTratamiento() + " hasta" + LocalDate.now().plusDays(-1));
-                        System.out.println("Ingrese Year: ");
-                        ano = scanner.nextInt();
-                        System.out.println("Ingrese Mes: ");
-                        mes = scanner.nextInt();
-                        System.out.println("Ingrese Dia: ");
-                        dia = scanner.nextInt();
+                        if (!Objects.equals(Actualizado.getPrincipiodelTratamiento(), LocalDate.now())) {
+                            System.out.println("Fechas Disponibles " + Actualizado.getPrincipiodelTratamiento() + " hasta " + LocalDate.now().plusDays(-1));
+                            System.out.println("Ingrese Year: ");
+                            ano = scanner.nextInt();
+                            System.out.println("Ingrese Mes: ");
+                            mes = scanner.nextInt();
+                            System.out.println("Ingrese Dia: ");
+                            dia = scanner.nextInt();
 
-                        System.out.println(Actualizado.BuscarRegistro(LocalDate.of(ano, mes, dia)));
-                    } else {
-                        System.out.println("No tiene Registros Aun");
+                            System.out.println(Actualizado.BuscarRegistro(LocalDate.of(ano, mes, dia)));
+                        } else {
+                            System.out.println("No tiene Registros Aun");
+                        }
                     }
                     break;
                 case 3:
                     //dardealta antes de tiempo o modificar fecha
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        if (pacientesAsignados.get(i).getPlanDeControl() != null && pacientesAsignados.get(i).isAltamedica()==false) {
+                        if (pacientesAsignados.get(i).getPlanDeControl() != null && !pacientesAsignados.get(i).isAltamedica()) {
                             System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                         }
                     }
+                    System.out.println("Opción " + pacientesAsignados.size() + ": Cancelar");
                     System.out.println("Ingrese una Opción");
                     scanner.nextLine();
                     opcion = scanner.nextInt();
-                    Paciente Actualizado2=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
-                    FinalizarPlan(Actualizado2);
+                    if (opcion < pacientesAsignados.size()) {
+                        Paciente Actualizado2=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
+                        FinalizarPlan(Actualizado2);
+                    }
                     //remover el paciente cuando termina el plan de control el profe compra que no se remueva para ver los registros
                     //pacientesAsignados.remove(opcion);
                     break;
@@ -295,8 +300,9 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         SerializadorTareasdeControl ser=new SerializadorTareasdeControl();
         File fileTareas = new File("files/TareasDeControl.json");
         ArrayList<TareasDeControl> disponibles=new ArrayList<>();
+
         try {
-            disponibles=(ArrayList<TareasDeControl>)ser.Deserializar(fileTareas);
+            disponibles=ser.Deserializar(fileTareas);
         }catch (IOException e) {
             System.out.println("No se pudo leer el archivo: " + e.getMessage());
             e.printStackTrace();
@@ -305,21 +311,26 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
         System.out.println("Elegir Tratamiento");
         for (int i = 0; i < disponibles.size(); i++) {
-            System.out.println("Opcion " + i + " " + disponibles.get(i).getDescripcion());
+            System.out.println("Opción " + i + ": " + disponibles.get(i).getDescripcion());
         }
+
+        System.out.println("Opción " + disponibles.size() + ": Cancelar.");
         System.out.print("Opción: ");
         opcion = scanner.nextInt(); //levanta del archivo tareas base
 
-        if (tareas.get(opcion) instanceof DatoNumerico) {
-            DatoNumerico dato = new DatoNumerico(disponibles.get(opcion).getDescripcion(), 0);
-            tareas.add(dato);
-        } else if (tareas.get(opcion) instanceof DatoBoolean) {
-            DatoBoolean dato = new DatoBoolean(disponibles.get(opcion).getDescripcion(), false);
-            tareas.add(dato);
-        } else if (tareas.get(opcion) instanceof DatoTextual) {
-            DatoTextual dato = new DatoTextual(disponibles.get(opcion).getDescripcion(), null);
-            tareas.add(dato);
+        if (opcion < disponibles.size()){
+            if (disponibles.get(opcion) instanceof DatoNumerico) {
+                DatoNumerico dato = new DatoNumerico(disponibles.get(opcion).getDescripcion(), 0);
+                tareas.add(dato);
+            } else if (disponibles.get(opcion) instanceof DatoBoolean) {
+                DatoBoolean dato = new DatoBoolean(disponibles.get(opcion).getDescripcion(), false);
+                tareas.add(dato);
+            } else if (disponibles.get(opcion) instanceof DatoTextual) {
+                DatoTextual dato = new DatoTextual(disponibles.get(opcion).getDescripcion(), null);
+                tareas.add(dato);
+            }
         }
+
     }
 
     //paraadminymedicolomismo
@@ -334,8 +345,10 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         while (!seguir) {
             System.out.println("Elegir Tratamiento a Eliminar");
             for (int i = 0; i < tareas.size(); i++) {
-                System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
+                System.out.println("Opción " + i + ": " + tareas.get(i).getDescripcion());
             }
+
+            System.out.println("Opción " + tareas.size() + ": Cancelar.");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
             if (opcion < tareas.size()) {
@@ -366,7 +379,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                 "2 - Dato Textual. \n" +
                 "3 - Dato si/no\n"
         );
-        System.out.println("Opcion: ");
+        System.out.println("Opción: ");
         opcion = scanner.nextInt();
 
         switch (opcion) {//solo agrega en el paciente no en el plan base
@@ -389,9 +402,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
     @Override
     public String toString() {
-        return "Medico: " + this.getUsers() + "{" +
-                "especializacion='" + especializacion + '\'' +
-                ", pacientesAsignados=" + pacientesAsignados +
-                '}';
+        return "Medico: " + this.getUsers() + " - " +
+                "Especialización: " + especializacion + '\'' +
+                ", Pacientes Asignados: " + pacientesAsignados;
     }
 }

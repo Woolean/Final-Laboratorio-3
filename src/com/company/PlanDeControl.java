@@ -46,10 +46,9 @@ public class PlanDeControl implements Serializable {
 
     @Override
     public String toString() {
-        return "PlanDeControl{" +
-                "Enfermedad='" + Enfermedad + '\'' +
-                ", Tiempo=" + Tiempo +
-                ", Tratamientos=" + Tratamientos +
-                '}';
+        return "Plan De Control: " +
+                " - Enfermedad: " + Enfermedad +
+                ", Tiempo: " + Tiempo +
+                ", Tratamientos: " + Tratamientos;
     }
 }

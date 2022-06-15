@@ -145,15 +145,15 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                         System.out.println("Opción " + i + ": " + e.getEnfermedadNombre());
                         i++;
                     }
-                    System.out.println("Opción " + (enfermedades.size() + 1) + ": Volver al inicio.");
+                    System.out.println("Opción " + enfermedades.size() + ": Volver al inicio.");
                     System.out.println("Opción: ");
                     opcion = scanner.nextInt();
                     if (opcion < enfermedades.size()) {
                         enfermedad = enfermedades.get(opcion);
                         for (int j = 0; j < medicos.size(); j++) {
-                            System.out.println("Opción " + j + " " + medicos.get(j));
+                            System.out.println("Opción " + j + ": " + medicos.get(j));
                         }
-                        System.out.println("Opción " + (medicos.size() + 1) + ": Cancelar y volver a inicio.");
+                        System.out.println("Opción " + medicos.size() + ": Cancelar y volver a inicio.");
                         System.out.println("Ingrese la opción de Medico: ");
                         opcion = scanner.nextInt();
                         if (opcion < medicos.size()){
@@ -215,7 +215,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 for (int k = 0; k < enfermedades.size(); k++) {
                                     System.out.println("Opción " + k + ": " + enfermedades.get(k).getEnfermedadNombre());
                                 }
-                                System.out.println("Opción " + (enfermedades.size()+1) + ": Cancelar");
+                                System.out.println("Opción " + enfermedades.size() + ": Cancelar");
                                 System.out.println("Eliminar Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad = scanner.nextInt();
@@ -230,9 +230,9 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 int diasrecu;
                                 System.out.println("Lista de Enfermedades");
                                 for (int k = 0; k < enfermedades.size(); k++) {
-                                    System.out.println("Enfermedad Numero " + k + " " + enfermedades.get(k).getEnfermedadNombre());
+                                    System.out.println("Enfermedad Numero " + k + ": " + enfermedades.get(k).getEnfermedadNombre());
                                 }
-                                System.out.println("Opción " + (enfermedades.size()+1) + ": Cancelar");
+                                System.out.println("Opción " + enfermedades.size()+ ": Cancelar");
                                 System.out.println("Cambiar dias de Recuperación de la Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad2 = scanner.nextInt();
@@ -257,10 +257,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     int opcion2 = 0;
                     Scanner scanner2 = new Scanner(System.in);
                     PlanDeControl Planamodificar;
+                    File filePlanes = new File("files/PlanesDeControl.json");
+
                     for (int k = 0; k < planes.size(); k++) {
-                        System.out.println("Opción " + k + ":" + planes.get(k));
+                        System.out.println("Opción " + k + ": " + planes.get(k));
                     }
-                    System.out.println("Opción " + (planes.size()+1) + ": Cancelar");
+
+                    System.out.println("Opción " + planes.size() + ": Cancelar");
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2 = scanner2.nextInt();
                     if (opcion2 < planes.size()) {
@@ -294,6 +297,13 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                             default -> System.out.println("Opción no valida");
                         }
                     }
+
+                    try {
+                        ser4.Serializar(planes, filePlanes);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 case 5 -> salir = true;
                 default -> System.out.println("Opción no valida");
@@ -309,37 +319,29 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         String descripcionNueva;
         int opcion;
         Scanner scanner = new Scanner(System.in);
-        File fileTareas = new File("files/TareasDeControl.json");
 
         System.out.println("Elegir Tratamiento");
-        for (int i = 0; i < tareas.size(); i++) {
-            System.out.println("Opción " + i + " " + tareas.get(i).getDescripcion());
+        for (int i = 0; i < tareasbase.size(); i++) {
+            System.out.println("Opción " + i + ": " + tareasbase.get(i).getDescripcion());
         }
-        System.out.println("Opción " + (tareas.size()+1) + ": Cancelar");
+
+        System.out.println("Opción " + tareasbase.size()+ ": Cancelar");
         System.out.print("Opción: ");
         opcion = scanner.nextInt();
-        if (opcion < tareas.size()){
-            if (tareas.get(opcion) instanceof DatoNumerico) {
-                DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
+        if (opcion < tareasbase.size()){
+            if (tareasbase.get(opcion) instanceof DatoNumerico) {
+                DatoNumerico dato = new DatoNumerico(tareasbase.get(opcion).getDescripcion(), 0);
                 tareas.add(dato);
-            } else if (tareas.get(opcion) instanceof DatoBoolean) {
-                DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
+            } else if (tareasbase.get(opcion) instanceof DatoBoolean) {
+                DatoBoolean dato = new DatoBoolean(tareasbase.get(opcion).getDescripcion(), false);
                 tareas.add(dato);
-            } else if (tareas.get(opcion) instanceof DatoTextual) {
-                DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
+            } else if (tareasbase.get(opcion) instanceof DatoTextual) {
+                DatoTextual dato = new DatoTextual(tareasbase.get(opcion).getDescripcion(), null);
                 tareas.add(dato);
             }
-
-            try {
-                ser5.Serializar(tareas, fileTareas);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         } else {
             System.out.println("Volviendo al menú principal...");
         }
-
     }
 
     //paraadminymedicolomismo
@@ -349,30 +351,21 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         boolean seguir = false;
         int opcion;
         Scanner scanner = new Scanner(System.in);
-        File fileTareas = new File("files/TareasDeControl.json");
 
         while (!seguir) {
             System.out.println("Elegir Tratamiento a Eliminar");
             for (int i = 0; i < tareas.size(); i++) {
-                System.out.println("Opción " + i + " " + tareas.get(i).getDescripcion());
+                System.out.println("Opción " + i + ": " + tareas.get(i).getDescripcion());
             }
-            System.out.println("Opción " + (tareas.size()+1) + ": Cancelar");
+            System.out.println("Opción " + tareas.size() + ": Cancelar");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
             if (opcion < tareas.size()) {
                 tareas.remove(opcion);
-                seguir = true;
             }
-            else {
-                seguir = true;
-            }
+            seguir = true;
         }
 
-        try {
-            ser5.Serializar(tareas, fileTareas);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     //agregar a un arraylist con las tareas por defecto y persiste
@@ -385,7 +378,6 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         DatoNumerico datoNumerico;
         DatoTextual datoTextual;
         DatoBoolean datoBoolean;
-        File fileTareas = new File("files/TareasDeControl.json");
 
         Scanner scanner = new Scanner(System.in);
 
@@ -421,12 +413,8 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             }
             default -> System.out.println("Opción no Valida");
         }
+
         //no se como pero hay que usar alguna ecepcion aca seguro
-        try {
-            ser5.Serializar(tareas, fileTareas);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 

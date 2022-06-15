@@ -39,11 +39,7 @@ public class RegistroDiario implements Serializable {
     }
 
     public boolean verificarfecha(LocalDate hoy) {
-        if (this.fecha.equals(hoy)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.fecha.equals(hoy);
     }
 
     public boolean VerificaciondeTareas(ArrayList<TareasDeControl> tareas) {
@@ -51,23 +47,23 @@ public class RegistroDiario implements Serializable {
             if (e instanceof DatoNumerico) {
                 if (!((DatoNumerico) e).Validar()) {
                     this.completado = false;
-                    return this.completado;
+                    return false;
                 }
             } else if (e instanceof DatoBoolean) {
                 if (!((DatoBoolean) e).Validar()) {
                     this.completado = false;
-                    return this.completado;
+                    return false;
                 }
             } else if (e instanceof DatoTextual) {
                 if (!((DatoTextual) e).Validar()) {
                     this.completado = false;
-                    return this.completado;
+                    return false;
                 }
             }
 
         }
         this.completado = true;
-        return this.completado;
+        return true;
     }
 
     public String RegistrodeTareas(ArrayList<TareasDeControl> tareas) {
@@ -75,7 +71,7 @@ public class RegistroDiario implements Serializable {
         StringBuilder registro = new StringBuilder();
         for (TareasDeControl n : tareas) {
             registro.append("\n");
-            registro.append(n.getDescripcion() + ":");
+            registro.append(n.getDescripcion()).append(":");
             if (n instanceof DatoNumerico) {
                 registro.append(((DatoNumerico) n).getDatoNumerico());
             } else if (n instanceof DatoBoolean) {

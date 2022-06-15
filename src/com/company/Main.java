@@ -66,10 +66,10 @@ public class Main {
         PlanDeControl plan12=new PlanDeControl(enfermedad2,  Tareas);
         PlanesdeControl.add(plan1);
         PlanesdeControl.add(plan12);
-        medico1.AsignarPlan(paciente1, plan12);*/
+        medico1.AsignarPlan(paciente1, plan12);
 
         //serializar
-        /*try {
+        try {
             ser1.Serializar(Pacientes, filePacientes);
             ser2.Serializar(Medicos, fileMedicos);
             ser3.Serializar(Administradores, fileAdmins);

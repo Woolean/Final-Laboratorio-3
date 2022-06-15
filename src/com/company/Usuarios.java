@@ -11,7 +11,6 @@ public class Usuarios implements Serializable {
     private String password;
     private String user;
     //sacar el id
-    private int id;
 
     public Usuarios(String password, String user) {
         try {
@@ -21,10 +20,6 @@ public class Usuarios implements Serializable {
         }catch (Exception e){
             System.out.printf("Ese usuario ya Existe");
         }
-
-        //sacar el id porque va con hascode
-        idsuma = idsuma + 1;
-        this.id = idsuma;
     }
 
     public Usuarios() {
@@ -44,14 +39,6 @@ public class Usuarios implements Serializable {
 
     public void setUser(String user) {
         this.user = user;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void verificarUsers() throws Exception{

@@ -5,6 +5,7 @@
       {
         "Enfermedad": "Bronquitis",
         "Sintomas": "dolor de garganta",
+        "altamedica": true,
         "planDeControl": {
           "Enfermedad": "Dolor de Garganta",
           "Tiempo": 10,
@@ -25,23 +26,67 @@
             }
           ]
         },
-        "FindelTratamiento": "24-jun.-2022",
-        "PrincipiodelTratamiento": "14-jun.-2022",
-        "historial": [],
+        "FindelTratamiento": "15-jun.-2022",
+        "PrincipiodelTratamiento": "15-jun.-2022",
+        "historial": [
+          {
+            "fecha": "15-jun.-2022",
+            "completado": false
+          }
+        ],
         "password": "contra1",
-        "user": "Pablo",
-        "id": 1
+        "user": "Pablo"
       }
     ],
     "password": "contra3",
-    "user": "Fernando",
-    "id": 3
+    "user": "Fernando"
   },
   {
     "especializacion": "Pediatra",
     "pacientesAsignados": [],
     "password": "contra33",
-    "user": "Julio",
-    "id": 4
+    "user": "Julio"
+  },
+  {
+    "especializacion": "Clínico",
+    "pacientesAsignados": [
+      {
+        "Enfermedad": "Gripe comun",
+        "Sintomas": "tos y congestion",
+        "altamedica": true,
+        "planDeControl": {
+          "Enfermedad": "Gripe comun",
+          "Tiempo": 14,
+          "Tratamientos": [
+            {
+              "type": "DatoNumerico",
+              "properties": {
+                "datoNumerico": 0.0,
+                "descripcion": "Tomar temperatura"
+              }
+            },
+            {
+              "type": "DatoBoolean",
+              "properties": {
+                "datoBoolean": false,
+                "descripcion": "Tomar medicamentos"
+              }
+            }
+          ]
+        },
+        "FindelTratamiento": "15-jun.-2022",
+        "PrincipiodelTratamiento": "15-jun.-2022",
+        "historial": [
+          {
+            "fecha": "15-jun.-2022",
+            "completado": false
+          }
+        ],
+        "password": "contra666",
+        "user": "Julián"
+      }
+    ],
+    "password": "contra333",
+    "user": "Carlos"
   }
 ]

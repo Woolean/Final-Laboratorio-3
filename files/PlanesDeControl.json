@@ -2,7 +2,22 @@
   {
     "Enfermedad": "Bronquitis",
     "Tiempo": 20,
-    "Tratamientos": []
+    "Tratamientos": [
+      {
+        "type": "DatoNumerico",
+        "properties": {
+          "datoNumerico": 0.0,
+          "descripcion": "Tomar Temperatura"
+        }
+      },
+      {
+        "type": "DatoBoolean",
+        "properties": {
+          "datoBoolean": false,
+          "descripcion": "Tomar Medicamentos"
+        }
+      }
+    ]
   },
   {
     "Enfermedad": "Dolor de Garganta",
@@ -12,14 +27,34 @@
         "type": "DatoNumerico",
         "properties": {
           "datoNumerico": 0.0,
-          "descripcion": "Tomar temperatura"
+          "descripcion": "Tomar Temperatura"
         }
       },
       {
         "type": "DatoBoolean",
         "properties": {
           "datoBoolean": false,
-          "descripcion": "Tomar Pastilla"
+          "descripcion": "Tomar Medicamentos"
+        }
+      }
+    ]
+  },
+  {
+    "Enfermedad": "Gripe comun",
+    "Tiempo": 14,
+    "Tratamientos": [
+      {
+        "type": "DatoNumerico",
+        "properties": {
+          "datoNumerico": 0.0,
+          "descripcion": "Tomar Temperatura"
+        }
+      },
+      {
+        "type": "DatoBoolean",
+        "properties": {
+          "datoBoolean": false,
+          "descripcion": "Tomar Medicamentos"
         }
       }
     ]

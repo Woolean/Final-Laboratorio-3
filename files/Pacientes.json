@@ -10,21 +10,21 @@
         {
           "type": "DatoNumerico",
           "properties": {
-            "datoNumerico": 37.0,
+            "datoNumerico": 0.0,
             "descripcion": "Tomar temperatura"
           }
         },
         {
           "type": "DatoBoolean",
           "properties": {
-            "datoBoolean": true,
+            "datoBoolean": false,
             "descripcion": "Tomar Pastilla"
           }
         }
       ]
     },
-    "FindelTratamiento": "24-jun.-2022",
-    "PrincipiodelTratamiento": "14-jun.-2022",
+    "FindelTratamiento": "15-jun.-2022",
+    "PrincipiodelTratamiento": "15-jun.-2022",
     "historial": [
       {
         "fecha": "15-jun.-2022",
@@ -32,8 +32,7 @@
       }
     ],
     "password": "contra1",
-    "user": "Pablo",
-    "id": 1
+    "user": "Pablo"
   },
   {
     "Enfermedad": "Dolor de Garganta",
@@ -41,7 +40,46 @@
     "altamedica": false,
     "historial": [],
     "password": "contra11",
-    "user": "Juan",
-    "id": 2
+    "user": "Juan"
+  },
+  {
+    "Enfermedad": "Gripe comun",
+    "Sintomas": "tos y congestion",
+    "altamedica": false,
+    "planDeControl": {
+      "Enfermedad": "Gripe comun",
+      "Tiempo": 14,
+      "Tratamientos": [
+        {
+          "type": "DatoNumerico",
+          "properties": {
+            "datoNumerico": 0.0,
+            "descripcion": "Tomar temperatura"
+          }
+        },
+        {
+          "type": "DatoBoolean",
+          "properties": {
+            "datoBoolean": false,
+            "descripcion": "Tomar medicamentos"
+          }
+        }
+      ]
+    },
+    "FindelTratamiento": "15-jun.-2022",
+    "PrincipiodelTratamiento": "15-jun.-2022",
+    "historial": [
+      {
+        "fecha": "15-jun.-2022",
+        "completado": false,
+        "informacion": "\nTomar temperatura:0.0--------------------\nTomar medicamentos:false--------------------"
+      },
+      {
+        "fecha": "16-jun.-2022",
+        "completado": false
+      }
+    ],
+    "password": "contra666",
+    "user": "Julián"
   }
 ]
