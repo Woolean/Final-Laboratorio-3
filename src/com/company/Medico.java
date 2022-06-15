@@ -44,6 +44,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         paciente.setPlanDeControl(plan);
         paciente.setPrincipiodelTratamiento(LocalDate.now());
         paciente.setFindelTratamiento(LocalDate.now().plusDays(plan.getTiempo()));
+
+        paciente.actualizarArchivo();
     }
 
     public String VerRegistro(Paciente paciente, LocalDate fechadelregistro) {
@@ -53,6 +55,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     //verificar cuando se da de alta, se cambia la fecha del fin del tratamiento en el paciente y se cambia el numero de dias del plan de control
     public void FinalizarPlan(Paciente paciente) {
         paciente.setFindelTratamiento(LocalDate.now());
+        paciente.actualizarArchivo();
         /*long dias= DAYS.between(paciente.getPrincipiodelTratamiento(), LocalDate.now());
         paciente.getPlanDeControl().setTiempo((int) dias); se usaba para cambiar a los dias que duro el tratamiento el plan de control*/
     }
@@ -139,21 +142,19 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2=scanner2.nextInt();
                     //copia de la enfermeda porque si no la modifica
-                    Planamodificar=new PlanDeControl(planes.get(opcion2).getEnfermedad, planes.get(opcion2).getTratamientos);
-
-                    //dato de prueba
-                    Enfermedad nueva=new Enfermedad("holatitis", 30);
-                    Planamodificar=new PlanDeControl(nueva, null);
+                    Enfermedad EnfermedadModificar=new Enfermedad(planes.get(opcion2).getEnfermedad(), planes.get(opcion2).getTiempo());
+                    Planamodificar=new PlanDeControl(EnfermedadModificar, planes.get(opcion2).getTratamientos());
 
 
                     //administracion de tareas de control y dias del plan de control.
 
 
                     while (!salir2) {
-                        System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5:");
+                        System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5 (Tambien para guardar cambios):");
                         System.out.println("Plan Base:");
-                        //System.out.println(Planamodificar);
-                        System.out.println("Opción 1: Agregar Tarea Existente al Plan de Control");
+                        System.out.println(Planamodificar);
+
+                        System.out.println("\nOpción 1: Agregar Tarea Existente al Plan de Control");
                         System.out.println("Opción 2: Eliminar Tarea");
                         System.out.println("Opción 3: Crear nueva Tarea");
                         System.out.println("Opción 4: Cambiar cantidad de dias del Plan");
@@ -165,14 +166,10 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         switch (opcion2) {
                             case 1 -> agregarTareasdeControl(Planamodificar.getTratamientos());
 
-                            //persistir cambio del plan
                             case 2 -> EliminarTareas(Planamodificar.getTratamientos());
 
-                            //persistir cambio del plan
                             case 3 ->
-                                    //crearnuevatarea para la lista así peristimos como base
                                     CrearTareaNueva(Planamodificar.getTratamientos());
-                            //persistir la lista de tareas
                             case 4 -> {
                                 int diasenfermedad = 0;
                                 System.out.println("Ingrese el Cantidad estimada de Dias para la Recuperación de la Enfermedad: ");
@@ -186,6 +183,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         }
                     }
                     AsignarPlan(asignar, Planamodificar);
+                    //persistir paciente de la lista de pacientes porque no es necesario persistirlo en el
+                    // medico ya que al momento de legir un user se busca en paciente para tener la ultima informacion
                     break;
                 case 2:
                     //pacientes con plan de control vigente
@@ -196,8 +195,10 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     System.out.println("Ingrese una Opcion");
                     opcion = scanner.nextInt();
 
-                    if (!Objects.equals(pacientesAsignados.get(opcion).getPrincipiodelTratamiento(), LocalDate.now())) {
-                        System.out.println("Fechas Disponibles " + pacientesAsignados.get(opcion).getPrincipiodelTratamiento() + " hasta" + LocalDate.now().plusDays(-1));
+                    Paciente Actualizado=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
+
+                    if (!Objects.equals(Actualizado.getPrincipiodelTratamiento(), LocalDate.now())) {
+                        System.out.println("Fechas Disponibles " + Actualizado.getPrincipiodelTratamiento() + " hasta" + LocalDate.now().plusDays(-1));
                         System.out.println("Ingrese Year: ");
                         ano = scanner.nextInt();
                         System.out.println("Ingrese Mes: ");
@@ -209,7 +210,6 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     } else {
                         System.out.println("No tiene Registros Aun");
                     }
-
                     break;
                 case 3:
                     //dardealta antes de tiempo o modificar fecha
@@ -221,7 +221,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     System.out.println("Ingrese una Opción");
                     scanner.nextLine();
                     opcion = scanner.nextInt();
-                    FinalizarPlan(pacientesAsignados.get(opcion));
+                    Paciente Actualizado2=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
+                    FinalizarPlan(Actualizado2);
                     pacientesAsignados.remove(opcion);
                     break;
                 case 4:
@@ -234,7 +235,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         }
     }
 
-    //modifica el plan de control
+    //modifica el plan de control solo en el paciente y en los pacientes asignados
     @Override
     public void agregarTareasdeControl(ArrayList<TareasDeControl> tareas) {
 

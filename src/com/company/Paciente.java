@@ -102,6 +102,9 @@ public class Paciente extends Usuarios implements Menus, Serializable {
             if (Objects.equals(getUsers(), paciente.getUsers())) {
                 paciente.setPlanDeControl(this.planDeControl);
                 paciente.setHistorial(this.historial);
+                //agarego esto porque si modifican esto no se va a guardar
+                paciente.setFindelTratamiento(this.FindelTratamiento);
+                paciente.setPrincipiodelTratamiento(this.PrincipiodelTratamiento);
             }
         }
 
