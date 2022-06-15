@@ -206,7 +206,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                         System.out.println("Ingrese Dia: ");
                         dia = scanner.nextInt();
 
-                        System.out.println(pacientesAsignados.get(opcion).BuscarRegistro(LocalDate.of(ano, mes, dia)));
+                        System.out.println(Actualizado.BuscarRegistro(LocalDate.of(ano, mes, dia)));
                     } else {
                         System.out.println("No tiene Registros Aun");
                     }
@@ -242,22 +242,32 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         String descripcionNueva;
         int opcion;
         Scanner scanner = new Scanner(System.in);
+        SerializadorTareasdeControl ser=new SerializadorTareasdeControl();
+        File fileTareas = new File("files/TareasDeControl.json");
+        ArrayList<TareasDeControl> disponibles=new ArrayList<>();
+        try {
+            disponibles=(ArrayList<TareasDeControl>)ser.Deserializar(fileTareas);
+        }catch (IOException e) {
+            System.out.println("No se pudo leer el archivo: " + e.getMessage());
+            e.printStackTrace();
+        }
+
 
         System.out.println("Elegir Tratamiento");
-        for (int i = 0; i < tareas.size(); i++) {
-            System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
+        for (int i = 0; i < disponibles.size(); i++) {
+            System.out.println("Opcion " + i + " " + disponibles.get(i).getDescripcion());
         }
         System.out.print("Opción: ");
         opcion = scanner.nextInt(); //levanta del archivo tareas base
 
         if (tareas.get(opcion) instanceof DatoNumerico) {
-            DatoNumerico dato = new DatoNumerico(tareas.get(opcion).getDescripcion(), 0);
+            DatoNumerico dato = new DatoNumerico(disponibles.get(opcion).getDescripcion(), 0);
             tareas.add(dato);
         } else if (tareas.get(opcion) instanceof DatoBoolean) {
-            DatoBoolean dato = new DatoBoolean(tareas.get(opcion).getDescripcion(), false);
+            DatoBoolean dato = new DatoBoolean(disponibles.get(opcion).getDescripcion(), false);
             tareas.add(dato);
         } else if (tareas.get(opcion) instanceof DatoTextual) {
-            DatoTextual dato = new DatoTextual(tareas.get(opcion).getDescripcion(), null);
+            DatoTextual dato = new DatoTextual(disponibles.get(opcion).getDescripcion(), null);
             tareas.add(dato);
         }
     }
