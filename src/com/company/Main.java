@@ -2,10 +2,8 @@ package com.company;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -47,7 +45,6 @@ public class Main {
         SerializadorEnfermedades ser6 = new SerializadorEnfermedades();
 
         //Carga de Datos de pruebas
-        //Ya cargado en Json
         /*Paciente paciente1=new Paciente("contra1", "Pablo", "Bronquitis", "dolor de garganta");
         Paciente paciente2=new Paciente("contra11", "Juan", "Dolor de Garganta", "dolor de garganta cuando trago");
         Medico medico1=new Medico("contra3", "Fernando", "Oftalmologo");
@@ -71,30 +68,6 @@ public class Main {
         PlanesdeControl.add(plan12);
         medico1.AsignarPlan(paciente1, plan12);*/
 
-        /*try {
-            BufferedReader bufferedReaderPacientes = new BufferedReader(new FileReader(filePacientes));
-            Type tipoPaciente = new TypeToken<ArrayList<Paciente>>() {}.getType();
-            Pacientes = gson.fromJson(bufferedReaderPacientes, tipoPaciente);
-            BufferedReader bufferedReaderMedicos = new BufferedReader(new FileReader(fileMedicos));
-            Type tipoMedico = new TypeToken<ArrayList<Medico>>() {}.getType();
-            Medicos = gson.fromJson(bufferedReaderMedicos, tipoMedico);
-            BufferedReader bufferedReaderTareas = new BufferedReader(new FileReader(fileTareas));
-            Type tipoTareas = new TypeToken<ArrayList<TareasDeControl>>() {}.getType();
-            Tareas = gson.fromJson(bufferedReaderTareas, tipoTareas);
-            BufferedReader bufferedReaderEnfermedades = new BufferedReader(new FileReader(fileEnfermedad));
-            Type tipoEnfermedad = new TypeToken<ArrayList<Enfermedad>>() {}.getType();
-            Enfermedades = gson.fromJson(bufferedReaderEnfermedades, tipoEnfermedad);
-            BufferedReader bufferedReaderPlanes = new BufferedReader(new FileReader(filePlanes));
-            Type tipoPlanes = new TypeToken<ArrayList<PlanDeControl>>() {}.getType();
-            PlanesdeControl = gson.fromJson(bufferedReaderPlanes, tipoPlanes);
-
-            System.out.println(Tareas.toString());
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
-
-
         //serializar
         /*try {
             ser1.Serializar(Pacientes, filePacientes);
@@ -108,15 +81,14 @@ public class Main {
             e.printStackTrace();
         }*/
 
-        //deserealizar
-
+        //deserializar
         try {
-            Pacientes= (ArrayList<Paciente>) ser1.Deserializar(filePacientes);
-            Medicos= (ArrayList<Medico>) ser2.Deserializar(fileMedicos);
-            Administradores= (ArrayList<Administrador>) ser3.Deserializar(fileAdmins);
-            PlanesdeControl= (ArrayList<PlanDeControl>) ser4.Deserializar(filePlanes);
-            Tareas= (ArrayList<TareasDeControl>) ser5.Deserializar(fileTareas);
-            Enfermedades= (ArrayList<Enfermedad>) ser6.Deserializar(fileEnfermedad);
+            Pacientes= ser1.Deserializar(filePacientes);
+            Medicos= ser2.Deserializar(fileMedicos);
+            Administradores= ser3.Deserializar(fileAdmins);
+            PlanesdeControl= ser4.Deserializar(filePlanes);
+            Tareas= ser5.Deserializar(fileTareas);
+            Enfermedades= ser6.Deserializar(fileEnfermedad);
         } catch (IOException e) {
             System.out.println("No se pudo leer/escribir el archivo: " + e.getMessage());
             e.printStackTrace();
@@ -128,7 +100,6 @@ public class Main {
         ////////////////////////////////////////
 
         Sistema hospital = new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
-
 
         //iniciar sesion
         boolean Seguir = false;
@@ -149,12 +120,5 @@ public class Main {
                 Seguir = true;
             }
         }
-
-        //Guardar los datos de una en los archivos, por si hay que resetearlos
-        /*guardar.serializarDatos(Pacientes, filePacientes);
-        guardar.serializarDatos(Medicos, fileMedicos);
-        guardar.serializarDatos(Tareas, fileTareas);
-        guardar.serializarDatos(PlanesdeControl, filePlanes);
-        guardar.serializarDatos(Enfermedades, fileEnfermedad);*/
     }
 }

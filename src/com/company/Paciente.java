@@ -130,13 +130,14 @@ public class Paciente extends Usuarios implements Menus, Serializable {
             for (int i = 0; i < planDeControl.getTratamientos().size(); i++) {
                 System.out.println("Opción " + i + " " + planDeControl.getTratamientos().get(i).getDescripcion());
             }
+
             System.out.print("Ingrese Opción: ");
             opcion = scanner.nextInt();
 
             if (opcion < planDeControl.getTratamientos().size()) {
                 if (planDeControl.getTratamientos().get(opcion) instanceof DatoNumerico) {
                     double dato;
-                    System.out.println("Ingresa un valor Numerico");
+                    System.out.println("Ingresa un valor Numérico");
                     System.out.println(planDeControl.getTratamientos().get(opcion) + ": ");
                     dato = scanner.nextInt();
                     ((DatoNumerico) planDeControl.getTratamientos().get(opcion)).setDatoNumerico(dato);

@@ -117,11 +117,11 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
 
         while (!salir) {
 
-            System.out.println("Opcion 1: Ingreso de Pacientes");
-            System.out.println("Opcion 2: Ingreso de Profesionales");
-            System.out.println("Opcion 3: Administración de Enfermedades");
-            System.out.println("Opcion 4: Administración de Tareas de Control");
-            System.out.println("Opcion 5: Salir");
+            System.out.println("Opción 1: Ingreso de Pacientes");
+            System.out.println("Opción 2: Ingreso de Profesionales");
+            System.out.println("Opción 3: Administración de Enfermedades");
+            System.out.println("Opción 4: Administración de Tareas de Control");
+            System.out.println("Opción 5: Salir");
 
             System.out.printf("Ingrese una Opción: ");
             opcion = scanner.nextInt();
@@ -136,26 +136,31 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     System.out.println("Ingrese nombre de usuario para el Paciente:");
                     scanner.nextLine();
                     nombre = scanner.nextLine();
-                    System.out.println("Ingrese contrasena de usuario para el Paciente:");
+                    System.out.println("Ingrese contraseña de usuario para el Paciente:");
                     contrasena = scanner.nextLine();
-                    System.out.println("Ingrese Sintomas del Paciente:");
+                    System.out.println("Ingrese Síntomas del Paciente:");
                     sintomas = scanner.nextLine();
                     System.out.println("Seleccione la enfermedad");
                     for (Enfermedad e : this.enfermedades) {
-                        System.out.println("Opcion " + i + ": " + e.getEnfermedadNombre());
+                        System.out.println("Opción " + i + ": " + e.getEnfermedadNombre());
                         i++;
                     }
-                    System.out.println("Opción 99: Volver al inicio.");
-                    System.out.println("Opcion: ");
+                    System.out.println("Opción " + (enfermedades.size() + 1) + ": Volver al inicio.");
+                    System.out.println("Opción: ");
                     opcion = scanner.nextInt();
-                    if (opcion < enfermedades.size() || opcion != 99) {
+                    if (opcion < enfermedades.size()) {
                         enfermedad = enfermedades.get(opcion);
                         for (int j = 0; j < medicos.size(); j++) {
-                            System.out.println("Opcion " + j + " " + medicos.get(j));
+                            System.out.println("Opción " + j + " " + medicos.get(j));
                         }
-                        System.out.println("Ingrese la opcion de Medico: ");
+                        System.out.println("Opción " + (medicos.size() + 1) + ": Cancelar y volver a inicio.");
+                        System.out.println("Ingrese la opción de Medico: ");
                         opcion = scanner.nextInt();
-                        agregarnuevoPaciente(enfermedad.getEnfermedadNombre(), medicos.get(opcion), nombre, contrasena, sintomas);
+                        if (opcion < medicos.size()){
+                            agregarnuevoPaciente(enfermedad.getEnfermedadNombre(), medicos.get(opcion), nombre, contrasena, sintomas);
+                        } else {
+                            System.out.println("Volviendo al menú principal...");
+                        }
                     } else {
                         System.out.println("La enfermedad no existe, primero créela.");
                     }
@@ -185,10 +190,10 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                         System.out.println(e.getEnfermedadNombre());
                     }
                     while (!salir3) {
-                        System.out.println("Opcion 1: Agregar nueva Enfermedad: ");
-                        System.out.println("Opcion 2: Eliminar Enfermedad: ");
-                        System.out.println("Opcion 3: Modificar dias de Recuperacion");
-                        System.out.println("Opcion 4: Salir");
+                        System.out.println("Opción 1: Agregar nueva Enfermedad: ");
+                        System.out.println("Opción 2: Eliminar Enfermedad: ");
+                        System.out.println("Opción 3: Modificar dias de Recuperación");
+                        System.out.println("Opción 4: Salir");
 
                         System.out.printf("Ingrese una Opción: ");
                         opcion3 = scanner.nextInt();
@@ -208,12 +213,17 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 int opcionenfermedad;
                                 System.out.println("Lista de Enfermedades");
                                 for (int k = 0; k < enfermedades.size(); k++) {
-                                    System.out.println("Enfermedad Numero " + k + " " + enfermedades.get(k).getEnfermedadNombre());
+                                    System.out.println("Opción " + k + ": " + enfermedades.get(k).getEnfermedadNombre());
                                 }
+                                System.out.println("Opción " + (enfermedades.size()+1) + ": Cancelar");
                                 System.out.println("Eliminar Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad = scanner.nextInt();
-                                eliminarEnfermedad(opcionenfermedad);
+                                if (opcionenfermedad < enfermedades.size()){
+                                    eliminarEnfermedad(opcionenfermedad);
+                                } else {
+                                    System.out.println("Volviendo al menú principal...");
+                                }
                             }
                             case 3 -> {
                                 int opcionenfermedad2;
@@ -222,11 +232,11 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 for (int k = 0; k < enfermedades.size(); k++) {
                                     System.out.println("Enfermedad Numero " + k + " " + enfermedades.get(k).getEnfermedadNombre());
                                 }
-                                System.out.println("Opción 99: Volver al menú.");
+                                System.out.println("Opción " + (enfermedades.size()+1) + ": Cancelar");
                                 System.out.println("Cambiar dias de Recuperación de la Enfermedad Numero: ");
                                 scanner.nextLine();
                                 opcionenfermedad2 = scanner.nextInt();
-                                if (opcionenfermedad2 < enfermedades.size() || opcionenfermedad2 != 99) {
+                                if (opcionenfermedad2 < enfermedades.size()) {
                                     System.out.println("Nueva Cantidad de Dias: ");
                                     scanner.nextLine();
                                     diasrecu = scanner.nextInt();
@@ -237,7 +247,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                                 }
                             }
                             case 4 -> salir3 = true;
-                            default -> System.out.println("Opcion no valida");
+                            default -> System.out.println("Opción no valida");
                         }
                     }
                 }
@@ -248,21 +258,22 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                     Scanner scanner2 = new Scanner(System.in);
                     PlanDeControl Planamodificar;
                     for (int k = 0; k < planes.size(); k++) {
-                        System.out.println("Opcion " + k + ":" + planes.get(k));
+                        System.out.println("Opción " + k + ":" + planes.get(k));
                     }
-                    System.out.println("Opcion 99: Volver atrás. ");
+                    System.out.println("Opción " + (planes.size()+1) + ": Cancelar");
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2 = scanner2.nextInt();
-                    if (opcion2 != 99) {
+                    if (opcion2 < planes.size()) {
                         Planamodificar = planes.get(opcion2);
                     } else {
+                        System.out.println("Volviendo al menú principal...");
                         break;
                     }
                     while (!salir2) {
-                        System.out.println("Opcion 1: Agregar Tarea Existente al Plan de Control");
-                        System.out.println("Opcion 2: Eliminar Tarea");
-                        System.out.println("Opcion 3: Crear nueva Tarea");
-                        System.out.println("Opcion 4: Salir");
+                        System.out.println("Opción 1: Agregar Tarea Existente al Plan de Control");
+                        System.out.println("Opción 2: Eliminar Tarea");
+                        System.out.println("Opción 3: Crear nueva Tarea");
+                        System.out.println("Opción 4: Salir");
 
                         System.out.printf("Ingrese una Opción: ");
                         opcion2 = scanner.nextInt();
@@ -280,12 +291,12 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
 
                             //persistir la lista de tareas
                             case 4 -> salir2 = true;
-                            default -> System.out.println("Opcion no valida");
+                            default -> System.out.println("Opción no valida");
                         }
                     }
                 }
                 case 5 -> salir = true;
-                default -> System.out.println("Opcion no valida");
+                default -> System.out.println("Opción no valida");
             }
         }
 
@@ -302,9 +313,9 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
 
         System.out.println("Elegir Tratamiento");
         for (int i = 0; i < tareas.size(); i++) {
-            System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
+            System.out.println("Opción " + i + " " + tareas.get(i).getDescripcion());
         }
-        System.out.println("Opción 99: Volver atrás.");
+        System.out.println("Opción " + (tareas.size()+1) + ": Cancelar");
         System.out.print("Opción: ");
         opcion = scanner.nextInt();
         if (opcion < tareas.size()){
@@ -326,7 +337,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
             }
 
         } else {
-            System.out.println("Opción errónea, intente nuevamente. ");
+            System.out.println("Volviendo al menú principal...");
         }
 
     }
@@ -343,8 +354,9 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
         while (!seguir) {
             System.out.println("Elegir Tratamiento a Eliminar");
             for (int i = 0; i < tareas.size(); i++) {
-                System.out.println("Opcion " + i + " " + tareas.get(i).getDescripcion());
+                System.out.println("Opción " + i + " " + tareas.get(i).getDescripcion());
             }
+            System.out.println("Opción " + (tareas.size()+1) + ": Cancelar");
             System.out.print("Opción: ");
             opcion = scanner.nextInt();
             if (opcion < tareas.size()) {
@@ -404,7 +416,7 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                 DatoBoolean datoBoolean2 = new DatoBoolean(descripcionNueva, false);
                 tareas.add(datoBoolean2);
             }
-            default -> System.out.println("Opcion no Valida");
+            default -> System.out.println("Opción no Valida");
         }
         //no se como pero hay que usar alguna ecepcion aca seguro
         try {
