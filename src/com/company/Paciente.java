@@ -13,6 +13,7 @@ public class Paciente extends Usuarios implements Menus, Serializable {
 
     private String Enfermedad;
     private String Sintomas;
+    private boolean altamedica=false;
     private PlanDeControl planDeControl = null; //se lo inicializa en null para verificar si le asignaron o no un plan el medico
     private LocalDate FindelTratamiento;
     private LocalDate PrincipiodelTratamiento;
@@ -53,6 +54,14 @@ public class Paciente extends Usuarios implements Menus, Serializable {
 
     public LocalDate getPrincipiodelTratamiento() {
         return PrincipiodelTratamiento;
+    }
+
+    public boolean isAltamedica() {
+        return altamedica;
+    }
+
+    public void setAltamedica(boolean altamedica) {
+        this.altamedica = altamedica;
     }
 
     public void setPrincipiodelTratamiento(LocalDate principiodelTratamiento) {

@@ -363,6 +363,9 @@ public class Administrador extends Usuarios implements AdministraciondeTareasdeC
                 tareas.remove(opcion);
                 seguir = true;
             }
+            else {
+                seguir = true;
+            }
         }
 
         try {

@@ -30,11 +30,11 @@ public class Main {
         File filePlanes = new File("files/PlanesDeControl.json");
 
         //Gson builders para que funcione LocalDate
-        GsonBuilder gsonBuilder = new GsonBuilder();
+        /*GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(TareasDeControl.class, new AbstractTareasdeControl());
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
         gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateDeserializer());
-        Gson gson = gsonBuilder.setPrettyPrinting().create();
+        Gson gson = gsonBuilder.setPrettyPrinting().create();*/
 
         //Serializadores
         SerializadorPacientes ser1 = new SerializadorPacientes();

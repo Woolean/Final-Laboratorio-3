@@ -65,10 +65,12 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     //verificar cuando se da de alta, se cambia la fecha del fin del tratamiento en el paciente y se cambia el numero de dias del plan de control
     public void FinalizarPlan(Paciente paciente) {
         paciente.setFindelTratamiento(LocalDate.now());
+        paciente.setAltamedica(true);
 
         for (Paciente pacient : this.pacientesAsignados){
             if (pacient.getUsers().equals(paciente.getUsers())){
                 pacient.setFindelTratamiento(paciente.getFindelTratamiento());
+                pacient.setAltamedica(true);
             }
         }
         this.ActualizarPacientesAsignados(paciente);
@@ -173,7 +175,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
                     System.out.println("Pacientes sin Plan de Control:");
                     for (int i=0; i<pacientesAsignados.size(); i++){
-                        if (pacientesAsignados.get(i).getPlanDeControl()==null){
+                        if (pacientesAsignados.get(i).getPlanDeControl()==null || pacientesAsignados.get(i).isAltamedica()==true){
                             System.out.println(pacientesAsignados.get(i));
                         }
                     }
@@ -261,7 +263,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                 case 3:
                     //dardealta antes de tiempo o modificar fecha
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        if (pacientesAsignados.get(i).getPlanDeControl() != null) {
+                        if (pacientesAsignados.get(i).getPlanDeControl() != null && pacientesAsignados.get(i).isAltamedica()==false) {
                             System.out.println("Opción " + i + " " + pacientesAsignados.get(i));
                         }
                     }
@@ -270,8 +272,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     opcion = scanner.nextInt();
                     Paciente Actualizado2=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
                     FinalizarPlan(Actualizado2);
-                    //remover el paciente cuando termina el plan de control??
-                    pacientesAsignados.remove(opcion);
+                    //remover el paciente cuando termina el plan de control el profe compra que no se remueva para ver los registros
+                    //pacientesAsignados.remove(opcion);
                     break;
                 case 4:
                     salir = true;

@@ -2,6 +2,7 @@
   {
     "Enfermedad": "Bronquitis",
     "Sintomas": "dolor de garganta",
+    "altamedica": false,
     "planDeControl": {
       "Enfermedad": "Dolor de Garganta",
       "Tiempo": 10,
@@ -24,7 +25,12 @@
     },
     "FindelTratamiento": "24-jun.-2022",
     "PrincipiodelTratamiento": "14-jun.-2022",
-    "historial": [],
+    "historial": [
+      {
+        "fecha": "15-jun.-2022",
+        "completado": false
+      }
+    ],
     "password": "contra1",
     "user": "Pablo",
     "id": 1
@@ -32,6 +38,7 @@
   {
     "Enfermedad": "Dolor de Garganta",
     "Sintomas": "dolor de garganta cuando trago",
+    "altamedica": false,
     "historial": [],
     "password": "contra11",
     "user": "Juan",
