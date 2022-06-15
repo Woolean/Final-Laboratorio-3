@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -55,13 +57,41 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         paciente.getPlanDeControl().setTiempo((int) dias); se usaba para cambiar a los dias que duro el tratamiento el plan de control*/
     }
 
-    public Paciente buscarpaciente(String nombre) {
-        for (Paciente e : this.pacientesAsignados) {
-            if (nombre.equalsIgnoreCase(e.getUsers())) {
+    public Paciente buscarpaciente(String nombre){
+        SerializadorPacientes ser=new SerializadorPacientes();
+        File filePacientes = new File("files/Pacientes.json");
+        ArrayList<Paciente> pacientes=new ArrayList<>();
+        try {
+            pacientes=(ArrayList<Paciente>)ser.Deserializar(filePacientes);
+        }catch (IOException e) {
+            System.out.println("No se pudo leer el archivo: " + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+
+        }
+
+        for (Paciente e : pacientes){
+            if (nombre.equalsIgnoreCase(e.getUsers())){
                 return e;
             }
         }
         return null;
+    }
+
+    public ArrayList<PlanDeControl> buscarplanes(){
+        SerializadorPlanesdeControl ser=new SerializadorPlanesdeControl();
+        File filePlanes = new File("files/PlanesDeControl.json");
+        ArrayList<PlanDeControl> planes=new ArrayList<>();
+        try {
+            planes=(ArrayList<PlanDeControl>)ser.Deserializar(filePlanes);
+        }catch (IOException e) {
+            System.out.println("No se pudo leer el archivo: " + e.getMessage());
+            e.printStackTrace();
+        }
+        finally {
+            return planes;
+        }
     }
 
     @Override
@@ -82,43 +112,38 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
 
             switch (opcion) {
                 case 1:
-                    boolean salir2 = false;
-                    int opcion2 = 0;
+                    boolean salir2=false;
+                    int opcion2=0;
                     String userpaciente;
                     Paciente asignar;
                     PlanDeControl Planamodificar;
-                    Scanner scanner2 = new Scanner(System.in);
+                    Scanner scanner2=new Scanner(System.in);
 
                     //selecciona el user
 
                     System.out.println("Pacientes sin Plan de Control:");
-                    for (int i = 0; i < pacientesAsignados.size(); i++) {
-                        if (pacientesAsignados.get(i).getPlanDeControl() == null) {
+                    for (int i=0; i<pacientesAsignados.size(); i++){
+                        if (pacientesAsignados.get(i).getPlanDeControl()==null){
                             System.out.println(pacientesAsignados.get(i));
                         }
                     }
                     System.out.println("Ingrese el Usuario: ");
-                    userpaciente = scanner2.nextLine();
-                    asignar = buscarpaciente(userpaciente);
+                    userpaciente=scanner2.nextLine();
+                    asignar=buscarpaciente(userpaciente);
 
                     //Opcion 1: levanta los planes base de un archivo y los lee, para elegir uno y hacer una copia
-
-
-                   /* boolean salir2=false;
-                    int opcion2=0;
-                    Scanner scanner2=new Scanner(System.in);
+                    ArrayList<PlanDeControl> planes=buscarplanes();
                     for (int k=0; k<planes.size(); k++){
                         System.out.println("Opcion "+k+":"+planes.get(k));
                     }
                     System.out.println("Ingrese Plan a Modificar: ");
                     opcion2=scanner2.nextInt();
                     //copia de la enfermeda porque si no la modifica
-                    Enfermedad EnfermedadModificar=new Enfermedad(plan.get(opcion2).getEnfermedad.getNombre, plan.get(opcion2).getEnfermedad.getDiasdeRecuperacion);
-                    Planamodificar=new PlanDeControl(plan.get(opcion2).getEnfermedad, plan.get(opcion2).getTratamientos);
-                    */
+                    Planamodificar=new PlanDeControl(planes.get(opcion2).getEnfermedad, planes.get(opcion2).getTratamientos);
+
                     //dato de prueba
-                    Enfermedad nueva = new Enfermedad();
-                    Planamodificar = new PlanDeControl(nueva, null);
+                    Enfermedad nueva=new Enfermedad("holatitis", 30);
+                    Planamodificar=new PlanDeControl(nueva, null);
 
 
                     //administracion de tareas de control y dias del plan de control.
