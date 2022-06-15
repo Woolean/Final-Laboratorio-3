@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -45,6 +46,15 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         paciente.setPrincipiodelTratamiento(LocalDate.now());
         paciente.setFindelTratamiento(LocalDate.now().plusDays(plan.getTiempo()));
 
+        for (Paciente pacient : this.pacientesAsignados){
+            if (pacient.getUsers().equals(paciente.getUsers())){
+                pacient.setPlanDeControl(paciente.getPlanDeControl());
+                pacient.setPrincipiodelTratamiento(paciente.getPrincipiodelTratamiento());
+                pacient.setFindelTratamiento(paciente.getFindelTratamiento());
+            }
+        }
+
+        this.ActualizarPacientesAsignados(paciente);
         paciente.actualizarArchivo();
     }
 
@@ -55,9 +65,46 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
     //verificar cuando se da de alta, se cambia la fecha del fin del tratamiento en el paciente y se cambia el numero de dias del plan de control
     public void FinalizarPlan(Paciente paciente) {
         paciente.setFindelTratamiento(LocalDate.now());
+
+        for (Paciente pacient : this.pacientesAsignados){
+            if (pacient.getUsers().equals(paciente.getUsers())){
+                pacient.setFindelTratamiento(paciente.getFindelTratamiento());
+            }
+        }
+        this.ActualizarPacientesAsignados(paciente);
         paciente.actualizarArchivo();
         /*long dias= DAYS.between(paciente.getPrincipiodelTratamiento(), LocalDate.now());
         paciente.getPlanDeControl().setTiempo((int) dias); se usaba para cambiar a los dias que duro el tratamiento el plan de control*/
+    }
+
+    public void ActualizarPacientesAsignados(Paciente asignado){
+        //Cosas para los archivos
+        File fileMedicos = new File("files/Medicos.json");
+        SerializadorMedicos ser2 = new SerializadorMedicos();
+        ArrayList<Medico>listanueva = new ArrayList<>();
+
+        try {
+            listanueva = ser2.Deserializar(fileMedicos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    for (Medico medico : listanueva){
+        if (Objects.equals(getUsers(), medico.getUsers())) {
+            for (Paciente pacientes : this.getPacientesAsignados()){
+                if (pacientes.getUsers().equals(asignado.getUsers())){
+                    medico.setPacientesAsignados(this.pacientesAsignados);
+                }
+            }
+
+        }
+    }
+
+        try {
+            ser2.Serializar(listanueva, fileMedicos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Paciente buscarpaciente(String nombre){
@@ -223,6 +270,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     opcion = scanner.nextInt();
                     Paciente Actualizado2=buscarpaciente(pacientesAsignados.get(opcion).getUsers());
                     FinalizarPlan(Actualizado2);
+                    //remover el paciente cuando termina el plan de control??
                     pacientesAsignados.remove(opcion);
                     break;
                 case 4:
