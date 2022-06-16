@@ -124,6 +124,34 @@ public class Paciente extends Usuarios implements Menus, Serializable {
         }
 
     }
+
+    public void actualizarHistorialArchivo(){
+
+        //Cosas para los archivos
+        File filePacientes = new File("files/Pacientes.json");
+        SerializadorPacientes ser1 = new SerializadorPacientes();
+
+        ArrayList<Paciente> listaNueva = new ArrayList<>();
+
+        try {
+            listaNueva = ser1.Deserializar(filePacientes);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (Paciente paciente : listaNueva) {
+            if (Objects.equals(getUsers(), paciente.getUsers())) {
+                paciente.setHistorial(this.historial);
+            }
+        }
+
+        try {
+            ser1.Serializar(listaNueva, filePacientes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     //interface menu
 
     @Override

@@ -206,60 +206,70 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                             System.out.println(pacientesAsignados.get(i));
                         }
                     }
+
+                    System.out.println("Escriba 'salir' para volver atrás.");
                     System.out.println("Ingrese el Usuario: ");
                     userpaciente=scanner2.nextLine();
-                    asignar=buscarpaciente(userpaciente);
 
-                    //Opcion 1: levanta los planes base de un archivo y los lee, para elegir uno y hacer una copia
-                    ArrayList<PlanDeControl> planes=buscarplanes();
-                    for (int k=0; k<planes.size(); k++){
-                        System.out.println("Opcion "+k+":"+planes.get(k));
-                    }
+                    if (!Objects.equals(userpaciente, "salir")){
+                        asignar=buscarpaciente(userpaciente);
 
-                    System.out.println("Ingrese Plan a Modificar: ");
-                    opcion2=scanner2.nextInt();
-                    //copia de la enfermeda porque si no la modifica
-                    Enfermedad EnfermedadModificar=new Enfermedad(planes.get(opcion2).getEnfermedad(), planes.get(opcion2).getTiempo());
-                    Planamodificar=new PlanDeControl(EnfermedadModificar, planes.get(opcion2).getTratamientos());
+                        //Opcion 1: levanta los planes base de un archivo y los lee, para elegir uno y hacer una copia
+                        ArrayList<PlanDeControl> planes=buscarplanes();
+                        for (int k=0; k<planes.size(); k++){
+                            System.out.println("Opcion "+k+": "+planes.get(k));
+                        }
+
+                        System.out.println("Opción " + planes.size() + ": Cancelar. ");
+                        System.out.println("Ingrese Plan a Modificar: ");
+                        opcion2=scanner2.nextInt();
+                        //copia de la enfermeda porque si no la modifica
+
+                        if (opcion < planes.size()){
+                            Enfermedad EnfermedadModificar=new Enfermedad(planes.get(opcion2).getEnfermedad(), planes.get(opcion2).getTiempo());
+                            Planamodificar=new PlanDeControl(EnfermedadModificar, planes.get(opcion2).getTratamientos());
 
 
-                    //administracion de tareas de control y dias del plan de control.
+                            //administracion de tareas de control y dias del plan de control.
+                            while (!salir2) {
+                                System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5 (Tambien para guardar cambios):");
+                                System.out.println("Plan Base:");
+                                System.out.println(Planamodificar);
 
+                                System.out.println("\nOpción 1: Agregar Tarea Existente al Plan de Control");
+                                System.out.println("Opción 2: Eliminar Tarea");
+                                System.out.println("Opción 3: Crear nueva Tarea");
+                                System.out.println("Opción 4: Cambiar cantidad de dias del Plan");
+                                System.out.println("Opción 5: Salir");
 
-                    while (!salir2) {
-                        System.out.println("SI NO QUIERE HACER MODIFICACIONES EN EL PLAN BASE DE LA ENFERMEDAD SELECCIONE SALIR OPCIÓN 5 (Tambien para guardar cambios):");
-                        System.out.println("Plan Base:");
-                        System.out.println(Planamodificar);
+                                System.out.println("Ingrese una Opción: ");
+                                opcion2 = scanner.nextInt();
 
-                        System.out.println("\nOpción 1: Agregar Tarea Existente al Plan de Control");
-                        System.out.println("Opción 2: Eliminar Tarea");
-                        System.out.println("Opción 3: Crear nueva Tarea");
-                        System.out.println("Opción 4: Cambiar cantidad de dias del Plan");
-                        System.out.println("Opción 5: Salir");
+                                switch (opcion2) {
+                                    case 1 -> agregarTareasdeControl(Planamodificar.getTratamientos());
 
-                        System.out.println("Ingrese una Opción: ");
-                        opcion2 = scanner.nextInt();
+                                    case 2 -> EliminarTareas(Planamodificar.getTratamientos());
 
-                        switch (opcion2) {
-                            case 1 -> agregarTareasdeControl(Planamodificar.getTratamientos());
-
-                            case 2 -> EliminarTareas(Planamodificar.getTratamientos());
-
-                            case 3 ->
-                                    CrearTareaNueva(Planamodificar.getTratamientos());
-                            case 4 -> {
-                                int diasenfermedad = 0;
-                                System.out.println("Ingrese el Cantidad estimada de Dias para la Recuperación de la Enfermedad: ");
-                                diasenfermedad = scanner.nextInt();
-                                Planamodificar.setTiempo(diasenfermedad);
+                                    case 3 ->
+                                            CrearTareaNueva(Planamodificar.getTratamientos());
+                                    case 4 -> {
+                                        int diasenfermedad = 0;
+                                        System.out.println("Ingrese el Cantidad estimada de Dias para la Recuperación de la Enfermedad: ");
+                                        diasenfermedad = scanner.nextInt();
+                                        Planamodificar.setTiempo(diasenfermedad);
+                                    }
+                                    case 5 -> salir2 = true;
+                                    default -> {
+                                        System.out.println("Opción no valida");
+                                    }
+                                }
                             }
-                            case 5 -> salir2 = true;
-                            default -> {
-                                System.out.println("Opción no valida");
-                            }
+                            AsignarPlan(asignar, Planamodificar);
                         }
                     }
-                    AsignarPlan(asignar, Planamodificar);
+
+
+
                     //persistir paciente de la lista de pacientes porque no es necesario persistirlo en el
                     // medico ya que al momento de legir un user se busca en paciente para tener la ultima informacion
                     break;

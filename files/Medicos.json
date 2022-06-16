@@ -41,5 +41,20 @@
     "pacientesAsignados": [],
     "password": "contra33",
     "user": "Julio"
+  },
+  {
+    "especializacion": "Clínico",
+    "pacientesAsignados": [
+      {
+        "Enfermedad": "Bronquitis",
+        "Sintomas": "tos y congestion",
+        "altamedica": false,
+        "historial": [],
+        "password": "contra55",
+        "user": "Julian"
+      }
+    ],
+    "password": "contra33",
+    "user": "Carlos"
   }
 ]

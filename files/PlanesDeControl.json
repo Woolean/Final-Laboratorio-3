@@ -2,7 +2,15 @@
   {
     "Enfermedad": "Bronquitis",
     "Tiempo": 20,
-    "Tratamientos": []
+    "Tratamientos": [
+      {
+        "type": "DatoNumerico",
+        "properties": {
+          "datoNumerico": 0.0,
+          "descripcion": "Tomar temperatura"
+        }
+      }
+    ]
   },
   {
     "Enfermedad": "Dolor de Garganta",

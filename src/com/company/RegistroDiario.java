@@ -60,8 +60,8 @@ public class RegistroDiario implements Serializable {
                     return false;
                 }
             }
-
         }
+
         this.completado = true;
         return true;
     }
