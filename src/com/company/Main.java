@@ -94,10 +94,13 @@ public class Main {
             e.printStackTrace();
         }
 
+
         Administrador admin2 = new Administrador("admin123", "admin", Pacientes, Medicos, PlanesdeControl, Tareas, Enfermedades);
         Administradores.add(admin2);
 
         ////////////////////////////////////////
+
+
 
         Sistema hospital = new Sistema(Pacientes, Medicos, Administradores, Tareas, PlanesdeControl);
 

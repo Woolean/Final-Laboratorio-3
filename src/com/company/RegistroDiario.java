@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class RegistroDiario implements Serializable {
     private LocalDate fecha;
-    private boolean completado;
+    private boolean completado=false;
     private String informacion;
 
 
@@ -81,6 +81,7 @@ public class RegistroDiario implements Serializable {
             }
             registro.append("--------------------");
         }
-        return this.informacion = registro.toString();
+        this.informacion=registro.toString();
+        return this.informacion;
     }
 }

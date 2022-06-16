@@ -25,6 +25,11 @@ public class DatoBoolean extends TareasDeControl implements ValidarTarea, Serial
     }
 
     @Override
+    public void Resetear() {
+        this.datoBoolean=false;
+    }
+
+    @Override
     public String toString() {
         if (isDatoBoolean()) {
             return this.getDescripcion() + ": Sí.";

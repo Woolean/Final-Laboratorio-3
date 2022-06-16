@@ -5,7 +5,7 @@
       {
         "Enfermedad": "Bronquitis",
         "Sintomas": "dolor de garganta",
-        "altamedica": true,
+        "altamedica": false,
         "planDeControl": {
           "Enfermedad": "Dolor de Garganta",
           "Tiempo": 10,
@@ -26,14 +26,9 @@
             }
           ]
         },
-        "FindelTratamiento": "15-jun.-2022",
+        "FindelTratamiento": "25-jun.-2022",
         "PrincipiodelTratamiento": "15-jun.-2022",
-        "historial": [
-          {
-            "fecha": "15-jun.-2022",
-            "completado": false
-          }
-        ],
+        "historial": [],
         "password": "contra1",
         "user": "Pablo"
       }
@@ -46,47 +41,5 @@
     "pacientesAsignados": [],
     "password": "contra33",
     "user": "Julio"
-  },
-  {
-    "especializacion": "Clínico",
-    "pacientesAsignados": [
-      {
-        "Enfermedad": "Gripe comun",
-        "Sintomas": "tos y congestion",
-        "altamedica": true,
-        "planDeControl": {
-          "Enfermedad": "Gripe comun",
-          "Tiempo": 14,
-          "Tratamientos": [
-            {
-              "type": "DatoNumerico",
-              "properties": {
-                "datoNumerico": 0.0,
-                "descripcion": "Tomar temperatura"
-              }
-            },
-            {
-              "type": "DatoBoolean",
-              "properties": {
-                "datoBoolean": false,
-                "descripcion": "Tomar medicamentos"
-              }
-            }
-          ]
-        },
-        "FindelTratamiento": "15-jun.-2022",
-        "PrincipiodelTratamiento": "15-jun.-2022",
-        "historial": [
-          {
-            "fecha": "15-jun.-2022",
-            "completado": false
-          }
-        ],
-        "password": "contra666",
-        "user": "Julián"
-      }
-    ],
-    "password": "contra333",
-    "user": "Carlos"
   }
 ]

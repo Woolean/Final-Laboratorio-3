@@ -87,10 +87,10 @@ public class Paciente extends Usuarios implements Menus, Serializable {
     public String BuscarRegistro(LocalDate fechadelregistro) {
         for (RegistroDiario e : this.historial) {
             if (e.verificarfecha(fechadelregistro)) {
-                return e.RegistrodeTareas(this.planDeControl.getTratamientos());
+                return e.getInformacion();
             }
         }
-        return null;
+        return "No hay actividad de ese dia por lo que no se completo nada";
     }
 
     public void actualizarArchivo(){

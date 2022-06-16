@@ -109,6 +109,36 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
         }
     }
 
+    public void ActualizarTodoslosPacientesAsignados(ArrayList<Paciente> asignados){
+        //Cosas para los archivos
+        File fileMedicos = new File("files/Medicos.json");
+        SerializadorMedicos ser2 = new SerializadorMedicos();
+        ArrayList<Medico>listanueva = new ArrayList<>();
+
+        try {
+            listanueva = ser2.Deserializar(fileMedicos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (Medico medico : listanueva){
+            for (Paciente e : asignados){
+                for (Paciente a: medico.pacientesAsignados){
+                    if (a.getUsers().equals(e.getUsers())){
+                        a=e;
+                    }
+                }
+            }
+        }
+
+        try {
+            ser2.Serializar(listanueva, fileMedicos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public Paciente buscarpaciente(String nombre){
         SerializadorPacientes ser=new SerializadorPacientes();
         File filePacientes = new File("files/Pacientes.json");
@@ -235,6 +265,7 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
                     break;
                 case 2:
                     //pacientes con plan de control vigente
+
                     int ano, mes, dia;
                     for (int i = 0; i < pacientesAsignados.size(); i++) {
                         System.out.println("Opción " + i + ": " + pacientesAsignados.get(i));

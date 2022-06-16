@@ -6,9 +6,5 @@
   {
     "EnfermedadNombre": "Dolor de Garganta",
     "RecuperacionenDias": 10
-  },
-  {
-    "EnfermedadNombre": "Gripe comun",
-    "RecuperacionenDias": 14
   }
 ]

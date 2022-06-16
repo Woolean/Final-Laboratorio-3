@@ -59,14 +59,32 @@ public class Sistema {
         //verificar si es el primer dia del tratamiento
         if (users.getHistorial().size() != 0) {
             mensaje = users.getHistorial().get(users.getHistorial().size() - 1).verificarfecha(LocalDate.now());
-            if (!mensaje) {
-                if (!users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())) {
+            if (mensaje==false) {
+                if (users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())==false) {
                     System.out.println(users + ": No Completo las Tareas Diarias el Dia de ayer");
                 }
+                //verifica las tareas si se hicieron
+                users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos());
+                //guarda los datos en el registro de cada tarea
                 users.getHistorial().get(users.getHistorial().size() - 1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
+                //actualiza el usuario
+                users.actualizarArchivo();
+                //resetea el plan de control
+                for (TareasDeControl e : users.getPlanDeControl().getTratamientos()) {
+                    if (e instanceof DatoNumerico) {
+                        ((DatoNumerico) e).Resetear();
+                    } else if (e instanceof DatoBoolean) {
+                        ((DatoBoolean) e).Resetear();
+                    } else if (e instanceof DatoTextual) {
+                        ((DatoTextual) e).Resetear();
+                    }
+                }
+                //guarda en el archivo y crea el registro de hoy
                 RegistroDiario registro = new RegistroDiario(LocalDate.now());
                 users.getHistorial().add(registro);
                 users.actualizarArchivo();
+            }
+            else {
             }
         } else {
             RegistroDiario registro = new RegistroDiario(LocalDate.now());
@@ -76,6 +94,7 @@ public class Sistema {
     }
 
     public void MensajedeAvisoMedicos(Medico medico) throws NullPointerException {
+        medico.ActualizarTodoslosPacientesAsignados(this.Pacientes);//
         for (Paciente e : medico.getPacientesAsignados()) {
             MensajedeAviso(e);
         }

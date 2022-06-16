@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class DatoTextual extends TareasDeControl implements ValidarTarea, Serializable {
 
-    private String datoTextual;
+    private String datoTextual=null;
 
     public DatoTextual(String descripcion, String datoTextual) {
         super(descripcion);
@@ -22,6 +22,11 @@ public class DatoTextual extends TareasDeControl implements ValidarTarea, Serial
     @Override
     public boolean Validar() {
         return datoTextual != null;
+    }
+
+    @Override
+    public void Resetear() {
+        this.datoTextual=null;
     }
 
     @Override

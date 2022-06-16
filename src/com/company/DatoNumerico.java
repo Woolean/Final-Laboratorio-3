@@ -28,6 +28,11 @@ public class DatoNumerico extends TareasDeControl implements ValidarTarea, Seria
     }
 
     @Override
+    public void Resetear() {
+        this.datoNumerico=0.0;
+    }
+
+    @Override
     public String toString() {
         return this.getDescripcion() + ": " + getDatoNumerico();
     }
