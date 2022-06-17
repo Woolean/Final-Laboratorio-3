@@ -26,8 +26,8 @@
             }
           ]
         },
-        "FindelTratamiento": "25-jun.-2022",
-        "PrincipiodelTratamiento": "15-jun.-2022",
+        "FindelTratamiento": "26-jun.-2022",
+        "PrincipiodelTratamiento": "16-jun.-2022",
         "historial": [],
         "password": "contra1",
         "user": "Pablo"
@@ -41,20 +41,5 @@
     "pacientesAsignados": [],
     "password": "contra33",
     "user": "Julio"
-  },
-  {
-    "especializacion": "Clínico",
-    "pacientesAsignados": [
-      {
-        "Enfermedad": "Bronquitis",
-        "Sintomas": "tos y congestion",
-        "altamedica": false,
-        "historial": [],
-        "password": "contra55",
-        "user": "Julian"
-      }
-    ],
-    "password": "contra33",
-    "user": "Carlos"
   }
 ]

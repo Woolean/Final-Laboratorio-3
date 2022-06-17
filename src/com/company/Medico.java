@@ -125,7 +125,8 @@ public class Medico extends Usuarios implements AdministraciondeTareasdeControl,
             for (Paciente e : asignados){
                 for (Paciente a: medico.pacientesAsignados){
                     if (a.getUsers().equals(e.getUsers())){
-                        a=e;
+                        a.setHistorial(e.getHistorial());
+                        a.setPlanDeControl(e.getPlanDeControl());
                     }
                 }
             }

@@ -23,14 +23,9 @@
         }
       ]
     },
-    "FindelTratamiento": "25-jun.-2022",
-    "PrincipiodelTratamiento": "15-jun.-2022",
-    "historial": [
-      {
-        "fecha": "15-jun.-2022",
-        "completado": false
-      }
-    ],
+    "FindelTratamiento": "26-jun.-2022",
+    "PrincipiodelTratamiento": "16-jun.-2022",
+    "historial": [],
     "password": "contra1",
     "user": "Pablo"
   },
@@ -41,13 +36,5 @@
     "historial": [],
     "password": "contra11",
     "user": "Juan"
-  },
-  {
-    "Enfermedad": "Bronquitis",
-    "Sintomas": "tos y congestion",
-    "altamedica": false,
-    "historial": [],
-    "password": "contra55",
-    "user": "Julian"
   }
 ]

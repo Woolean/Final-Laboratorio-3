@@ -34,11 +34,8 @@ public class Sistema {
         for (Medico e : Medicos) {
             if (e.getUsers().equalsIgnoreCase(nombre)) {
                 if (e.getPasswords().equalsIgnoreCase(contraseña)) {
-                    try {
-                        MensajedeAvisoMedicos(e);
-                    } catch (NullPointerException a) {
-                        System.out.println("No tiene ningun Paciente Asignado");
-                    }
+                    e.ActualizarTodoslosPacientesAsignados(this.Pacientes);
+                    MensajeMedico(e.getPacientesAsignados());
                     return e;
                 }
             }
@@ -60,15 +57,16 @@ public class Sistema {
         if (users.getHistorial().size() != 0) {
             mensaje = users.getHistorial().get(users.getHistorial().size() - 1).verificarfecha(LocalDate.now());
             if (!mensaje) {
+
                 if (!users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos())) {
                     System.out.println(users + ": No Completo las Tareas Diarias el Dia de ayer");
                 }
-                //verifica las tareas si se hicieron
-                users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos());
                 //guarda los datos en el registro de cada tarea
                 users.getHistorial().get(users.getHistorial().size() - 1).RegistrodeTareas(users.getPlanDeControl().getTratamientos());
-                //actualiza el usuario
-                users.actualizarArchivo();
+                users.getHistorial().get(users.getHistorial().size() - 1).VerificaciondeTareas(users.getPlanDeControl().getTratamientos());
+                //guarda en el archivo y crea el registro de hoy
+                RegistroDiario registro = new RegistroDiario(LocalDate.now());
+                users.getHistorial().add(registro);
                 //resetea el plan de control
                 for (TareasDeControl e : users.getPlanDeControl().getTratamientos()) {
                     if (e instanceof DatoNumerico) {
@@ -79,9 +77,6 @@ public class Sistema {
                         ((DatoTextual) e).Resetear();
                     }
                 }
-                //guarda en el archivo y crea el registro de hoy
-                RegistroDiario registro = new RegistroDiario(LocalDate.now());
-                users.getHistorial().add(registro);
                 users.actualizarArchivo();
             }
             else {
@@ -93,10 +88,11 @@ public class Sistema {
         }
     }
 
-    public void MensajedeAvisoMedicos(Medico medico) throws NullPointerException {
-        medico.ActualizarTodoslosPacientesAsignados(this.Pacientes);//
-        for (Paciente e : medico.getPacientesAsignados()) {
-            MensajedeAviso(e);
+    public void MensajeMedico(ArrayList<Paciente> pacientes){
+        for (Paciente e : pacientes){
+            if (!e.getHistorial().get(e.getHistorial().size() - 1).VerificaciondeTareas(e.getPlanDeControl().getTratamientos())) {
+                System.out.println(e + ": No Completo las Tareas Diarias el Dia de ayer");
+            }
         }
     }
 
